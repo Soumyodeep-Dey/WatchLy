@@ -1,43 +1,59 @@
- 
+import { useNavigate } from 'react-router-dom';
+
 const products = [
   {
     id: 1,
-    name: 'Classic Watch',
+    name: 'Classic Section',
     description: 'A timeless design with a leather strap and gold finish.',
-    price: '$199.99',
-    imageUrl: 'https://via.placeholder.com/200x200?text=Classic+Watch',
+    price: '$299.99 ~ $999.99',
+    imageUrl: 'https://www.theluxuryhut.com/admin/upload/1711977693top-luxury-men-s-watches-for-spring-2024.jpg',
+    category: 'classic',
   },
   {
     id: 2,
-    name: 'Sporty Watch',
-    description: 'Built for the active lifestyle, featuring a durable silicone strap.',
-    price: '$129.99',
-    imageUrl: 'https://via.placeholder.com/200x200?text=Sporty+Watch',
-  },
-  {
-    id: 3,
-    name: 'Luxury Watch',
+    name: 'Luxury Section',
     description: 'An elegant watch with a stainless steel band and premium design.',
-    price: '$499.99',
-    imageUrl: 'https://via.placeholder.com/200x200?text=Luxury+Watch',
+    price: '$999.99 ~ $3999.99',
+    imageUrl: 'https://media.licdn.com/dms/image/C5612AQHCfy4fSELdKw/article-cover_image-shrink_600_2000/0/1623931338114?e=2147483647&v=beta&t=-D_15dIb10p01nR_sRAI3sV1XhbGQRvzahdXux4mSs8',
+    category: 'luxury',
   },
 ];
 
 function ProductsPage() {
-  return (
-    <div className="py-12 px-4">
-      <h1 className="text-3xl font-semibold text-center mb-8">Our Products</h1>
+  const navigate = useNavigate();
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+  const handleRedirect = (category) => {
+    if (category === 'classic') {
+      navigate('/all-classic-products');
+    } else if (category === 'luxury') {
+      navigate('/all-luxury-products');
+    }
+  };
+
+  return (
+    <div className="py-16 px-6 bg-black">
+      <h1 className="text-4xl font-bold text-center mb-12 text-gold">Our Exclusive Collections</h1>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-12">
         {products.map((product) => (
-          <div key={product.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
-            <img src={product.imageUrl} alt={product.name} className="w-full h-48 object-cover" />
-            <div className="p-4">
-              <h2 className="text-xl font-bold">{product.name}</h2>
-              <p className="text-sm text-gray-500 mt-2">{product.description}</p>
-              <p className="text-lg font-semibold text-blue-600 mt-4">{product.price}</p>
-              <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-                Add to Cart
+          <div
+            key={product.id}
+            className="bg-black shadow-lg rounded-xl overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl border border-gold"
+          >
+            <img
+              src={product.imageUrl}
+              alt={product.name}
+              className="w-full h-60 object-cover rounded-t-xl transition-opacity hover:opacity-90"
+            />
+            <div className="p-6">
+              <h2 className="text-2xl font-bold text-gold">{product.name}</h2>
+              <p className="text-sm text-gray-400 mt-2">{product.description}</p>
+              <p className="text-lg font-semibold text-gold mt-4">{product.price}</p>
+              <button
+                onClick={() => handleRedirect(product.category)}
+                className="mt-6 px-6 py-3 bg-gold text-black font-semibold rounded-lg hover:bg-black hover:text-gold transition-colors"
+              >
+                View All {product.name.split(" ")[0]} Products
               </button>
             </div>
           </div>

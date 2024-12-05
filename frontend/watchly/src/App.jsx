@@ -5,6 +5,8 @@ import ProductsPage from './pages/ProductsPage'; // Import additional pages
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import NotFoundPage from './pages/NotFoundPage';
+import AllClassicPage from './pages/AllClassicPage';
+import AllLuxuaryPage from './pages/AllLuxuaryPage';
 
 const App = () => {
     return (
@@ -17,7 +19,9 @@ const App = () => {
                     <Route path="/products" element={<ProductsPage />} />
                     <Route path="/about" element={<AboutPage />} />
                     <Route path="/contact" element={<ContactPage />} />
-
+                    <Route path="/all-classic-products" element={<AllClassicPage />} />
+                    <Route path="/all-luxury-products" element={<AllLuxuaryPage />} />
+                    
                     {/* Fallback route for undefined paths */}
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>

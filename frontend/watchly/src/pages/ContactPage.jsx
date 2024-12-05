@@ -18,13 +18,13 @@ export default function Contact() {
   };
 
   return (
-    <div className="py-12 px-4">
-      <h1 className="text-3xl font-semibold text-center mb-8">Contact Us</h1>
+    <div className="py-12 px-4 bg-black min-h-screen">
+      <h1 className="text-3xl font-semibold text-center mb-8 text-gold">Contact Us</h1>
 
       <div className="max-w-2xl mx-auto">
         <form onSubmit={handleSubmit} className="bg-white p-8 shadow-lg rounded-lg">
           <div className="mb-4">
-            <label htmlFor="name" className="block text-sm font-semibold mb-2">
+            <label htmlFor="name" className="block text-sm font-semibold mb-2 text-black">
               Name
             </label>
             <input
@@ -33,13 +33,13 @@ export default function Contact() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-md"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gold"
               required
             />
           </div>
 
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-semibold mb-2">
+            <label htmlFor="email" className="block text-sm font-semibold mb-2 text-black">
               Email
             </label>
             <input
@@ -48,13 +48,13 @@ export default function Contact() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-md"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gold"
               required
             />
           </div>
 
           <div className="mb-4">
-            <label htmlFor="message" className="block text-sm font-semibold mb-2">
+            <label htmlFor="message" className="block text-sm font-semibold mb-2 text-black">
               Message
             </label>
             <textarea
@@ -62,7 +62,7 @@ export default function Contact() {
               name="message"
               value={formData.message}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-md"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gold"
               rows="4"
               required
             ></textarea>
@@ -70,16 +70,16 @@ export default function Contact() {
 
           <button
             type="submit"
-            className="w-full py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            className="w-full py-3 bg-gold text-white rounded-md hover:bg-yellow-500 transition duration-300"
           >
             Send Message
           </button>
         </form>
 
         <div className="mt-8 text-center text-gray-600">
-          <p>Or reach us at:</p>
-          <p className="font-semibold">Email: contact@watchly.com</p>
-          <p>Phone: +1 800 123 4567</p>
+          <p className="text-white">Or reach us at:</p>
+          <p className="font-semibold text-white">Email: contact@watchly.com</p>
+          <p className="text-white">Phone: +1 800 123 4567</p>
         </div>
       </div>
     </div>
