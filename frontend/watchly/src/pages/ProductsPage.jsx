@@ -6,7 +6,7 @@ const products = [
     name: 'Classic Section',
     description: 'A timeless design with a leather strap and gold finish.',
     price: '$299.99 ~ $999.99',
-    imageUrl: 'https://www.theluxuryhut.com/admin/upload/1711977693top-luxury-men-s-watches-for-spring-2024.jpg',
+    imageUrl: 'https://cdn.prod.website-files.com/63b937f7cb69a848fab5e097/66a9f0588f2f4cb3de3d0e19_Lead%20Image%20%20(4)%20(1).jpg',
     category: 'classic',
   },
   {
@@ -14,7 +14,7 @@ const products = [
     name: 'Luxury Section',
     description: 'An elegant watch with a stainless steel band and premium design.',
     price: '$999.99 ~ $3999.99',
-    imageUrl: 'https://media.licdn.com/dms/image/C5612AQHCfy4fSELdKw/article-cover_image-shrink_600_2000/0/1623931338114?e=2147483647&v=beta&t=-D_15dIb10p01nR_sRAI3sV1XhbGQRvzahdXux4mSs8',
+    imageUrl: 'https://media.gq-magazine.co.uk/photos/5efa1c8687e549a3c50639f7/master/pass/20200629-rolex-04.jpg',
     category: 'luxury',
   },
 ];

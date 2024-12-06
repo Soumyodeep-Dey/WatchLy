@@ -7,6 +7,8 @@ import ContactPage from './pages/ContactPage';
 import NotFoundPage from './pages/NotFoundPage';
 import AllClassicPage from './pages/AllClassicPage';
 import AllLuxuaryPage from './pages/AllLuxuaryPage';
+import WishlistPage from './pages/WishlistPage';
+import CartPage from './pages/CartPage';
 
 const App = () => {
     return (
@@ -19,6 +21,8 @@ const App = () => {
                     <Route path="/products" element={<ProductsPage />} />
                     <Route path="/about" element={<AboutPage />} />
                     <Route path="/contact" element={<ContactPage />} />
+                    <Route path="/wishlist" element={<WishlistPage />} />
+                    <Route path="/cart" element={<CartPage />} />
                     <Route path="/all-classic-products" element={<AllClassicPage />} />
                     <Route path="/all-luxury-products" element={<AllLuxuaryPage />} />
                     

@@ -4,21 +4,21 @@ const allLuxuryProducts = [
       name: 'Luxury Watch 1',
       description: 'A premium design with a diamond-encrusted dial and stainless steel band.',
       price: '$1,299.99',
-      imageUrl: 'https://via.placeholder.com/400x400?text=Luxury+Watch+1',
+      imageUrl: 'https://media.rolex.com/image/upload/q_auto:eco/f_auto/t_v7-grid/c_limit,w_2440/v1/catalogue/2024/upright-bba-with-shadow/m128235-0075',
     },
     {
       id: 2,
       name: 'Luxury Watch 2',
       description: 'A luxurious design with a 24k gold-plated casing and black leather strap.',
       price: '$2,499.99',
-      imageUrl: 'https://via.placeholder.com/400x400?text=Luxury+Watch+2',
+      imageUrl: 'https://media.rolex.com/image/upload/q_auto:eco/f_auto/t_v7-grid/c_limit,w_2440/v1/catalogue/2024/upright-bba-with-shadow/m126234-0013',
     },
     {
       id: 3,
       name: 'Luxury Watch 3',
       description: 'A sophisticated watch with a diamond-studded bezel and sapphire glass.',
       price: '$3,799.99',
-      imageUrl: 'https://via.placeholder.com/400x400?text=Luxury+Watch+3',
+      imageUrl: 'https://www.theluxuryhut.com/admin/upload/1724418702secrets-of-rolex-watches.jpg',
     },
   ];
   

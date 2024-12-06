@@ -18,13 +18,20 @@ export default function Contact() {
   };
 
   return (
-    <div className="py-12 px-4 bg-black min-h-screen">
-      <h1 className="text-3xl font-semibold text-center mb-8 text-gold">Contact Us</h1>
+    <div className="py-12 px-12 bg-black-rich text-white min-h-screen flex flex-col justify-center">
+      <h1 className="text-5xl font-bold text-center mb-12 text-gold">Contact Us</h1>
 
-      <div className="max-w-2xl mx-auto">
-        <form onSubmit={handleSubmit} className="bg-white p-8 shadow-lg rounded-lg">
-          <div className="mb-4">
-            <label htmlFor="name" className="block text-sm font-semibold mb-2 text-black">
+      <div className="w-1/3 mx-auto">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-gray-800 p-12 shadow-2xl rounded-lg space-y-8 "
+        >
+          {/* Name Field */}
+          <div>
+            <label
+              htmlFor="name"
+              className="block text-lg font-semibold mb-3 text-gold"
+            >
               Name
             </label>
             <input
@@ -33,13 +40,18 @@ export default function Contact() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gold"
+              className="w-full p-4 text-lg border border-gray-600 rounded-lg bg-black text-white focus:outline-none focus:ring-4 focus:ring-gold"
+              placeholder="Enter your name"
               required
             />
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-semibold mb-2 text-black">
+          {/* Email Field */}
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-lg font-semibold mb-3 text-gold"
+            >
               Email
             </label>
             <input
@@ -48,13 +60,18 @@ export default function Contact() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gold"
+              className="w-full p-4 text-lg border border-gray-600 rounded-lg bg-black text-white focus:outline-none focus:ring-4 focus:ring-gold"
+              placeholder="Enter your email"
               required
             />
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="message" className="block text-sm font-semibold mb-2 text-black">
+          {/* Message Field */}
+          <div>
+            <label
+              htmlFor="message"
+              className="block text-lg font-semibold mb-3 text-gold"
+            >
               Message
             </label>
             <textarea
@@ -62,24 +79,27 @@ export default function Contact() {
               name="message"
               value={formData.message}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gold"
-              rows="4"
+              className="w-full p-4 text-lg border border-gray-600 rounded-lg bg-black text-white focus:outline-none focus:ring-4 focus:ring-gold"
+              rows="6"
+              placeholder="Write your message"
               required
             ></textarea>
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-3 bg-gold text-white rounded-md hover:bg-yellow-500 transition duration-300"
+            className="w-full py-4 bg-gold text-black text-lg font-bold rounded-lg hover:bg-yellow-500 transition duration-300"
           >
             Send Message
           </button>
         </form>
 
-        <div className="mt-8 text-center text-gray-600">
-          <p className="text-white">Or reach us at:</p>
-          <p className="font-semibold text-white">Email: contact@watchly.com</p>
-          <p className="text-white">Phone: +1 800 123 4567</p>
+        {/* Contact Info */}
+        <div className="mt-12 text-center text-gray-400 space-y-4">
+          <p className="text-xl">Or reach us at:</p>
+          <p className="font-semibold text-white text-lg">Email: contact@watchly.com</p>
+          <p className="text-white text-lg">Phone: +1 800 123 4567</p>
         </div>
       </div>
     </div>

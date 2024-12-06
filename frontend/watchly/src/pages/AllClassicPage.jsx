@@ -6,21 +6,21 @@ const allClassicProducts = [
     name: 'Classic Watch 1',
     description: 'A luxurious classic design with a leather strap.',
     price: '$299.99',
-    imageUrl: 'https://via.placeholder.com/400x400?text=Classic+Watch+1',
+    imageUrl: 'https://www.medusa.jewelry/cdn/shop/products/rolex-datejust-41mm-black-green-emerald-montre-or-noir-bijoux-medusa-homme-quebec-canada-233_600x.jpg?v=1639795084',
   },
   {
     id: 2,
     name: 'Classic Watch 2',
     description: 'Timeless elegance with a stainless steel band.',
     price: '$499.99',
-    imageUrl: 'https://via.placeholder.com/400x400?text=Classic+Watch+2',
+    imageUrl: 'https://media.rolex.com/image/upload/q_auto:eco/f_auto/t_v7-grid/c_limit,w_2440/v1/catalogue/2024/upright-bba-with-shadow/m128238-0113',
   },
   {
     id: 3,
     name: 'Classic Watch 3',
     description: 'A sophisticated design with a gold finish.',
     price: '$799.99',
-    imageUrl: 'https://via.placeholder.com/400x400?text=Classic+Watch+3',
+    imageUrl: 'https://media.rolex.com/image/upload/q_auto:eco/f_auto/t_v7-grid/c_limit,w_2440/v1/catalogue/2024/upright-bba-with-shadow/m228239-0076',
   },
 ];
 
