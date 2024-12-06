@@ -3,21 +3,21 @@ import { useNavigate } from 'react-router-dom';
 const featuredProducts = [
   {
     id: 1,
-    name: "Classic Wristwatch",
-    price: "$299",
-    imageUrl: "https://www.gemaee.com/cdn/shop/articles/unlocking-luxury-the-allure-of-second-hand-rolex-watches-in-dubai-379135.jpg?v=1706297462",
+    name: "Rolex Oyster Perpetual Day-Date 36",
+    price: "$299.99",
+    imageUrl: "/home1.webp",
   },
   {
     id: 2,
-    name: "Luxury Timepiece",
-    price: "$999",
-    imageUrl: "https://content.thewosgroup.com/rolex/certified-pre-owned/landing-page-image-banner-02.webp",
+    name: "Rolex Lady-Datejust watch",
+    price: "$599.99",
+    imageUrl: "/home2.webp",
   },
   {
     id: 3,
-    name: "Limited Edition",
-    price: "$3,499",
-    imageUrl: "https://cdn2.ethoswatches.com/rolex/pub/media/newtheme/desktop/rolex-deepsea-watches-ethos.jpg",
+    name: "Rolex Submariner",
+    price: "$3,499.99",
+    imageUrl: "/home3.jpg",
   },
 ];
 
@@ -27,10 +27,10 @@ const HomePage = () => {
     <div className="bg-black text-gold">
       {/* Hero Section */}
       <section
-        className="hero bg-cover bg-center py-16 text-center relative"
+        className="hero bg-cover bg-center py-80 text-center relative"
         style={{
           backgroundImage:
-            "url('https://www.vintagewinders.co.uk/wp-content/uploads/2017/04/vintage-winders-rolex-banner.jpg')",
+            "url('/homebg.jpg')",
         }}
       >
         <div className="bg-black bg-opacity-70 absolute inset-0"></div>

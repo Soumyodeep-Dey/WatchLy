@@ -40,18 +40,20 @@ function ProductsPage() {
             key={product.id}
             className="bg-black shadow-lg rounded-xl overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl border border-gold"
           >
-            <img
-              src={product.imageUrl}
-              alt={product.name}
-              className="w-full h-60 object-cover rounded-t-xl transition-opacity hover:opacity-90"
-            />
+            <div className="p-4"> {/* Added padding here */}
+              <img
+                src={product.imageUrl}
+                alt={`Image of ${product.name}`}
+                className="w-full h-72 object-cover rounded-t-xl transition-opacity hover:opacity-90" // Adjusted height to 72
+              />
+            </div>
             <div className="p-6">
               <h2 className="text-2xl font-bold text-gold">{product.name}</h2>
               <p className="text-sm text-gray-400 mt-2">{product.description}</p>
               <p className="text-lg font-semibold text-gold mt-4">{product.price}</p>
               <button
                 onClick={() => handleRedirect(product.category)}
-                className="mt-6 px-6 py-3 bg-gold text-black font-semibold rounded-lg hover:bg-black hover:text-gold transition-colors"
+                className="mt-6 px-6 py-3 bg-gold text-black font-semibold rounded-lg hover:bg-black hover:text-gold transition-colors duration-300"
               >
                 View All {product.name.split(" ")[0]} Products
               </button>

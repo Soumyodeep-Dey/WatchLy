@@ -18,13 +18,13 @@ export default function Contact() {
   };
 
   return (
-    <div className="py-12 px-12 bg-black-rich text-white min-h-screen flex flex-col justify-center">
+    <div className="py-12 px-4 bg-black-rich text-white min-h-screen flex flex-col justify-center">
       <h1 className="text-5xl font-bold text-center mb-12 text-gold">Contact Us</h1>
 
-      <div className="w-1/3 mx-auto">
+      <div className="w-full max-w-4xl mx-auto">
         <form
           onSubmit={handleSubmit}
-          className="bg-gray-800 p-12 shadow-2xl rounded-lg space-y-8 "
+          className="bg-gray-800 p-10 shadow-2xl rounded-lg space-y-8"
         >
           {/* Name Field */}
           <div>
@@ -40,7 +40,7 @@ export default function Contact() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full p-4 text-lg border border-gray-600 rounded-lg bg-black text-white focus:outline-none focus:ring-4 focus:ring-gold"
+              className="w-full p-4 text-lg border border-gray-600 rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-gold transition duration-200"
               placeholder="Enter your name"
               required
             />
@@ -60,7 +60,7 @@ export default function Contact() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full p-4 text-lg border border-gray-600 rounded-lg bg-black text-white focus:outline-none focus:ring-4 focus:ring-gold"
+              className="w-full p-4 text-lg border border-gray-600 rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-gold transition duration-200"
               placeholder="Enter your email"
               required
             />
@@ -79,7 +79,7 @@ export default function Contact() {
               name="message"
               value={formData.message}
               onChange={handleChange}
-              className="w-full p-4 text-lg border border-gray-600 rounded-lg bg-black text-white focus:outline-none focus:ring-4 focus:ring-gold"
+              className="w-full p-4 text-lg border border-gray-600 rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-gold transition duration-200"
               rows="6"
               placeholder="Write your message"
               required
@@ -89,7 +89,7 @@ export default function Contact() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-4 bg-gold text-black text-lg font-bold rounded-lg hover:bg-yellow-500 transition duration-300"
+            className="w-full py-4 bg-gold text-black text-lg font-bold rounded-lg hover:bg-yellow-500 transition duration-300 transform hover:scale-105"
           >
             Send Message
           </button>
