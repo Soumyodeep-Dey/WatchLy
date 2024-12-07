@@ -1,5 +1,3 @@
- 
-
 function LadyDateJust() {
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col items-center py-12 px-4">
@@ -19,7 +17,18 @@ function LadyDateJust() {
             A timeless design featuring a stainless steel and Everose gold combination, with a refined diamond dial.
           </p>
           <p className="text-4xl font-bold text-gold mb-6">$599.99</p>
-          <button className="px-10 py-4 bg-black text-white font-semibold text-lg rounded-lg shadow-md hover:bg-gold hover:text-black transition-colors duration-300 transform hover:scale-105">
+
+          {/* Buy Now Button */}
+          <button
+            className="w-full px-10 py-4 bg-gold text-black font-semibold text-lg rounded-lg shadow-md hover:bg-black hover:text-white transition-colors duration-300 transform hover:scale-105 mb-8 border-2 border-transparent hover:border-gold focus:outline-none focus:ring-2 focus:ring-gold"
+          >
+            Buy Now
+          </button>
+
+          {/* Add to Cart Button */}
+          <button
+            className="w-full px-10 py-4 bg-black text-white font-semibold text-lg rounded-lg shadow-md hover:bg-gold hover:text-black transition-colors duration-300 transform hover:scale-105 border-2 border-transparent hover:border-gold focus:outline-none focus:ring-2 focus:ring-gold"
+          >
             Add to Cart
           </button>
         </div>

@@ -1,7 +1,7 @@
-import React from "react";
+import { useState } from "react";
 
 function CartPage() {
-  const cartItems = [
+  const [cartItems, setCartItems] = useState([
     {
       id: 1,
       name: "Luxury Watch 1",
@@ -16,11 +16,36 @@ function CartPage() {
       imageUrl: "https://via.placeholder.com/200",
       quantity: 2,
     },
-  ];
+  ]);
+
+  const handleQuantityChange = (id, delta) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id
+          ? { ...item, quantity: Math.max(1, item.quantity + delta) } // Ensure quantity is at least 1
+          : item
+      )
+    );
+  };
+
+  const handleRemove = (id) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  };
+
+  const handleAddToWishlist = (id) => {
+    const item = cartItems.find((item) => item.id === id);
+    console.log(`"${item.name}" added to wishlist.`);
+  };
 
   const handleCheckout = () => {
     console.log("Proceed to Checkout");
   };
+
+  const calculateTotal = () =>
+    cartItems.reduce(
+      (total, item) => total + parseInt(item.price.slice(1)) * item.quantity,
+      0
+    );
 
   return (
     <div className="bg-black-rich min-h-screen py-12 px-6 text-white-off">
@@ -49,17 +74,35 @@ function CartPage() {
                 <p className="text-gray-400 text-lg mb-4">{item.price}</p>
                 <div className="flex items-center space-x-4">
                   <label className="text-gray-300">Quantity:</label>
-                  <input
-                    type="number"
-                    min="1"
-                    value={item.quantity}
-                    className="w-16 text-center border border-gold-light rounded-md bg-black text-white"
-                  />
+                  <button
+                    onClick={() => handleQuantityChange(item.id, -1)}
+                    className="px-2 py-1 border border-gold-light rounded-md bg-black text-white hover:text-red-500"
+                  >
+                    -
+                  </button>
+                  <span className="text-white text-lg">{item.quantity}</span>
+                  <button
+                    onClick={() => handleQuantityChange(item.id, 1)}
+                    className="px-2 py-1 border border-gold-light rounded-md bg-black text-white hover:text-green-500"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
-              <button className="text-gold hover:text-red-500 transition-all">
-                Remove
-              </button>
+              <div className="flex flex-col space-y-10 "> {/* Changed to flex-col */}
+                <button
+                  onClick={() => handleAddToWishlist(item.id)}
+                  className="bg-gold text-black font-semibold py-2 px-4 rounded-xl shadow-md hover:bg-gold-light transition-all duration-300 transform hover:scale-105"
+                >
+                  Add to Wishlist
+                </button>
+                <button
+                  onClick={() => handleRemove(item.id)}
+                  className="bg-gold text-black font-semibold py-2 px-4 rounded-xl shadow-md hover:bg-gold-light transition-all duration-300 transform hover:scale-105"
+                >
+                  Remove
+                </button>
+              </div>
             </div>
           ))
         ) : (
@@ -83,9 +126,7 @@ function CartPage() {
           <div className="flex justify-between items-center bg-black border border-gold-dark rounded-xl p-6 shadow-lg">
             <p className="text-lg font-semibold text-white">
               Total:{" "}
-              <span className="text-gold">
-                ${cartItems.reduce((total, item) => total + parseInt(item.price.slice(1)) * item.quantity, 0)}
-              </span>
+              <span className="text-gold">${calculateTotal()}</span>
             </p>
             <button
               onClick={handleCheckout}

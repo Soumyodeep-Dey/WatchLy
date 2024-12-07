@@ -6,23 +6,30 @@ const featuredProducts = [
     name: "Rolex Oyster Perpetual Day-Date 36",
     price: "$299.99",
     imageUrl: "/home1.webp",
+    path: 'Rolex+Oyster+Perpetual+Day-Date+36+Green',
   },
   {
     id: 2,
     name: "Rolex Lady-Datejust watch",
     price: "$599.99",
     imageUrl: "/home2.webp",
+    path: 'Rolex+Lady-Datejust+watch', 
   },
   {
     id: 3,
     name: "Rolex Submariner",
-    price: "$3,499.99",
+    price: "$10,499.99",
     imageUrl: "/home3.jpg",
+    path: 'Rolex+Submariner',
   },
 ];
 
 const HomePage = () => {
   const navigate = useNavigate()
+  const handleViewDetails = (path) => {
+    navigate(`/${path}`); // Navigate to the specific product's page
+  };
+
   return (
     <div className="bg-black text-gold">
       {/* Hero Section */}
@@ -68,7 +75,7 @@ const HomePage = () => {
               </div>
               <h3 className="text-xl font-medium text-gold">{product.name}</h3>
               <p className="text-lg mt-2 text-gray-300">{product.price}</p>
-              <button className="mt-4 bg-gradient-to-r from-gold-light to-gold-dark text-black px-4 py-2 rounded-md hover:bg-black hover:text-gold transition-all">
+              <button className="mt-4 bg-gradient-to-r from-gold-light to-gold-dark text-black px-4 py-2 rounded-md hover:bg-black hover:text-gold transition-all" onClick={() => handleViewDetails(product.path)}>
                 View Details
               </button>
             </div>

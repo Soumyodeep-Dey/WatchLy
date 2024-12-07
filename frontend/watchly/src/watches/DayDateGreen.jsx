@@ -1,5 +1,3 @@
- 
-
 function DayDateGreen() {
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col items-center py-12 px-4">
@@ -19,7 +17,18 @@ function DayDateGreen() {
             Crafted in 18 kt yellow gold with a rainbow sapphire bezel and a diamond-paved dial.
           </p>
           <p className="text-4xl font-bold text-gold mb-6">$299.99</p>
-          <button className="px-10 py-4 bg-black text-white font-semibold text-lg rounded-lg shadow-md hover:bg-gold hover:text-black transition-colors duration-300 transform hover:scale-105">
+
+          {/* Buy Now Button */}
+          <button
+            className="w-full px-10 py-4 bg-gold text-black font-semibold text-lg rounded-lg shadow-md hover:bg-black hover:text-white transition-colors duration-300 transform hover:scale-105 mb-8 border-2 border-transparent hover:border-gold focus:outline-none focus:ring-2 focus:ring-gold"
+          >
+            Buy Now
+          </button>
+
+          {/* Add to Cart Button */}
+          <button
+            className="w-full px-10 py-4 bg-black text-white font-semibold text-lg rounded-lg shadow-md hover:bg-gold hover:text-black transition-colors duration-300 transform hover:scale-105 border-2 border-transparent hover:border-gold focus:outline-none focus:ring-2 focus:ring-gold"
+          >
             Add to Cart
           </button>
         </div>
@@ -29,7 +38,7 @@ function DayDateGreen() {
         <h2 className="text-4xl font-bold text-black mb-6">About the Rolex Day-Date</h2>
         <p className="text-lg text-gray-700 leading-relaxed mb-4">
           The Rolex Oyster Perpetual Day-Date is synonymous with prestige and excellence. 
-          Known as the &quot;president&apos;s watch,&quot; it is an icon of timeless luxury and exceptional craftsmanship.Introduced in 1956, it was the first wristwatch to display the date and the day of the week spelled out in full.
+          Known as the &quot;president&apos;s watch,&quot; it is an icon of timeless luxury and exceptional craftsmanship. Introduced in 1956, it was the first wristwatch to display the date and the day of the week spelled out in full.
         </p>
         <p className="text-lg text-gray-700 leading-relaxed mb-4">
           The Day-Date is available exclusively in precious metals, including 18 kt yellow gold, white gold, and Everose gold. 

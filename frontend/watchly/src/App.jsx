@@ -12,6 +12,9 @@ import CartPage from './pages/CartPage';
 import DayDateGreen from './watches/DayDateGreen';
 import DayDateBlue from './watches/DayDateBlue';
 import LadyDateJust from './watches/LadyDateJust';
+import Submariner from './watches/Submariner';
+import YachtMaster from './watches/YachtMaster';
+import GMTmaster from './watches/GMTmaster';
 
 const App = () => {
     return (
@@ -35,6 +38,9 @@ const App = () => {
 
                     <Route path="/all-luxury-products" element={<AllLuxuaryPage />} />
                     {/* all luxury watches */}
+                    <Route path="/Rolex+Yacht+Master+II" element={<YachtMaster />} />
+                    <Route path="/Rolex+GMT+Master+II" element={<GMTmaster />} />
+                    <Route path="/Rolex+Submariner" element={<Submariner />} />
                     
                     {/* Fallback route for undefined paths */}
                     <Route path="*" element={<NotFoundPage />} />
