@@ -22,6 +22,7 @@
     "prettier": "^3.5.1"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "cros": "^1.0.1",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
