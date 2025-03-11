@@ -94,8 +94,9 @@ const Footer = () => {
 
             {/* Copyright */}
             <div className="text-center text-sm text-gray-500">
-                © 2024 <span className="text-gold">Watchly</span>. All rights reserved.
+                © {new Date().getFullYear()} <span className="text-gold">Watchly Pvt Ltd</span>. All rights reserved.
             </div>
+
         </footer>
     );
 };
