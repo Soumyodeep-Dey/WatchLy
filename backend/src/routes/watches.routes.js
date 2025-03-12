@@ -1,5 +1,5 @@
 import express from "express";
-import Watch from "../models/watch.model.js"; // Import Watch model
+import Watch from "../models/watches.model.js"; // Import Watch model
 
 const router = express.Router();
 
