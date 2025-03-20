@@ -65,25 +65,6 @@ function DayDateGreen() {
           </button>
         </div>
       </div>
-      {/* Additional Section */}
-      <div className="mt-12 max-w-4xl text-center">
-        <h2 className="text-4xl font-bold text-black mb-6">About the Rolex Day-Date</h2>
-        <p className="text-lg text-gray-700 leading-relaxed mb-4">
-          The Rolex Oyster Perpetual Day-Date is synonymous with prestige and excellence. 
-          Known as the &quot;president&apos;s watch,&quot; it is an icon of timeless luxury and exceptional craftsmanship. Introduced in 1956, it was the first wristwatch to display the date and the day of the week spelled out in full.
-        </p>
-        <p className="text-lg text-gray-700 leading-relaxed mb-4">
-          The Day-Date is available exclusively in precious metals, including 18 kt yellow gold, white gold, and Everose gold. 
-          Its distinctive features include the iconic President bracelet, which is known for its semi-circular links and concealed clasp, providing both comfort and elegance.
-        </p>
-        <p className="text-lg text-gray-700 leading-relaxed mb-4">
-          This particular model, with its vibrant rainbow sapphire bezel, adds a unique flair to the classic design, making it a standout piece for any collection. 
-          The diamond-paved dial enhances its luxurious appeal, making it suitable for both formal occasions and everyday wear.
-        </p>
-        <p className="text-lg text-gray-700 leading-relaxed">
-          With its refined design and exceptional functionality, the Rolex Day-Date remains one of the most sought-after timepieces for those who appreciate excellence and timeless style.
-        </p>
-      </div>
     </div>
   );
 }
