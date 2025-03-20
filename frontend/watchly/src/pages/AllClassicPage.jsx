@@ -1,37 +1,30 @@
-import { useNavigate } from 'react-router-dom';
-
-const allClassicProducts = [
-  {
-    id: 1,
-    name: 'Rolex Oyster Perpetual Day-Date 36',
-    description: 'Crafted in 18 kt yellow gold with a rainbow sapphire bezel and a diamond-paved dial.',
-    price: '$299.99',
-    imageUrl: 'https://hamiltonandinches.com/media/catalog/product/cache/52fad59d8736408bee5028687415c967/m/1/m128345rbr-0068_drp-upright-bba-with-shadow.png',
-    path: 'Rolex+Oyster+Perpetual+Day-Date+36+Green', // Route path for the product
-  },
-  {
-    id: 2,
-    name: 'Rolex Lady-Datejust watch',
-    description: 'A stainless steel and Everose gold masterpiece with a floral diamond dial​.',
-    price: '$599.99',
-    imageUrl: 'https://media.rolex.com/image/upload/q_auto:eco/f_auto/t_v7-grid/c_limit,w_2440/v1/catalogue/2024/upright-bba-with-shadow/m278288rbr-0006',
-    path: 'Rolex+Lady-Datejust+watch', // Route path for the product
-  },
-  {
-    id: 3,
-    name: 'Rolex Oyster Perpetual Day-Date 36',
-    description: 'Elegant in white gold with a diamond-set bezel and iconic President bracelet.',
-    price: '$799.99',
-    imageUrl: 'https://media.rolex.com/image/upload/q_auto:eco/f_auto/t_v7-grid/c_limit,w_2440/v1/catalogue/2024/upright-bba-with-shadow/m228239-0076',
-    path: 'Rolex+Oyster+Perpetual+Day-Date+36+Blue', // Route path for the product
-  },
-];
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function AllClassicPage() {
   const navigate = useNavigate();
+  const [products, setProducts] = useState([]); // State for storing watches
+
+  useEffect(() => {
+    // Fetch watches from backend
+    fetch("http://localhost:8000/api/watches")
+      .then((response) => {
+        console.log("Response:", response); // Log the raw response
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Data:", data); // Log the parsed data
+        // Filter products with prices between $299.99 and $9,999.99
+        const filteredProducts = data.filter(
+          (product) => product.price >= "$299.99" && product.price <= "$9999.99"
+        );
+        setProducts(filteredProducts);
+      })
+      .catch((error) => console.error("Error fetching watches:", error));
+  }, []);
 
   const handleViewDetails = (path) => {
-    navigate(`/${path}`); // Navigate to the specific product's page
+    navigate(`/${path}`);
   };
 
   return (
@@ -39,9 +32,9 @@ function AllClassicPage() {
       <h1 className="text-5xl font-bold text-center mb-12 text-gold">All Classic Watches</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
-        {allClassicProducts.map((product) => (
+        {products.map((product) => (
           <div
-            key={product.id}
+            key={product._id}
             className="bg-white shadow-xl rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-2xl transition-all"
           >
             <img
@@ -55,7 +48,7 @@ function AllClassicPage() {
               <p className="text-2xl font-semibold text-gold mt-4">{product.price}</p>
               <button
                 className="mt-6 px-8 py-3 bg-black text-white font-semibold text-lg rounded-lg hover:bg-gold hover:text-black transition-colors"
-                onClick={() => handleViewDetails(product.path)} // Pass the path dynamically
+                onClick={() => handleViewDetails(product.path)}
               >
                 View Details
               </button>

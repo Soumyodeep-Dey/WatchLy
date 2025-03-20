@@ -2,13 +2,13 @@ import express from "express";
 import cors from "cors";
 import watchRoutes from "./routes/watches.routes.js"; // Import watch routes
 
-const app = express(); 
+const app = express();
 
 app.use(
-    cors({
-        origin: process.env.CORS_ORIGIN,
-        credentials: true
-    })
+  cors({
+    origin: ["http://localhost:5173", "http://localhost:8000"], // Add allowed origins
+    credentials: true,
+  })
 );
 
 // Common middlewares
@@ -18,9 +18,5 @@ app.use(express.static("public"));
 
 // ✅ API Routes
 app.use("/api/watches", watchRoutes); // Register watch routes
-
-
-
-
 
 export { app };

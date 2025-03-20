@@ -1,37 +1,30 @@
-import { useNavigate } from 'react-router-dom';
-
-const allLuxuryProducts = [
-  {
-    id: 1,
-    name: 'Rolex Yacht Master II',
-    description: 'A premium design with a diamond-encrusted dial and stainless steel band.',
-    price: '$12,000.00',
-    imageUrl: 'https://images.jdmagicbox.com/quickquotes/images_main/rolex-yacht-master-ii-oyster-44-mm-oystersteel-and-everose-gold-184502099-txmzv.png',
-    path: 'Rolex+Yacht+Master+II', // Route path for the product
-  },
-  {
-    id: 2,
-    name: 'Rolex GMT-Master II',
-    description: 'A luxurious design with a 24k gold-plated casing and black leather strap.',
-    price: '$12,000.00',
-    imageUrl: 'https://media.rolex.com/image/upload/q_auto:eco/f_auto/t_v7-majesty/c_limit,w_2440/v1/catalogue/2024/upright-c/m126720vtnr-0001',
-    path: 'Rolex+GMT+Master+II', // Route path for the product
-  },
-  {
-    id: 3,
-    name: 'Rolex Submariner',
-    description: 'A sophisticated watch with a diamond-studded bezel and sapphire glass.',
-    price: '$10,500.00',
-    imageUrl: 'https://timeavenue.com/wp-content/uploads/2024/06/m126613lb-0002_drp-upright-bba-with-shadow.webp',
-    path: 'Rolex+Submariner', // Route path for the product
-  },
-];
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function AllLuxuryPage() {
   const navigate = useNavigate();
+  const [products, setProducts] = useState([]); // State for storing watches
+
+  useEffect(() => {
+    // Fetch watches from backend
+    fetch("http://localhost:8000/api/watches")
+      .then((response) => {
+        console.log("Response:", response); // Log the raw response
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Data:", data); // Log the parsed data
+        // Filter products with prices between $299.99 and $9,999.99
+        const filteredProducts = data.filter(
+          (product) => product.price <= "$19999.99"
+        );
+        setProducts(filteredProducts);
+      })
+      .catch((error) => console.error("Error fetching watches:", error));
+  }, []);
 
   const handleViewDetails = (path) => {
-    navigate(`/${path}`); // Navigate to the specific product's page
+    navigate(`/${path}`);
   };
 
   return (
@@ -39,9 +32,9 @@ function AllLuxuryPage() {
       <h1 className="text-5xl font-bold text-center mb-12 text-gold">All Luxury Watches</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
-        {allLuxuryProducts.map((product) => (
+        {products.map((product) => (
           <div
-            key={product.id}
+            key={product._id}
             className="bg-white shadow-xl rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-2xl transition-all"
           >
             <img
@@ -55,7 +48,7 @@ function AllLuxuryPage() {
               <p className="text-2xl font-semibold text-gold mt-4">{product.price}</p>
               <button
                 className="mt-6 px-8 py-3 bg-black text-white font-semibold text-lg rounded-lg hover:bg-gold hover:text-black transition-colors"
-                onClick={() => handleViewDetails(product.path)} // Pass the path dynamically
+                onClick={() => handleViewDetails(product.path)}
               >
                 View Details
               </button>
