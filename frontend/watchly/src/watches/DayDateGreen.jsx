@@ -1,22 +1,54 @@
+import { useEffect, useState } from "react";
+
 function DayDateGreen() {
+  const [product, setProduct] = useState(null); // State to store product data
+  const [loading, setLoading] = useState(true); // State to handle loading
+  const [error, setError] = useState(null); // State to handle errors
+
+  useEffect(() => {
+    // Fetch product data from the backend
+    fetch("http://localhost:8000/api/watches/67d097edbcc7677ff2fa4214") // Use the actual product ID
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch product data");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setProduct(data); // Set the product data
+        setLoading(false); // Stop loading
+      })
+      .catch((error) => {
+        console.error("Error fetching product data:", error);
+        setError(error.message);
+        setLoading(false); // Stop loading
+      });
+  }, []);
+
+  if (loading) {
+    return <div className="text-center text-lg text-gray-700">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center text-lg text-red-500">Error: {error}</div>;
+  }
+
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col items-center py-12 px-4">
       <h1 className="text-5xl font-extrabold text-center text-black mb-10">
-        Rolex Oyster Perpetual Day-Date 36
+        {product.name}
       </h1>
       <div className="flex flex-col md:flex-row items-center max-w-5xl bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105">
         {/* Product Image */}
         <img
-          src="https://hamiltonandinches.com/media/catalog/product/cache/52fad59d8736408bee5028687415c967/m/1/m128345rbr-0068_drp-upright-bba-with-shadow.png"
-          alt="Rolex Oyster Perpetual Day-Date 36"
+          src={product.imageUrl}
+          alt={product.name}
           className="w-full md:w-1/2 h-auto object-cover transition-opacity duration-300 hover:opacity-80"
         />
         {/* Product Details */}
         <div className="p-8 md:w-1/2">
-          <p className="text-lg text-gray-700 mb-4">
-            Crafted in 18 kt yellow gold with a rainbow sapphire bezel and a diamond-paved dial.
-          </p>
-          <p className="text-4xl font-bold text-gold mb-6">$299.99</p>
+          <p className="text-lg text-gray-700 mb-4">{product.description}</p>
+          <p className="text-4xl font-bold text-gold mb-6">{product.price}</p>
 
           {/* Buy Now Button */}
           <button

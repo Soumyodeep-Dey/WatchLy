@@ -17,7 +17,9 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const watch = await Watch.findById(req.params.id);
-    if (!watch) return res.status(404).json({ error: "Watch not found" });
+    if (!watch) {
+      return res.status(404).json({ error: "Watch not found" });
+    }
     res.json(watch);
   } catch (error) {
     res.status(500).json({ error: "Server error" });

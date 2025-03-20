@@ -1,22 +1,54 @@
+import { useEffect, useState } from "react";
+
 function DayDateBlue() {
+  const [product, setProduct] = useState(null); // State to store product data
+  const [loading, setLoading] = useState(true); // State to handle loading
+  const [error, setError] = useState(null); // State to handle errors
+
+  useEffect(() => {
+    // Fetch product data from the backend
+    fetch("http://localhost:8000/api/watches/67d097edbcc7677ff2fa4216") // Use the actual product ID
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch product data");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setProduct(data); // Set the product data
+        setLoading(false); // Stop loading
+      })
+      .catch((error) => {
+        console.error("Error fetching product data:", error);
+        setError(error.message);
+        setLoading(false); // Stop loading
+      });
+  }, []);
+
+  if (loading) {
+    return <div className="text-center text-lg text-gray-700">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center text-lg text-red-500">Error: {error}</div>;
+  }
+
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col items-center py-12 px-4">
       <h1 className="text-5xl font-extrabold text-center text-black mb-10">
-        Rolex Oyster Perpetual Day-Date 36 - Blue Dial
+        {product.name}
       </h1>
       <div className="flex flex-col md:flex-row items-center max-w-5xl bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105">
         {/* Product Image */}
         <img
-          src="https://media.rolex.com/image/upload/q_auto:eco/f_auto/t_v7-grid/c_limit,w_2440/v1/catalogue/2024/upright-bba-with-shadow/m228239-0076"
-          alt="Rolex Oyster Perpetual Day-Date 36 Blue Dial"
+          src={product.imageUrl}
+          alt={product.name}
           className="w-full md:w-1/2 h-auto object-cover transition-opacity duration-300 hover:opacity-80"
         />
         {/* Product Details */}
         <div className="p-8 md:w-1/2">
-          <p className="text-lg text-gray-700 mb-4">
-            Crafted in 18 kt Everose gold, featuring a stunning blue dial and a unique diamond-set bezel.
-          </p>
-          <p className="text-4xl font-bold text-gold mb-6">$359.99</p>
+          <p className="text-lg text-gray-700 mb-4">{product.description}</p>
+          <p className="text-4xl font-bold text-gold mb-6">{product.price}</p>
 
           {/* Buy Now Button */}
           <button
@@ -31,7 +63,6 @@ function DayDateBlue() {
           >
             Add to Cart
           </button>
-
         </div>
       </div>
 
@@ -39,19 +70,7 @@ function DayDateBlue() {
       <div className="mt-12 max-w-4xl text-center">
         <h2 className="text-4xl font-bold text-black mb-6">About the Rolex Day-Date</h2>
         <p className="text-lg text-gray-700 leading-relaxed mb-4">
-          The Rolex Day-Date, also known as the &quot;president&apos;s watch,&quot; is a symbol of prestige and luxury.
-          Introduced in 1956, it was the first wristwatch to display the date and the day of the week spelled out in full.
-        </p>
-        <p className="text-lg text-gray-700 leading-relaxed mb-4">
-          Renowned for its exquisite craftsmanship, the Day-Date is available exclusively in precious metals, including 18 kt yellow gold, white gold, and Everose gold.
-          The watch is characterized by its iconic President bracelet, which features semi-circular links and a concealed clasp, providing both comfort and elegance.
-        </p>
-        <p className="text-lg text-gray-700 leading-relaxed mb-4">
-          The blue dial of this particular model is not only visually striking but also represents depth and sophistication.
-          The diamond-set bezel adds a touch of opulence, making it a perfect choice for formal occasions or everyday wear.
-        </p>
-        <p className="text-lg text-gray-700 leading-relaxed">
-          With its refined design and exceptional functionality, the Rolex Day-Date remains one of the most sought-after timepieces for those who appreciate excellence and timeless style.
+          Elegant in white gold with a diamond-set bezel and iconic President bracelet.
         </p>
       </div>
     </div>
