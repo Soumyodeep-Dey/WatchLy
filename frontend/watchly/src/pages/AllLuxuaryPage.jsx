@@ -14,7 +14,7 @@ function AllLuxuryPage() {
       })
       .then((data) => {
         console.log("Data:", data); // Log the parsed data
-        // Filter products with prices between $299.99 and $9,999.99
+        // Filter products with prices between $9,999.99 and $199,999.99
         const filteredProducts = data.filter(
           (product) => product.price <= "$19999.99"
         );
@@ -35,7 +35,7 @@ function AllLuxuryPage() {
         {products.map((product) => (
           <div
             key={product._id}
-            className="bg-white shadow-xl rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-2xl transition-all"
+            className="bg-white border-4 border-gold-dark shadow-lg rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-2xl transition-all"
           >
             <img
               src={product.imageUrl}
@@ -43,7 +43,7 @@ function AllLuxuryPage() {
               className="w-full h-96 object-cover"
             />
             <div className="p-6">
-              <h2 className="text-3xl font-bold text-black">{product.name}</h2>
+              <h2 className="text-3xl font-bold text-gold">{product.name}</h2>
               <p className="text-lg text-gray-600 mt-2">{product.description}</p>
               <p className="text-2xl font-semibold text-gold mt-4">{product.price}</p>
               <button
