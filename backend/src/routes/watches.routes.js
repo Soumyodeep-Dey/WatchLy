@@ -59,4 +59,29 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+// ✅ Search watches by name
+app.get("/api/watches", async (req, res) => {
+  try {
+      const query = req.query.q; // Get search input
+      let watches;
+
+      if (query) {
+          watches = await Watch.find({
+              name: { $regex: query, $options: "i" }, // Case-insensitive search
+          })
+          .sort({ name: 1 })  // Sort alphabetically (optional)
+          .limit(5);           // Limit results to 5
+      } else {
+          watches = await Watch.find().limit(5); // Default to 5 watches if no query
+      }
+
+      res.json(watches);
+  } catch (error) {
+      console.error("Error fetching watches:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
+
 export default router;
