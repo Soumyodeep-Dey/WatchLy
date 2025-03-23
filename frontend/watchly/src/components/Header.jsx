@@ -150,7 +150,7 @@ const Header = () => {
             </li>
           </ul>
 
-          {/* Wishlist and Cart */}
+          {/* Wishlist, Cart, and Login */}
           <div className="flex space-x-6">
             <Link
               to="/wishlist"
@@ -169,6 +169,12 @@ const Header = () => {
             >
               <FaShoppingCart className="text-gold" />
               <span>Cart</span>
+            </Link>
+            <Link
+              to="/login"
+              className="bg-gold text-black px-4 py-2 rounded-lg font-medium hover:bg-gold-light transition"
+            >
+              Login
             </Link>
           </div>
         </div>
@@ -252,6 +258,15 @@ const Header = () => {
               >
                 <FaShoppingCart className="text-gold" />
                 <span>Cart</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/login"
+                className="bg-gold text-black px-4 py-2 rounded-lg font-medium hover:bg-gold-light transition"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Login
               </Link>
             </li>
           </ul>
