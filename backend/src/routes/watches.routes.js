@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Router } from "express";
 import Watch from "../models/watches.model.js"; // Import Watch model
 
 const router = express.Router();
@@ -60,7 +60,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 // ✅ Search watches by name
-app.get("/api/watches", async (req, res) => {
+router.get("/api/watches", async (req, res) => {
   try {
       const query = req.query.q; // Get search input
       let watches;
