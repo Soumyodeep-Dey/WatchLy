@@ -60,7 +60,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 // ✅ Search watches by name
-router.get("/api/watches", async (req, res) => {
+router.get("/watches", async (req, res) => {
   try {
       const query = req.query.q; // Get search input
       let watches;
@@ -81,7 +81,6 @@ router.get("/api/watches", async (req, res) => {
       res.status(500).json({ message: "Internal Server Error" });
   }
 });
-
 
 
 export default router;

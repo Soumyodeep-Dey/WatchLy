@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import watchRoutes from "./routes/watches.routes.js"; // Import watch routes
+import cartRoutes from "./routes/cart.routes.js"; // Import cart routes
 
 const app = express();
 
@@ -18,5 +19,6 @@ app.use(express.static("public"));
 
 // ✅ API Routes
 app.use("/api/watches", watchRoutes); // Register watch routes
+app.use("/api/cart", cartRoutes); // Register the cart routes
 
 export { app };
