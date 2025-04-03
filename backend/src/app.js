@@ -1,13 +1,14 @@
 import express from "express";
 import cors from "cors";
-import watchRoutes from "./routes/watches.routes.js"; // Import watch routes
-import cartRoutes from "./routes/cart.routes.js"; // Import cart routes
+import watchRoutes from "./routes/watches.routes.js";
+import cartRoutes from "./routes/cart.routes.js";
+import authRoutes from "./routes/auth.routes.js"; // Import authentication routes
 
 const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:8000"], // Add allowed origins
+    origin: ["http://localhost:5173", "http://localhost:8000"], // Allowed origins
     credentials: true,
   })
 );
@@ -18,7 +19,8 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 
 // ✅ API Routes
-app.use("/api/watches", watchRoutes); // Register watch routes
-app.use("/api/cart", cartRoutes); // Register the cart routes
+app.use("/api/watches", watchRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/auth", authRoutes); // Register auth routes
 
 export { app };
