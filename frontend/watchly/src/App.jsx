@@ -15,6 +15,8 @@ import LadyDateJust from './watches/LadyDateJust';
 import Submariner from './watches/Submariner';
 import YachtMaster from './watches/YachtMaster';
 import GMTmaster from './watches/GMTmaster';
+import Login from './pages/LoginPage'; // Import Login page
+import Signup from './pages/SignUpPage'; // Import Sign-up page
 
 const App = () => {
     return (
@@ -29,6 +31,13 @@ const App = () => {
                     <Route path="/contact" element={<ContactPage />} />
                     <Route path="/wishlist" element={<WishlistPage />} />
                     <Route path="/cart" element={<CartPage />} />
+
+
+                    {/* Login and Sign-up */}
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Signup />} />
+
+
                     <Route path="/all-classic-products" element={<AllClassicPage />} />
                     {/* all classic watches */}
                     <Route path="/Rolex+Oyster+Perpetual+Day-Date+36+Green" element={<DayDateGreen />} />
