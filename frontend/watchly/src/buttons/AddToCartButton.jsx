@@ -1,48 +1,50 @@
 import PropTypes from "prop-types";
 
-function AddToCartButton({ productId, userId, onAddToCart }) {
+const AddToCartButton = ({ productId }) => {
   const handleAddToCart = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Please log in to add items to your cart.");
+      return;
+    }
+
     try {
-      const response = await fetch("http://localhost:8000/api/cart", {
+      const res = await fetch("http://localhost:8000/api/cart", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ productId, userId }), // Send productId & userId
+        body: JSON.stringify({ productId }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to add item to cart");
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("✅ Item added to cart");
+      } else {
+        console.error("Add to cart failed:", data.error);
+        alert("❌ " + data.error);
       }
-
-      const data = await response.json();
-      console.log("Item added to cart:", data);
-
-      // Call the provided function to update UI
-      onAddToCart(productId);
-
-      // Show success message
-      alert("Item is added to cart!");
     } catch (error) {
-      console.error("Error adding item to cart:", error);
-      alert("Failed to add item to cart. Please try again.");
+      console.error("Error adding to cart:", error);
+      alert("❌ Something went wrong");
     }
   };
 
   return (
     <button
-      className="w-full px-10 py-4 bg-gold text-black font-semibold text-lg rounded-lg shadow-md hover:bg-black hover:text-white transition duration-300 transform hover:scale-105 border-2 border-transparent hover:border-gold focus:outline-none focus:ring-2 focus:ring-gold"
       onClick={handleAddToCart}
+      className="w-full px-10 py-4 bg-black text-white font-semibold text-lg rounded-lg shadow-md hover:bg-gold hover:text-black transition-colors duration-300 transform hover:scale-105 border-2 border-transparent hover:border-gold focus:outline-none focus:ring-2 focus:ring-gold"
     >
       Add to Cart
     </button>
   );
-}
+};
 
 AddToCartButton.propTypes = {
   productId: PropTypes.string.isRequired,
-  userId: PropTypes.string.isRequired, // Pass user ID to associate cart item
-  onAddToCart: PropTypes.func.isRequired,
 };
 
 export default AddToCartButton;
