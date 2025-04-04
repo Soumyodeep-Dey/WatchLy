@@ -1,7 +1,7 @@
 import { Router } from "express";
 import Cart from "../models/cart.model.js"; // Import Cart model
 import { Types } from "mongoose";
-import { verifyToken } from "../middleware/authMiddleware.js"; // Import auth middleware
+import { verifyToken } from "../middlewares/authMiddleware.js"; // Import auth middleware
 
 const router = Router();
 

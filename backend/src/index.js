@@ -10,7 +10,6 @@ const PORT = process.env.PORT || 8000; // Ensure the port is set to 8000
 
 connectDB()
   .then(() => {
-    console.log("MongoDB Connected: watchly-shard-00-00.qijxv.mongodb.net"); // Log MongoDB connection message
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`); // Log server start message
     });
