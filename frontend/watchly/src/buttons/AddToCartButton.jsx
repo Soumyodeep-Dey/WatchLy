@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 
 const AddToCartButton = ({ productId, onCartUpdate }) => {
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (productId) => {
     const token = localStorage.getItem("token");
 
     if (!token) {
@@ -14,7 +14,7 @@ const AddToCartButton = ({ productId, onCartUpdate }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, // Include the token here
         },
         body: JSON.stringify({ productId }),
       });
@@ -38,7 +38,7 @@ const AddToCartButton = ({ productId, onCartUpdate }) => {
 
   return (
     <button
-      onClick={handleAddToCart}
+      onClick={() => handleAddToCart(productId)}
       className="w-full px-10 py-4 bg-black text-white font-semibold text-lg rounded-lg shadow-md hover:bg-gold hover:text-black transition-colors duration-300 transform hover:scale-105 border-2 border-transparent hover:border-gold focus:outline-none focus:ring-2 focus:ring-gold"
     >
       Add to Cart

@@ -114,7 +114,7 @@ const Header = () => {
 
         <div className="hidden md:flex items-center space-x-8">
           <ul className="flex space-x-6">
-            {["Home", "Products", "About", "Contact"].map((page) => (
+            {["Products", "About", "Contact"].map((page) => (
               <li key={page}>
                 <Link
                   to={`/${page.toLowerCase()}`}

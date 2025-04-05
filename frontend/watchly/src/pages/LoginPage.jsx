@@ -45,7 +45,7 @@ const Login = () => {
           // Redirect to the home page or dashboard
           navigate("/");
         } else {
-          setError("Invalid email or password");
+          alert("Login failed");
         }
       })
       .catch((error) => {

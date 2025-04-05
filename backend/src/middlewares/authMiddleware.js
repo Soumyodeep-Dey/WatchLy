@@ -8,6 +8,8 @@ const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_key"; // Secret ke
 export const verifyToken = (req, res, next) => {
   try {
     const token = req.header("Authorization");
+    console.log("Authorization Header:", token); // Log the token
+
     if (!token) {
       return res.status(401).json({ error: "Access Denied. No token provided." });
     }
@@ -16,6 +18,7 @@ export const verifyToken = (req, res, next) => {
     req.user = verified; // Attach user data to request
     next();
   } catch (error) {
+    console.error("Token verification error:", error); // Log the error
     res.status(403).json({ error: "Invalid or expired token" });
   }
 };
