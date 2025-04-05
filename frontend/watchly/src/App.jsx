@@ -25,7 +25,7 @@ const App = () => {
             <Layout>
                 <Routes>
                     {/* Define routes for each page */}
-                    <Route path="/" element={<HomePage />} />
+                    <Route path="/home" element={<HomePage />} />
                     <Route path="/products" element={<ProductsPage />} />
                     <Route path="/about" element={<AboutPage />} />
                     <Route path="/contact" element={<ContactPage />} />
