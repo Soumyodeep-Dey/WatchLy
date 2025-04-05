@@ -4,13 +4,25 @@ import { FaHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(""); // State for search input
-  const [suggestions, setSuggestions] = useState([]); // State for search suggestions
-  const location = useLocation(); // Get the current location
-  const navigate = useNavigate();
-  const searchContainerRef = useRef(null); // Ref for the search container
+  const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Hide suggestions when clicking outside of the search container
+  const location = useLocation();
+  const navigate = useNavigate();
+  const searchContainerRef = useRef(null);
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("jwt");
+    setIsLoggedIn(!!token);
+  }, []);
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("jwt");
+    setIsLoggedIn(false);
+    navigate("/"); // Optional: redirect to home
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -39,13 +51,11 @@ const Header = () => {
     fetch(`http://localhost:8000/api/watches?q=${query}`)
       .then((response) => response.json())
       .then((data) => {
-        // Show only 5 results and prioritize exact matches
         const filteredResults = data
           .filter((item) =>
             item.name.toLowerCase().includes(query.toLowerCase())
           )
           .slice(0, 5);
-
         setSuggestions(filteredResults);
       })
       .catch((error) =>
@@ -54,29 +64,27 @@ const Header = () => {
   };
 
   const handleSearchSelect = (path) => {
-    setSearchQuery(""); // Clear the search input
-    setSuggestions([]); // Clear suggestions
-    navigate(`/${path}`); // Redirect to the selected watch's page
+    setSearchQuery("");
+    setSuggestions([]);
+    navigate(`/${path}`);
   };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (suggestions.length > 0) {
-      handleSearchSelect(suggestions[0].path); // Redirect to the first suggestion
+      handleSearchSelect(suggestions[0].path);
     }
   };
 
   return (
     <header className="bg-black text-white shadow-lg">
       <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-        {/* Logo */}
         <h1 className="text-3xl font-bold text-gold">
           <Link to="/" className="hover:text-white transition duration-200">
             Watchly
           </Link>
         </h1>
 
-        {/* Search Bar */}
         <div className="flex-grow mx-6 relative" ref={searchContainerRef}>
           <form onSubmit={handleSearchSubmit}>
             <input
@@ -89,7 +97,6 @@ const Header = () => {
             <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gold" />
           </form>
 
-          {/* Suggestions Dropdown */}
           {suggestions.length > 0 && (
             <ul className="absolute left-0 right-0 bg-black text-white rounded-lg shadow-lg mt-2 z-10 border border-gold">
               {suggestions.map((suggestion) => (
@@ -105,81 +112,59 @@ const Header = () => {
           )}
         </div>
 
-        {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-8">
           <ul className="flex space-x-6">
-            <li>
-              <Link
-                to="/"
-                className={`transition duration-200 ${
-                  location.pathname === "/" ? "text-gold" : "text-white hover:text-gold"
-                }`}
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/products"
-                className={`transition duration-200 ${
-                  location.pathname === "/products" ? "text-gold" : "text-white hover:text-gold"
-                }`}
-              >
-                Products
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/about"
-                className={`transition duration-200 ${
-                  location.pathname === "/about" ? "text-gold" : "text-white hover:text-gold"
-                }`}
-              >
-                About
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/contact"
-                className={`transition duration-200 ${
-                  location.pathname === "/contact" ? "text-gold" : "text-white hover:text-gold"
-                }`}
-              >
-                Contact
-              </Link>
-            </li>
+            {["Home", "Products", "About", "Contact"].map((page) => (
+              <li key={page}>
+                <Link
+                  to={`/${page.toLowerCase()}`}
+                  className={`transition duration-200 ${location.pathname === `/${page.toLowerCase()}`
+                      ? "text-gold"
+                      : "text-white hover:text-gold"
+                    }`}
+                >
+                  {page}
+                </Link>
+              </li>
+            ))}
           </ul>
 
-          {/* Wishlist, Cart, and Login */}
           <div className="flex space-x-6">
             <Link
               to="/wishlist"
-              className={`flex items-center transition duration-200 ${
-                location.pathname === "/wishlist" ? "text-gold" : "text-white hover:text-gold"
-              } space-x-2`}
+              className={`flex items-center transition duration-200 ${location.pathname === "/wishlist" ? "text-gold" : "text-white hover:text-gold"
+                } space-x-2`}
             >
               <FaHeart className="text-gold" />
               <span>Wishlist</span>
             </Link>
             <Link
               to="/cart"
-              className={`flex items-center transition duration-200 ${
-                location.pathname === "/cart" ? "text-gold" : "text-white hover:text-gold"
-              } space-x-2`}
+              className={`flex items-center transition duration-200 ${location.pathname === "/cart" ? "text-gold" : "text-white hover:text-gold"
+                } space-x-2`}
             >
               <FaShoppingCart className="text-gold" />
               <span>Cart</span>
             </Link>
-            <Link
-              to="/login"
-              className="bg-gold text-black px-4 py-2 rounded-lg font-medium hover:bg-gold-light transition"
-            >
-              Login
-            </Link>
+
+            {isLoggedIn ? (
+              <button
+                onClick={handleLogout}
+                className="bg-gold text-black px-4 py-2 rounded-lg font-medium hover:bg-gold-light transition"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                className="bg-gold text-black px-4 py-2 rounded-lg font-medium hover:bg-gold-light transition"
+              >
+                Login
+              </Link>
+            )}
           </div>
         </div>
 
-        {/* Mobile Menu Toggle */}
         <button
           className="md:hidden text-white focus:outline-none"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -188,60 +173,27 @@ const Header = () => {
         </button>
       </nav>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-black-rich">
           <ul className="flex flex-col items-center space-y-4 py-4">
-            <li>
-              <Link
-                to="/"
-                className={`text-white hover:text-gold ${
-                  location.pathname === "/" ? "text-gold" : ""
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/products"
-                className={`text-white hover:text-gold ${
-                  location.pathname === "/products" ? "text-gold" : ""
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Products
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/about"
-                className={`text-white hover:text-gold ${
-                  location.pathname === "/about" ? "text-gold" : ""
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                About
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/contact"
-                className={`text-white hover:text-gold ${
-                  location.pathname === "/contact" ? "text-gold" : ""
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Contact
-              </Link>
-            </li>
+            {["Home", "Products", "About", "Contact"].map((page) => (
+              <li key={page}>
+                <Link
+                  to={`/${page.toLowerCase()}`}
+                  className={`text-white hover:text-gold ${location.pathname === `/${page.toLowerCase()}` ? "text-gold" : ""
+                    }`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {page}
+                </Link>
+              </li>
+            ))}
+
             <li>
               <Link
                 to="/wishlist"
-                className={`flex items-center text-white hover:text-gold ${
-                  location.pathname === "/wishlist" ? "text-gold" : ""
-                } space-x-2`}
+                className={`flex items-center text-white hover:text-gold ${location.pathname === "/wishlist" ? "text-gold" : ""
+                  } space-x-2`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 <FaHeart className="text-gold" />
@@ -251,9 +203,8 @@ const Header = () => {
             <li>
               <Link
                 to="/cart"
-                className={`flex items-center text-white hover:text-gold ${
-                  location.pathname === "/cart" ? "text-gold" : ""
-                } space-x-2`}
+                className={`flex items-center text-white hover:text-gold ${location.pathname === "/cart" ? "text-gold" : ""
+                  } space-x-2`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 <FaShoppingCart className="text-gold" />
@@ -261,13 +212,25 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link
-                to="/login"
-                className="bg-gold text-black px-4 py-2 rounded-lg font-medium hover:bg-gold-light transition"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Login
-              </Link>
+              {isLoggedIn ? (
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setIsMenuOpen(false);
+                  }}
+                  className="bg-gold text-black px-4 py-2 rounded-lg font-medium hover:bg-gold-light transition"
+                >
+                  Logout
+                </button>
+              ) : (
+                <Link
+                  to="/login"
+                  className="bg-gold text-black px-4 py-2 rounded-lg font-medium hover:bg-gold-light transition"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Login
+                </Link>
+              )}
             </li>
           </ul>
         </div>

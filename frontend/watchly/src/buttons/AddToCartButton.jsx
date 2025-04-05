@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const AddToCartButton = ({ productId }) => {
+const AddToCartButton = ({ productId, onCartUpdate }) => {
   const handleAddToCart = async () => {
     const token = localStorage.getItem("token");
 
@@ -23,6 +23,9 @@ const AddToCartButton = ({ productId }) => {
 
       if (res.ok) {
         alert("✅ Item added to cart");
+        if (onCartUpdate) {
+          onCartUpdate(); // Notify the parent component to refresh the cart
+        }
       } else {
         console.error("Add to cart failed:", data.error);
         alert("❌ " + data.error);
@@ -45,6 +48,7 @@ const AddToCartButton = ({ productId }) => {
 
 AddToCartButton.propTypes = {
   productId: PropTypes.string.isRequired,
+  onCartUpdate: PropTypes.func, // Optional callback to refresh the cart
 };
 
 export default AddToCartButton;

@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+  const navigate = useNavigate(); // For navigation after login
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,8 +17,41 @@ const Login = () => {
       return;
     }
     setError("");
-    console.log("Login data submitted:", formData);
-    // Add logic to handle login (e.g., API call)
+
+    const apiUrl = "http://localhost:8000/api/auth/login"; // Replace with your actual API URL
+    const userData = {
+      email: formData.email,
+      password: formData.password,
+    };
+
+    fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Invalid email or password");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.token) {
+          // Store the token in localStorage
+          localStorage.setItem("token", data.token);
+
+          // Redirect to the home page or dashboard
+          navigate("/");
+        } else {
+          setError("Invalid email or password");
+        }
+      })
+      .catch((error) => {
+        console.error("Error logging in:", error);
+        setError("Error logging in. Please try again.");
+      });
   };
 
   return (

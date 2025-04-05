@@ -1,140 +1,120 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function CartPage() {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Luxury Watch 1",
-      price: "$250",
-      imageUrl: "https://via.placeholder.com/200",
-      quantity: 1,
-    },
-    {
-      id: 2,
-      name: "Luxury Watch 2",
-      price: "$320",
-      imageUrl: "https://via.placeholder.com/200",
-      quantity: 2,
-    },
-  ]);
+  const navigate = useNavigate();
+  const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleQuantityChange = (id, delta) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + delta) } // Ensure quantity is at least 1
-          : item
-      )
-    );
+  const fetchCartItems = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Please log in to view your cart.");
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:8000/api/cart", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setCartItems(data.cartItems);
+      } else {
+        console.error("Failed to fetch cart items:", data.error);
+        setCartItems([]);
+      }
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+      setCartItems([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleRemove = (id) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  const handleRemove = async (productId) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const res = await fetch(`http://localhost:8000/api/cart/${productId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.ok) {
+        alert("✅ Item removed from cart");
+        fetchCartItems(); // Refresh the cart
+      } else {
+        const data = await res.json();
+        console.error("Failed to remove item:", data.error);
+      }
+    } catch (error) {
+      console.error("Error removing item from cart:", error);
+    }
   };
 
-  const handleAddToWishlist = (id) => {
-    const item = cartItems.find((item) => item.id === id);
-    console.log(`"${item.name}" added to wishlist.`);
-  };
+  useEffect(() => {
+    fetchCartItems();
+  }, []);
 
-  const handleCheckout = () => {
-    console.log("Proceed to Checkout");
-  };
-
-  const calculateTotal = () =>
-    cartItems.reduce(
-      (total, item) => total + parseInt(item.price.slice(1)) * item.quantity,
-      0
-    );
+  if (loading) {
+    return <div className="text-center text-lg text-gray-700">Loading...</div>;
+  }
 
   return (
     <div className="bg-black-rich min-h-screen py-12 px-6 text-white-off">
-      {/* Page Title */}
       <h1 className="text-4xl font-bold text-center text-gold mb-12">
         Your Cart
       </h1>
 
-      {/* Cart Items Section */}
-      <div className="max-w-6xl mx-auto space-y-8">
-        {cartItems.length > 0 ? (
-          cartItems.map((item) => (
+      {cartItems.length > 0 ? (
+        <div className="max-w-6xl mx-auto space-y-8">
+          {cartItems.map((item) => (
             <div
-              key={item.id}
+              key={item._id}
               className="bg-black border border-gold-dark rounded-xl p-6 shadow-lg flex items-center gap-6"
             >
               <img
-                src={item.imageUrl}
-                alt={item.name}
+                src={item.product.imageUrl}
+                alt={item.product.name}
                 className="w-32 h-32 object-cover rounded-md"
               />
               <div className="flex-grow">
                 <h2 className="text-xl font-semibold text-gold mb-2">
-                  {item.name}
+                  {item.product.name}
                 </h2>
-                <p className="text-gray-400 text-lg mb-4">{item.price}</p>
-                <div className="flex items-center space-x-4">
-                  <label className="text-gray-300">Quantity:</label>
-                  <button
-                    onClick={() => handleQuantityChange(item.id, -1)}
-                    className="px-2 py-1 border border-gold-light rounded-md bg-black text-white hover:text-red-500"
-                  >
-                    -
-                  </button>
-                  <span className="text-white text-lg">{item.quantity}</span>
-                  <button
-                    onClick={() => handleQuantityChange(item.id, 1)}
-                    className="px-2 py-1 border border-gold-light rounded-md bg-black text-white hover:text-green-500"
-                  >
-                    +
-                  </button>
-                </div>
+                <p className="text-gray-400 text-lg mb-4">{item.product.price}</p>
+                <p className="text-gray-400 text-lg mb-4">
+                  Quantity: {item.quantity}
+                </p>
               </div>
-              <div className="flex flex-col space-y-10 "> {/* Changed to flex-col */}
-                <button
-                  onClick={() => handleAddToWishlist(item.id)}
-                  className="bg-gold text-black font-semibold py-2 px-4 rounded-xl shadow-md hover:bg-gold-light transition-all duration-300 transform hover:scale-105"
-                >
-                  Add to Wishlist
-                </button>
-                <button
-                  onClick={() => handleRemove(item.id)}
-                  className="bg-gold text-black font-semibold py-2 px-4 rounded-xl shadow-md hover:bg-gold-light transition-all duration-300 transform hover:scale-105"
-                >
-                  Remove
-                </button>
-              </div>
+              <button
+                onClick={() => handleRemove(item.product._id)}
+                className="bg-gold text-black font-semibold py-2 px-4 rounded-xl shadow-md hover:bg-gold-light transition-all duration-300 transform hover:scale-105"
+              >
+                Remove
+              </button>
             </div>
-          ))
-        ) : (
-          <div className="text-center">
-            <p className="text-lg text-gray-500">
-              Your cart is empty. Add items to your cart to see them here!
-            </p>
-            <button
-              className="mt-4 bg-gradient-gold px-6 py-2 rounded-md text-black font-semibold hover:opacity-90 transition"
-              onClick={() => console.log("Navigate to Products")}
-            >
-              Shop Now
-            </button>
-          </div>
-        )}
-      </div>
-
-      {/* Checkout Section */}
-      {cartItems.length > 0 && (
-        <div className="max-w-6xl mx-auto mt-12">
-          <div className="flex justify-between items-center bg-black border border-gold-dark rounded-xl p-6 shadow-lg">
-            <p className="text-lg font-semibold text-white">
-              Total:{" "}
-              <span className="text-gold">${calculateTotal()}</span>
-            </p>
-            <button
-              onClick={handleCheckout}
-              className="bg-gradient-gold px-6 py-2 rounded-md text-black font-semibold hover:bg-black hover:text-gold transition-all"
-            >
-              Proceed to Checkout
-            </button>
-          </div>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center">
+          <p className="text-lg text-gray-500">
+            Your cart is empty. Add items to your cart to see them here!
+          </p>
+          <button
+            className="mt-4 bg-gradient-gold px-6 py-2 rounded-md text-black font-semibold hover:opacity-90 transition"
+            onClick={() => navigate("/products")}
+          >
+            Shop Now
+          </button>
         </div>
       )}
     </div>
