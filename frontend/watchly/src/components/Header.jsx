@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
+import { fetchSearchSuggestions } from "../functions/SearchFunction"; // Import the search function
+import LoginLogoutButton from "../buttons/LoginLogoutButton"; // Import the new component
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,10 +14,11 @@ const Header = () => {
   const navigate = useNavigate();
   const searchContainerRef = useRef(null);
 
+  // Check for token in sessionStorage on component mount
   useEffect(() => {
     const token = sessionStorage.getItem("jwt");
-    setIsLoggedIn(!!token);
-  }, []);
+    setIsLoggedIn(!!token); // Update isLoggedIn based on token presence
+  }, []); // No need for sessionStorageToken dependency
 
   const handleLogout = () => {
     sessionStorage.removeItem("jwt");
@@ -39,28 +42,12 @@ const Header = () => {
     };
   }, []);
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = async (e) => {
     const query = e.target.value;
     setSearchQuery(query);
 
-    if (query.trim() === "") {
-      setSuggestions([]);
-      return;
-    }
-
-    fetch(`http://localhost:8000/api/watches?q=${query}`)
-      .then((response) => response.json())
-      .then((data) => {
-        const filteredResults = data
-          .filter((item) =>
-            item.name.toLowerCase().includes(query.toLowerCase())
-          )
-          .slice(0, 5);
-        setSuggestions(filteredResults);
-      })
-      .catch((error) =>
-        console.error("Error fetching search suggestions:", error)
-      );
+    const results = await fetchSearchSuggestions(query); // Use the imported function
+    setSuggestions(results);
   };
 
   const handleSearchSelect = (path) => {
@@ -132,7 +119,9 @@ const Header = () => {
           <div className="flex space-x-6">
             <Link
               to="/wishlist"
-              className={`flex items-center transition duration-200 ${location.pathname === "/wishlist" ? "text-gold" : "text-white hover:text-gold"
+              className={`flex items-center transition duration-200 ${location.pathname === "/wishlist"
+                  ? "text-gold"
+                  : "text-white hover:text-gold"
                 } space-x-2`}
             >
               <FaHeart className="text-gold" />
@@ -140,28 +129,17 @@ const Header = () => {
             </Link>
             <Link
               to="/cart"
-              className={`flex items-center transition duration-200 ${location.pathname === "/cart" ? "text-gold" : "text-white hover:text-gold"
+              className={`flex items-center transition duration-200 ${location.pathname === "/cart"
+                  ? "text-gold"
+                  : "text-white hover:text-gold"
                 } space-x-2`}
             >
               <FaShoppingCart className="text-gold" />
               <span>Cart</span>
             </Link>
 
-            {isLoggedIn ? (
-              <button
-                onClick={handleLogout}
-                className="bg-gold text-black px-4 py-2 rounded-lg font-medium hover:bg-gold-light transition"
-              >
-                Logout
-              </button>
-            ) : (
-              <Link
-                to="/login"
-                className="bg-gold text-black px-4 py-2 rounded-lg font-medium hover:bg-gold-light transition"
-              >
-                Login
-              </Link>
-            )}
+            {/* Use the LoginLogoutButton component */}
+            <LoginLogoutButton />
           </div>
         </div>
 
@@ -180,7 +158,9 @@ const Header = () => {
               <li key={page}>
                 <Link
                   to={`/${page.toLowerCase()}`}
-                  className={`text-white hover:text-gold ${location.pathname === `/${page.toLowerCase()}` ? "text-gold" : ""
+                  className={`text-white hover:text-gold ${location.pathname === `/${page.toLowerCase()}`
+                      ? "text-gold"
+                      : ""
                     }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
