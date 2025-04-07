@@ -18,7 +18,7 @@ const Login = () => {
     }
     setError("");
 
-    const apiUrl = "http://localhost:8000/api/auth/login"; // Replace with your actual API URL
+    const apiUrl = "http://localhost:8000/api/auth/login"; 
     const userData = {
       email: formData.email,
       password: formData.password,

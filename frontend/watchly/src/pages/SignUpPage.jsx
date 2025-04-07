@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const Signup = () => {
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const navigate = useNavigate(); // For navigation after successful registration
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,8 +18,33 @@ const Signup = () => {
       return;
     }
     setError("");
-    console.log("Signup data submitted:", formData);
-    // Add logic to handle signup (e.g., API call)
+    setSuccess("");
+
+    const apiUrl = "http://localhost:8000/api/auth/register"; // API endpoint for registration
+
+    fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to register. Please try again.");
+        }
+        return response.json();
+      })
+      .then(() => {
+        setSuccess("Registration successful! Redirecting to login...");
+        setTimeout(() => {
+          navigate("/login"); // Redirect to login page after successful registration
+        }, 2000);
+      })
+      .catch((error) => {
+        console.error("Error during registration:", error);
+        setError("Failed to register. Please try again.");
+      });
   };
 
   return (
@@ -25,6 +52,7 @@ const Signup = () => {
       <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-3xl font-bold text-center text-gold mb-6">Sign Up</h2>
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+        {success && <p className="text-green-500 text-center mb-4">{success}</p>}
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Name Field */}
           <div>
