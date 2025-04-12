@@ -7,7 +7,7 @@ const LoginLogoutButton = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("jwt");
+    sessionStorage.removeItem("jwt"); // Use sessionStorage
     setIsLoggedIn(false);
     navigate("/"); // Redirect to home after logout
   };

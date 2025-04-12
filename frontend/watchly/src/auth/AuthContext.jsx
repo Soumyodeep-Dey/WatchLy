@@ -1,20 +1,31 @@
 import { useState, useEffect, createContext } from "react";
 import PropTypes from "prop-types";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("jwt"));
+  const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem("jwt"));
 
   useEffect(() => {
-    const handleStorageChange = () => {
-      setIsLoggedIn(!!localStorage.getItem("jwt")); // Update state when localStorage changes
+    const checkAuthStatus = () => {
+      setIsLoggedIn(!!sessionStorage.getItem("jwt")); // Update state based on sessionStorage
     };
 
-    window.addEventListener("storage", handleStorageChange);
+    // Check auth status on mount
+    checkAuthStatus();
+
+    // Listen for changes to sessionStorage in the same tab
+    const originalSetItem = sessionStorage.setItem;
+    sessionStorage.setItem = function (key) {
+      originalSetItem.apply(this, arguments);
+      if (key === "jwt") {
+        checkAuthStatus();
+      }
+    };
 
     return () => {
-      window.removeEventListener("storage", handleStorageChange);
+      sessionStorage.setItem = originalSetItem; // Restore original setItem
     };
   }, []);
 
