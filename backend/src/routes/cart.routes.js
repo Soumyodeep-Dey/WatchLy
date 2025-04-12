@@ -11,7 +11,11 @@ router.post("/", verifyToken, async (req, res) => {
     const { productId } = req.body;
     const userId = req.user.userId; // Extract user ID from token
 
+    console.log("Received productId:", productId);
+    console.log("Decoded userId from token:", userId);
+
     if (!Types.ObjectId.isValid(productId)) {
+      console.error("Invalid product ID:", productId);
       return res.status(400).json({ error: "Invalid product ID" });
     }
 
@@ -25,6 +29,7 @@ router.post("/", verifyToken, async (req, res) => {
     }
 
     await cartItem.save();
+    console.log("Cart item saved:", cartItem);
     res.status(201).json({ message: "Item added to cart", cartItem });
   } catch (error) {
     console.error("Error adding item to cart:", error);

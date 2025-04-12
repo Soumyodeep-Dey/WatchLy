@@ -1,57 +1,43 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../auth/AuthContext";
+import { useNavigate, Link } from "react-router-dom";
 
-const Login = () => {
+const LoginPage = () => {
+  const { setIsLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // For navigation after login
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.email || !formData.password) {
-      setError("Please fill in all fields.");
-      return;
-    }
     setError("");
 
-    const apiUrl = "http://localhost:8000/api/auth/login"; 
-    const userData = {
-      email: formData.email,
-      password: formData.password,
-    };
-
-    fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Invalid email or password");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data.token) {
-          // Store the token in localStorage
-          localStorage.setItem("token", data.token);
-
-          // Redirect to the home page or dashboard
-          navigate("/");
-        } else {
-          alert("Login failed");
-        }
-      })
-      .catch((error) => {
-        console.error("Error logging in:", error);
-        setError("Error logging in. Please try again.");
+    try {
+      const res = await fetch("http://localhost:8000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        sessionStorage.setItem("jwt", data.token); // Store the token
+        setIsLoggedIn(true); // Update the global login state
+        navigate("/"); // Redirect to the home page
+      } else {
+        setError(data.error || "Login failed");
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+      setError("Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -115,4 +101,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

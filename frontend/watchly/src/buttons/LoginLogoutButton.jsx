@@ -7,9 +7,12 @@ const LoginLogoutButton = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    sessionStorage.removeItem("jwt"); // Use sessionStorage
+    // Remove the token from sessionStorage
+    sessionStorage.removeItem("jwt");
+    // Update the global login state
     setIsLoggedIn(false);
-    navigate("/"); // Redirect to home after logout
+    // Redirect to the home page
+    navigate("/");
   };
 
   return (

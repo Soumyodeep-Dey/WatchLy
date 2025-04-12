@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 const AddToCartButton = ({ productId, onCartUpdate }) => {
   const handleAddToCart = async (productId) => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("jwt");
 
     if (!token) {
       alert("Please log in to add items to your cart.");
