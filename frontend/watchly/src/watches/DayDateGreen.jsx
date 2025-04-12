@@ -59,12 +59,8 @@ function DayDateGreen() {
             Buy Now
           </button>
 
-          {/* Add to Cart Button */}
-          <button
-            className="w-full px-10 py-4 bg-black text-white font-semibold text-lg rounded-lg shadow-md hover:bg-gold hover:text-black transition-colors duration-300 transform hover:scale-105 border-2 border-transparent hover:border-gold focus:outline-none focus:ring-2 focus:ring-gold"
-          >
-            Add to Cart
-          </button>
+          {/* ✅ Properly Rendered Add to Cart Button */}
+          <AddToCartButton productId={product._id} />
         </div>
       </div>
     </div>
