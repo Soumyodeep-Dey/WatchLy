@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import AddToCartButton from "../buttons/AddToCartButton"; // ✅ Make sure it's default export
+
 
 function DayDateGreen() {
   const [product, setProduct] = useState(null); // State to store product data

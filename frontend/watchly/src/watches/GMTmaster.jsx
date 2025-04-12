@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import AddToCartButton from "../buttons/AddToCartButton"; // ✅ Make sure it's default export
+
 
 function GMTmaster() {
   const [product, setProduct] = useState(null);
@@ -49,9 +51,8 @@ function GMTmaster() {
           <button className="w-full px-10 py-4 bg-gold text-black font-semibold text-lg rounded-lg shadow-md hover:bg-black hover:text-white transition-colors duration-300 transform hover:scale-105 mb-8 border-2 border-transparent hover:border-gold focus:outline-none focus:ring-2 focus:ring-gold">
             Buy Now
           </button>
-          <button className="w-full px-10 py-4 bg-black text-white font-semibold text-lg rounded-lg shadow-md hover:bg-gold hover:text-black transition-colors duration-300 transform hover:scale-105 border-2 border-transparent hover:border-gold focus:outline-none focus:ring-2 focus:ring-gold">
-            Add to Cart
-          </button>
+          {/* ✅ Properly Rendered Add to Cart Button */}
+          <AddToCartButton productId={product._id} />
         </div>
       </div>
     </div>
