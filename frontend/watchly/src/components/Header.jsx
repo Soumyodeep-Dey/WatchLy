@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
 import { fetchSearchSuggestions } from "../functions/SearchFunction"; // Import the search function
-import LoginLogoutButton from "../buttons/LoginLogoutButton"; // Import the new component
+import LoginLogoutButton from "../buttons/LoginLogoutButton"; // Import the LoginLogoutButton
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -138,7 +138,7 @@ const Header = () => {
               <span>Cart</span>
             </Link>
 
-            {/* Use the LoginLogoutButton component */}
+            {/* Use the LoginLogoutButton */}
             <LoginLogoutButton />
           </div>
         </div>

@@ -1,18 +1,13 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../auth/AuthContext";
 
 const LoginLogoutButton = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // Check for token in sessionStorage on component mount
-  useEffect(() => {
-    const token = sessionStorage.getItem("jwt");
-    setIsLoggedIn(!!token); // Update isLoggedIn based on token presence
-  }, []);
-
   const handleLogout = () => {
-    sessionStorage.removeItem("jwt");
+    localStorage.removeItem("jwt");
     setIsLoggedIn(false);
     navigate("/"); // Redirect to home after logout
   };

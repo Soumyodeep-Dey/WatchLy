@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './auth/AuthContext'; // Import AuthProvider
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductsPage'; // Import additional pages
@@ -20,42 +21,44 @@ import Signup from './pages/SignUpPage'; // Import Sign-up page
 
 const App = () => {
     return (
-        <Router>
-            {/* Layout provides consistent Header and Footer */}
-            <Layout>
-                <Routes>
-                    {/* Define routes for each page */}
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/products" element={<ProductsPage />} />
-                    <Route path="/about" element={<AboutPage />} />
-                    <Route path="/contact" element={<ContactPage />} />
-                    <Route path="/wishlist" element={<WishlistPage />} />
-                    <Route path="/cart" element={<CartPage />} />
+        <AuthProvider>
+            <Router>
+                {/* Layout provides consistent Header and Footer */}
+                <Layout>
+                    <Routes>
+                        {/* Define routes for each page */}
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/products" element={<ProductsPage />} />
+                        <Route path="/about" element={<AboutPage />} />
+                        <Route path="/contact" element={<ContactPage />} />
+                        <Route path="/wishlist" element={<WishlistPage />} />
+                        <Route path="/cart" element={<CartPage />} />
 
 
-                    {/* Login and Sign-up */}
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
+                        {/* Login and Sign-up */}
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/signup" element={<Signup />} />
 
 
-                    <Route path="/all-classic-products" element={<AllClassicPage />} />
-                    {/* all classic watches */}
-                    <Route path="/Rolex+Oyster+Perpetual+Day-Date+36+Green" element={<DayDateGreen />} />
-                    <Route path="/Rolex+Lady-Datejust+watch" element={<LadyDateJust />} />
-                    <Route path="/Rolex+Oyster+Perpetual+Day-Date+36+Blue" element={<DayDateBlue />} />
+                        <Route path="/all-classic-products" element={<AllClassicPage />} />
+                        {/* all classic watches */}
+                        <Route path="/Rolex+Oyster+Perpetual+Day-Date+36+Green" element={<DayDateGreen />} />
+                        <Route path="/Rolex+Lady-Datejust+watch" element={<LadyDateJust />} />
+                        <Route path="/Rolex+Oyster+Perpetual+Day-Date+36+Blue" element={<DayDateBlue />} />
 
 
-                    <Route path="/all-luxury-products" element={<AllLuxuaryPage />} />
-                    {/* all luxury watches */}
-                    <Route path="/Rolex+Yacht+Master+II" element={<YachtMaster />} />
-                    <Route path="/Rolex+GMT+Master+II" element={<GMTmaster />} />
-                    <Route path="/Rolex+Submariner" element={<Submariner />} />
-                    
-                    {/* Fallback route for undefined paths */}
-                    <Route path="*" element={<NotFoundPage />} />
-                </Routes>
-            </Layout>
-        </Router>
+                        <Route path="/all-luxury-products" element={<AllLuxuaryPage />} />
+                        {/* all luxury watches */}
+                        <Route path="/Rolex+Yacht+Master+II" element={<YachtMaster />} />
+                        <Route path="/Rolex+GMT+Master+II" element={<GMTmaster />} />
+                        <Route path="/Rolex+Submariner" element={<Submariner />} />
+                        
+                        {/* Fallback route for undefined paths */}
+                        <Route path="*" element={<NotFoundPage />} />
+                    </Routes>
+                </Layout>
+            </Router>
+        </AuthProvider>
     );
 };
 
