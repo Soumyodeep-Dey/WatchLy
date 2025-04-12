@@ -28,9 +28,14 @@ const LoginPage = () => {
       const data = await res.json();
 
       if (res.ok) {
-        sessionStorage.setItem("jwt", data.token); // Store the token
-        setIsLoggedIn(true); // Update the global login state
-        navigate("/"); // Redirect to the home page
+        if (data.token) {
+          console.log("Token received:", data.token); // Debugging log
+          sessionStorage.setItem("jwt", data.token); // Store the token
+          setIsLoggedIn(true); // Update the global login state
+          navigate("/"); // Redirect to the home page
+        } else {
+          setError("Token not received from the server.");
+        }
       } else {
         setError(data.error || "Login failed");
       }
