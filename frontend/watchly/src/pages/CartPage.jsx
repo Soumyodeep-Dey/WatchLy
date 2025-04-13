@@ -82,21 +82,23 @@ function CartPage() {
               className="bg-black border border-gold-dark rounded-xl p-6 shadow-lg flex items-center gap-6"
             >
               <img
-                src={item.product.imageUrl}
-                alt={item.product.name}
+                src={item.productId.imageUrl} // Use productId for populated data
+                alt={item.productId.name}
                 className="w-32 h-32 object-cover rounded-md"
               />
               <div className="flex-grow">
                 <h2 className="text-xl font-semibold text-gold mb-2">
-                  {item.product.name}
+                  {item.productId.name}
                 </h2>
-                <p className="text-gray-400 text-lg mb-4">{item.product.price}</p>
+                <p className="text-gray-400 text-lg mb-4">
+                  {item.productId.price}
+                </p>
                 <p className="text-gray-400 text-lg mb-4">
                   Quantity: {item.quantity}
                 </p>
               </div>
               <button
-                onClick={() => handleRemove(item.product._id)}
+                onClick={() => handleRemove(item.productId._id)}
                 className="bg-gold text-black font-semibold py-2 px-4 rounded-xl shadow-md hover:bg-gold-light transition-all duration-300 transform hover:scale-105"
               >
                 Remove
