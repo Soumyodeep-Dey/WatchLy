@@ -37,4 +37,17 @@ router.post("/", verifyToken, async (req, res) => {
   }
 });
 
+// ✅ Get all items in cart (Protected Route)
+router.get("/", verifyToken, async (req, res) => {
+  try {
+    const userId = req.user.userId; // Extract user ID from token
+
+    const cartItems = await Cart.find({ userId }).populate("productId");
+    res.status(200).json({ cartItems });
+  } catch (error) {
+    console.error("Error fetching cart items:", error);
+    res.status(500).json({ error: "Failed to fetch cart items" });
+  }
+});
+
 export default router;

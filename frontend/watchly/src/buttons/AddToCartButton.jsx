@@ -24,7 +24,7 @@ const AddToCartButton = ({ productId, onCartUpdate }) => {
       if (res.ok) {
         alert("✅ Item added to cart");
         if (onCartUpdate) {
-          onCartUpdate(); // Notify the parent component to refresh the cart
+          onCartUpdate();
         }
       } else {
         console.error("Add to cart failed:", data.error);

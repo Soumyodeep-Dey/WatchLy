@@ -7,7 +7,7 @@ function CartPage() {
   const [loading, setLoading] = useState(true);
 
   const fetchCartItems = async () => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("jwt");
 
     if (!token) {
       alert("Please log in to view your cart.");
