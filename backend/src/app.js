@@ -3,6 +3,7 @@ import cors from "cors";
 import watchRoutes from "./routes/watches.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
 import authRoutes from "./routes/auth.routes.js"; // Import authentication routes
+import wishlistRoutes from "./routes/wishlist.routes.js"; // Import wishlist routes
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(express.static("public"));
 app.use("/api/watches", watchRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/auth", authRoutes); // Register auth routes
+app.use("/api/wishlist", wishlistRoutes); // Register wishlist routes
 
 
 export { app };

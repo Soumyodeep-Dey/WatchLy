@@ -9,6 +9,8 @@ const AddtoWishListButton = ({ productId, onWishlistUpdate }) => {
       return;
     }
 
+    console.log("Adding product to wishlist:", productId); // Debugging log
+
     try {
       const res = await fetch("http://localhost:8000/api/wishlist", {
         method: "POST",
@@ -22,6 +24,7 @@ const AddtoWishListButton = ({ productId, onWishlistUpdate }) => {
       const data = await res.json();
 
       if (res.ok) {
+        console.log("Wishlist response:", data); // Debugging log
         alert("✅ Item added to wishlist");
         if (onWishlistUpdate) {
           onWishlistUpdate(); // Optional callback to refresh the wishlist
