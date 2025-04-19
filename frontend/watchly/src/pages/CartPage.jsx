@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import AddtoWishListButton from "../buttons/AddtoWishListButtom";
 
 function CartPage() {
   const navigate = useNavigate();
@@ -147,12 +148,15 @@ function CartPage() {
                   </button>
                 </div>
               </div>
-              <button
-                onClick={() => handleRemove(item.productId._id)}
-                className="bg-gold text-black font-semibold py-2 px-4 rounded-xl shadow-md hover:bg-gold-light transition-all duration-300 transform hover:scale-105"
-              >
-                Remove
-              </button>
+              <div className="flex flex-col gap-2">
+                <button
+                  onClick={() => handleRemove(item.productId._id)}
+                  className="bg-gold text-black font-semibold py-2 px-4 rounded-xl shadow-md hover:bg-gold-light transition-all duration-300 transform hover:scale-105"
+                >
+                  Remove
+                </button>
+                <AddtoWishListButton productId={item.productId._id} />
+              </div>
             </div>
           ))}
         </div>
