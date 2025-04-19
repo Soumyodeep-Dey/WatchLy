@@ -127,7 +127,7 @@ function CartPage() {
                   {item.productId.name}
                 </h2>
                 <p className="text-gray-400 text-lg mb-4">
-                  Price: ${item.productId.price}
+                  Price: {item.productId.price}
                 </p>
                 <p className="text-gray-400 text-lg mb-4">
                   Quantity: {item.quantity}
