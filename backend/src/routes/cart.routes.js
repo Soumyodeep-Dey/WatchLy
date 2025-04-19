@@ -62,6 +62,11 @@ router.delete("/:productId", verifyToken, async (req, res) => {
     console.log("DELETE request received for productId:", productId);
     console.log("User ID from token:", userId);
 
+    if (!Types.ObjectId.isValid(productId)) {
+      console.error("Invalid product ID:", productId);
+      return res.status(400).json({ error: "Invalid product ID" });
+    }
+
     const result = await Cart.findOneAndDelete({ userId, productId });
 
     if (!result) {
@@ -82,7 +87,7 @@ router.patch("/:productId", verifyToken, async (req, res) => {
   try {
     const userId = req.user.userId; // Extract user ID from the token
     const { productId } = req.params;
-    const { quantityChange } = req.body; // `quantityChange` will be +1 or -1
+    const { quantityChange } = req.body;
 
     console.log("PATCH request received for productId:", productId);
     console.log("User ID from token:", userId);
@@ -100,9 +105,10 @@ router.patch("/:productId", verifyToken, async (req, res) => {
       return res.status(404).json({ error: "Item not found in cart" });
     }
 
+    console.log("Current cart item:", cartItem);
+
     cartItem.quantity += quantityChange;
 
-    // If quantity becomes 0 or less, remove the item from the cart
     if (cartItem.quantity <= 0) {
       await Cart.findOneAndDelete({ userId, productId });
       console.log("Item removed from cart due to zero quantity:", productId);
