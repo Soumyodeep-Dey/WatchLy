@@ -42,7 +42,7 @@ router.get("/", verifyToken, async (req, res) => {
     const userId = req.user.userId; // Extract user ID from token
 
     const cartItems = await Cart.find({ userId }).populate({
-      path: "watchtId",
+      path: "productId",
       select: "name price imageUrl", // Select only the required fields
     });
     res.status(200).json({ cartItems });
