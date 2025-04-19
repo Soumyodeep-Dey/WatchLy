@@ -9,12 +9,14 @@ const AddToCartButton = ({ productId, onCartUpdate }) => {
       return;
     }
 
+    console.log("Adding product to cart:", productId); // Debugging log
+
     try {
       const res = await fetch("http://localhost:8000/api/cart", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Include the token here
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ productId }),
       });
@@ -22,12 +24,13 @@ const AddToCartButton = ({ productId, onCartUpdate }) => {
       const data = await res.json();
 
       if (res.ok) {
+        console.log("Cart response:", data); // Debugging log
         alert("✅ Item added to cart");
         if (onCartUpdate) {
-          onCartUpdate();
+          onCartUpdate(); // Optional callback to refresh the cart
         }
       } else {
-        console.error("Add to cart failed:", data.error);
+        console.error("Failed to add item to cart:", data.error);
         alert("❌ " + data.error);
       }
     } catch (error) {

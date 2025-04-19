@@ -11,15 +11,14 @@ router.post("/", verifyToken, async (req, res) => {
     const { productId } = req.body;
     const userId = req.user.userId; // Extract user ID from token
 
-    console.log("Received productId:", productId);
-    console.log("Decoded userId from token:", userId);
+    console.log("POST request received for cart with productId:", productId);
+    console.log("User ID from token:", userId);
 
     if (!Types.ObjectId.isValid(productId)) {
       console.error("Invalid product ID:", productId);
       return res.status(400).json({ error: "Invalid product ID" });
     }
 
-    // Check if item already exists in cart
     let cartItem = await Cart.findOne({ userId, productId });
 
     if (cartItem) {
@@ -43,7 +42,7 @@ router.get("/", verifyToken, async (req, res) => {
     const userId = req.user.userId; // Extract user ID from token
 
     const cartItems = await Cart.find({ userId }).populate({
-      path: "productId",
+      path: "watchtId",
       select: "name price imageUrl", // Select only the required fields
     });
     res.status(200).json({ cartItems });
