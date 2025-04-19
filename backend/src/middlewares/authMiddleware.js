@@ -8,7 +8,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_key"; // Secret ke
 export const verifyToken = (req, res, next) => {
   try {
     const token = req.header("Authorization");
-    console.log("Authorization Header:", token); // Log the token
+     
 
     if (!token) {
       return res.status(401).json({ error: "Access Denied. No token provided." });
