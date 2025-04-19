@@ -77,4 +77,45 @@ router.delete("/:productId", verifyToken, async (req, res) => {
   }
 });
 
+// ✅ Update quantity of an item in the cart (Protected Route)
+router.patch("/:productId", verifyToken, async (req, res) => {
+  try {
+    const userId = req.user.userId; // Extract user ID from the token
+    const { productId } = req.params;
+    const { quantityChange } = req.body; // `quantityChange` will be +1 or -1
+
+    console.log("PATCH request received for productId:", productId);
+    console.log("User ID from token:", userId);
+    console.log("Quantity change:", quantityChange);
+
+    if (!Types.ObjectId.isValid(productId)) {
+      console.error("Invalid product ID:", productId);
+      return res.status(400).json({ error: "Invalid product ID" });
+    }
+
+    const cartItem = await Cart.findOne({ userId, productId });
+
+    if (!cartItem) {
+      console.error("Item not found in cart for productId:", productId);
+      return res.status(404).json({ error: "Item not found in cart" });
+    }
+
+    cartItem.quantity += quantityChange;
+
+    // If quantity becomes 0 or less, remove the item from the cart
+    if (cartItem.quantity <= 0) {
+      await Cart.findOneAndDelete({ userId, productId });
+      console.log("Item removed from cart due to zero quantity:", productId);
+      return res.status(200).json({ message: "Item removed from cart" });
+    }
+
+    await cartItem.save();
+    console.log("Cart item updated:", cartItem);
+    res.status(200).json({ message: "Cart item updated", cartItem });
+  } catch (error) {
+    console.error("Error updating cart item quantity:", error);
+    res.status(500).json({ error: "Failed to update cart item quantity" });
+  }
+});
+
 export default router;

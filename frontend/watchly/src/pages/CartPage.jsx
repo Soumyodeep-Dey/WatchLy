@@ -38,15 +38,12 @@ function CartPage() {
   };
 
   const handleRemove = async (productId) => {
-    const token = sessionStorage.getItem("jwt"); // Use sessionStorage instead of localStorage
+    const token = sessionStorage.getItem("jwt");
 
     if (!token) {
       alert("Please log in to remove items from your cart.");
       return;
     }
-
-    console.log("Removing item with productId:", productId); // Debugging log
-    console.log("Authorization token:", token); // Debugging log
 
     try {
       const res = await fetch(`http://localhost:8000/api/cart/${productId}`, {
@@ -58,13 +55,44 @@ function CartPage() {
 
       if (res.ok) {
         alert("✅ Item removed from cart");
-        fetchCartItems(); // Refresh the cart
+        fetchCartItems();
       } else {
         const data = await res.json();
         console.error("Failed to remove item:", data.error);
       }
     } catch (error) {
       console.error("Error removing item from cart:", error);
+    }
+  };
+
+  const handleQuantityChange = async (productId, quantityChange) => {
+    const token = sessionStorage.getItem("jwt");
+
+    if (!token) {
+      alert("Please log in to update cart items.");
+      return;
+    }
+
+    try {
+      const res = await fetch(`http://localhost:8000/api/cart/${productId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ quantityChange }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("✅ Cart updated");
+        fetchCartItems();
+      } else {
+        console.error("Failed to update cart item:", data.error);
+      }
+    } catch (error) {
+      console.error("Error updating cart item:", error);
     }
   };
 
@@ -90,7 +118,7 @@ function CartPage() {
               className="bg-black border border-gold-dark rounded-xl p-6 shadow-lg flex items-center gap-6"
             >
               <img
-                src={item.productId.imageUrl} // Use productId for populated data
+                src={item.productId.imageUrl}
                 alt={item.productId.name}
                 className="w-32 h-32 object-cover rounded-md"
               />
@@ -99,11 +127,25 @@ function CartPage() {
                   {item.productId.name}
                 </h2>
                 <p className="text-gray-400 text-lg mb-4">
-                  {item.productId.price}
+                  Price: ${item.productId.price}
                 </p>
                 <p className="text-gray-400 text-lg mb-4">
                   Quantity: {item.quantity}
                 </p>
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={() => handleQuantityChange(item.productId._id, -1)}
+                    className="bg-red-500 text-white font-semibold py-1 px-3 rounded-lg hover:bg-red-600 transition"
+                  >
+                    -
+                  </button>
+                  <button
+                    onClick={() => handleQuantityChange(item.productId._id, 1)}
+                    className="bg-green-500 text-white font-semibold py-1 px-3 rounded-lg hover:bg-green-600 transition"
+                  >
+                    +
+                  </button>
+                </div>
               </div>
               <button
                 onClick={() => handleRemove(item.productId._id)}
