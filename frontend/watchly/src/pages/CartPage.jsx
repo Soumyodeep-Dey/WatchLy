@@ -38,7 +38,15 @@ function CartPage() {
   };
 
   const handleRemove = async (productId) => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("jwt"); // Use sessionStorage instead of localStorage
+
+    if (!token) {
+      alert("Please log in to remove items from your cart.");
+      return;
+    }
+
+    console.log("Removing item with productId:", productId); // Debugging log
+    console.log("Authorization token:", token); // Debugging log
 
     try {
       const res = await fetch(`http://localhost:8000/api/cart/${productId}`, {

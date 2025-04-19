@@ -53,4 +53,28 @@ router.get("/", verifyToken, async (req, res) => {
   }
 });
 
+// ✅ Remove item from cart (Protected Route)
+router.delete("/:productId", verifyToken, async (req, res) => {
+  try {
+    const userId = req.user.userId; // Extract user ID from the token
+    const { productId } = req.params;
+
+    console.log("DELETE request received for productId:", productId);
+    console.log("User ID from token:", userId);
+
+    const result = await Cart.findOneAndDelete({ userId, productId });
+
+    if (!result) {
+      console.error("Item not found in cart for productId:", productId);
+      return res.status(404).json({ error: "Item not found in cart" });
+    }
+
+    console.log("Item removed from cart:", result);
+    res.status(200).json({ message: "Item removed from cart" });
+  } catch (error) {
+    console.error("Error removing item from cart:", error);
+    res.status(500).json({ error: "Failed to remove item from cart" });
+  }
+});
+
 export default router;
