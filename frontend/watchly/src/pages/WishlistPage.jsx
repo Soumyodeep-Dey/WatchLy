@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import RemoveFromWIshListButton from "../buttons/RemoveFromWIshListButton";
 import MoveToCartButton from "../watches/MoveToCartButton";
 
 function WishlistPage() {
   const [wishlistItems, setWishlistItems] = useState([]);
+  const navigate = useNavigate(); // Initialize navigate
 
   const fetchWishlistItems = async () => {
     const token = sessionStorage.getItem("jwt");
@@ -52,7 +54,8 @@ function WishlistPage() {
               <img
                 src={item.productId.imageUrl}
                 alt={item.productId.name}
-                className="w-32 h-32 object-cover rounded-md"
+                className="w-32 h-32 object-cover rounded-md cursor-pointer"
+                onClick={() => navigate(`/${item.productId.path}`)} // Navigate to product page
               />
               <div className="flex-grow">
                 <h2 className="text-xl font-semibold text-gold mb-2">
