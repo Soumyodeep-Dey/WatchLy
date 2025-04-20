@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SortingButton from "../buttons/SortingButton";
-import SortFunction from "../functions/SortFunction";
 
 function AllClassicPage() {
   const navigate = useNavigate();
@@ -15,8 +14,9 @@ function AllClassicPage() {
       .then((data) => {
         // Filter products with prices between $299.99 and $9,999.99
         const filteredProducts = data.filter(
-          (product) => parseFloat(product.price.replace(/[^0-9.-]+/g, "")) >= 299.99 &&
-                       parseFloat(product.price.replace(/[^0-9.-]+/g, "")) <= 9999.99
+          (product) =>
+            parseFloat(product.price.replace(/[^0-9.-]+/g, "")) >= 299.99 &&
+            parseFloat(product.price.replace(/[^0-9.-]+/g, "")) <= 9999.99
         );
         setProducts(filteredProducts);
         setSortedProducts(filteredProducts); // Initialize sorted products
@@ -25,7 +25,11 @@ function AllClassicPage() {
   }, []);
 
   const handleSort = (sortOrder) => {
-    const sorted = SortFunction({ watches: products, sortOrder });
+    const sorted = [...products].sort((a, b) => {
+      const priceA = parseFloat(a.price.replace(/[^0-9.-]+/g, ""));
+      const priceB = parseFloat(b.price.replace(/[^0-9.-]+/g, ""));
+      return sortOrder === "lowToHigh" ? priceA - priceB : priceB - priceA;
+    });
     setSortedProducts(sorted);
   };
 
