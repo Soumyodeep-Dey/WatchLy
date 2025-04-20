@@ -1,29 +1,24 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaHeart, FaShoppingCart, FaSearch, FaUser } from "react-icons/fa"; // Import FaUser for the user icon
-import { fetchSearchSuggestions } from "../functions/SearchFunction"; // Import the search function
-import LoginLogoutButton from "../buttons/LoginLogoutButton"; // Import the LoginLogoutButton
+import { FaHeart, FaShoppingCart, FaSearch, FaUser } from "react-icons/fa";
+import { fetchSearchSuggestions } from "../functions/SearchFunction";
+import { AuthContext } from "../auth/AuthContext";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   const location = useLocation();
   const navigate = useNavigate();
   const searchContainerRef = useRef(null);
 
-  // Check for token in sessionStorage on component mount
-  useEffect(() => {
-    const token = sessionStorage.getItem("jwt");
-    setIsLoggedIn(!!token); // Update isLoggedIn based on token presence
-  }, []);
+  // Use global auth context
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
   const handleLogout = () => {
     sessionStorage.removeItem("jwt");
     setIsLoggedIn(false);
-    navigate("/"); // Redirect to home
+    navigate("/");
   };
 
   useEffect(() => {
@@ -47,7 +42,7 @@ const Header = () => {
     setSearchQuery(query);
 
     if (query.trim()) {
-      const results = await fetchSearchSuggestions(query); // Use the imported function
+      const results = await fetchSearchSuggestions(query);
       setSuggestions(results);
     } else {
       setSuggestions([]);
