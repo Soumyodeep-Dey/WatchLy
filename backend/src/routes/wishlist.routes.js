@@ -39,8 +39,8 @@ router.get("/", verifyToken, async (req, res) => {
     console.log("Fetching wishlist items for userId:", userId);
 
     const wishlistItems = await Wishlist.find({ userId }).populate({
-      path: "productId", // Ensure this matches the field in the Wishlist model
-      select: "name price imageUrl", // Select only the required fields
+      path: "productId", // Populate the productId field
+      select: "name price imageUrl", // Select only the required fields from the Watch model
     });
 
     console.log("Fetched wishlist items:", wishlistItems);

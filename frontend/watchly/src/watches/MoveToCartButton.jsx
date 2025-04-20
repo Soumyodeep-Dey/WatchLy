@@ -1,6 +1,9 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
 
 const MoveToCartButton = ({ productId, quantity, onCartUpdate, onWishlistUpdate }) => {
+  const [loading, setLoading] = useState(false);
+
   const handleMoveToCart = async () => {
     const token = sessionStorage.getItem("jwt");
 
@@ -8,6 +11,8 @@ const MoveToCartButton = ({ productId, quantity, onCartUpdate, onWishlistUpdate 
       alert("Please log in to move items to your cart.");
       return;
     }
+
+    setLoading(true);
 
     try {
       // Add the item to the cart with its quantity
@@ -55,15 +60,20 @@ const MoveToCartButton = ({ productId, quantity, onCartUpdate, onWishlistUpdate 
     } catch (error) {
       console.error("Error moving item to cart:", error);
       alert("❌ Something went wrong");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <button
       onClick={handleMoveToCart}
-      className="bg-blue-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-600 transition"
+      disabled={loading}
+      className={`bg-blue-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-600 transition ${
+        loading ? "opacity-50 cursor-not-allowed" : ""
+      }`}
     >
-      Move to Cart
+      {loading ? "Processing..." : "Move to Cart"}
     </button>
   );
 };
