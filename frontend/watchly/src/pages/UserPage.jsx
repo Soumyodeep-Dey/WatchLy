@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const UserPage = () => {
   const [user, setUser] = useState(null);
-  const [formData, setFormData] = useState({ name: "", email: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", address: "", phone: "" });
   const [passwordData, setPasswordData] = useState({ currentPassword: "", newPassword: "" });
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -29,7 +29,12 @@ const UserPage = () => {
       })
       .then((data) => {
         setUser(data);
-        setFormData({ name: data.name, email: data.email });
+        setFormData({
+          name: data.name,
+          email: data.email,
+          address: data.address || "",
+          phone: data.phone || "",
+        });
       })
       .catch((error) => console.error("Error fetching user details:", error));
   }, []);
@@ -145,6 +150,34 @@ const UserPage = () => {
               className="w-full p-3 text-lg border border-gray-600 rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-gold"
               placeholder="Enter your email"
               required
+            />
+          </div>
+          <div>
+            <label htmlFor="address" className="block text-lg font-semibold mb-2 text-gold">
+              Address
+            </label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              value={formData.address}
+              onChange={handleInputChange}
+              className="w-full p-3 text-lg border border-gray-600 rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-gold"
+              placeholder="Enter your address"
+            />
+          </div>
+          <div>
+            <label htmlFor="phone" className="block text-lg font-semibold mb-2 text-gold">
+              Phone Number
+            </label>
+            <input
+              type="text"
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleInputChange}
+              className="w-full p-3 text-lg border border-gray-600 rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-gold"
+              placeholder="Enter your phone number"
             />
           </div>
           <button
