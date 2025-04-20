@@ -1,8 +1,7 @@
-import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
+import RemoveFromWIshListButton from "../buttons/RemoveFromWIshListButton";
 
 function WishlistPage() {
-  const navigate = useNavigate();
   const [wishlistItems, setWishlistItems] = useState([]);
 
   const fetchWishlistItems = async () => {
@@ -61,6 +60,12 @@ function WishlistPage() {
                 <p className="text-gray-400 text-lg mb-4">
                   Price: {item.productId.price}
                 </p>
+              </div>
+              <div>
+                <RemoveFromWIshListButton
+                  productId={item.productId._id}
+                  onWishlistUpdate={fetchWishlistItems} // Refresh the wishlist after removal
+                />
               </div>
             </div>
           ))}
