@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AddtoWishListButton from "../buttons/AddtoWishListButtom";
+import RemoveFromCartButton from "../buttons/RemoveFromCartButtom";
 
 function CartPage() {
   const navigate = useNavigate();
@@ -35,34 +36,6 @@ function CartPage() {
       setCartItems([]);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleRemove = async (productId) => {
-    const token = sessionStorage.getItem("jwt");
-
-    if (!token) {
-      alert("Please log in to remove items from your cart.");
-      return;
-    }
-
-    try {
-      const res = await fetch(`http://localhost:8000/api/cart/${productId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (res.ok) {
-        alert("✅ Item removed from cart");
-        fetchCartItems();
-      } else {
-        const data = await res.json();
-        console.error("Failed to remove item:", data.error);
-      }
-    } catch (error) {
-      console.error("Error removing item from cart:", error);
     }
   };
 
@@ -149,12 +122,10 @@ function CartPage() {
                 </div>
               </div>
               <div className="flex flex-col gap-2">
-                <button
-                  onClick={() => handleRemove(item.productId._id)}
-                  className="bg-gold text-black font-semibold py-2 px-4 rounded-xl shadow-md hover:bg-gold-light transition-all duration-300 transform hover:scale-105"
-                >
-                  Remove
-                </button>
+                <RemoveFromCartButton
+                  productId={item.productId._id}
+                  onCartUpdate={fetchCartItems} // Refresh the cart after removal
+                />
                 <AddtoWishListButton productId={item.productId._id} />
               </div>
             </div>
