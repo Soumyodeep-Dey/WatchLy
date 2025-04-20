@@ -8,8 +8,13 @@ const wishlistSchema = new mongoose.Schema({
   },
   productId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Watch", // Reference to the Watches model
+    ref: "Watch", // Reference to the Watch model
     required: true,
+  },
+  quantity: {
+    type: Number,
+    required: true,
+    default: 1, // Default quantity is 1
   },
 });
 

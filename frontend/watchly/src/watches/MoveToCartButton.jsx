@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const MoveToCartButton = ({ productId, onCartUpdate, onWishlistUpdate }) => {
+const MoveToCartButton = ({ productId, quantity, onCartUpdate, onWishlistUpdate }) => {
   const handleMoveToCart = async () => {
     const token = sessionStorage.getItem("jwt");
 
@@ -10,14 +10,14 @@ const MoveToCartButton = ({ productId, onCartUpdate, onWishlistUpdate }) => {
     }
 
     try {
-      // Add the item to the cart
+      // Add the item to the cart with its quantity
       const addToCartRes = await fetch("http://localhost:8000/api/cart", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ productId }),
+        body: JSON.stringify({ productId, quantity }),
       });
 
       if (!addToCartRes.ok) {
@@ -70,6 +70,7 @@ const MoveToCartButton = ({ productId, onCartUpdate, onWishlistUpdate }) => {
 
 MoveToCartButton.propTypes = {
   productId: PropTypes.string.isRequired, // The ID of the product to move
+  quantity: PropTypes.number.isRequired, // The quantity of the product
   onCartUpdate: PropTypes.func, // Optional callback to refresh the cart
   onWishlistUpdate: PropTypes.func, // Optional callback to refresh the wishlist
 };

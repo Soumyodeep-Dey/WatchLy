@@ -61,10 +61,14 @@ function WishlistPage() {
                 <p className="text-gray-400 text-lg mb-4">
                   Price: {item.productId.price}
                 </p>
+                <p className="text-gray-400 text-lg mb-4">
+                  Quantity: {item.quantity}
+                </p>
               </div>
               <div className="flex flex-col gap-2">
                 <MoveToCartButton
                   productId={item.productId._id}
+                  quantity={item.quantity} // Pass the quantity to MoveToCartButton
                   onCartUpdate={() => console.log("Cart updated")}
                   onWishlistUpdate={fetchWishlistItems} // Refresh the wishlist after moving
                 />
