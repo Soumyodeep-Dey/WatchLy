@@ -18,6 +18,7 @@ import YachtMaster from './watches/YachtMaster';
 import GMTmaster from './watches/GMTmaster';
 import Login from './pages/LoginPage'; // Import Login page
 import Signup from './pages/SignUpPage'; // Import Sign-up page
+import UserPage from './pages/UserPage';
 
 const App = () => {
     return (
@@ -52,7 +53,10 @@ const App = () => {
                         <Route path="/Rolex+Yacht+Master+II" element={<YachtMaster />} />
                         <Route path="/Rolex+GMT+Master+II" element={<GMTmaster />} />
                         <Route path="/Rolex+Submariner" element={<Submariner />} />
-                        
+
+                        {/* Other routes */}
+                        <Route path="/user" element={<UserPage />} />
+
                         {/* Fallback route for undefined paths */}
                         <Route path="*" element={<NotFoundPage />} />
                     </Routes>

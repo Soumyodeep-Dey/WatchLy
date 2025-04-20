@@ -9,6 +9,23 @@ dotenv.config();
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_key";
 
+// Middleware to verify token
+const verifyToken = (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ error: "Access denied. No token provided." });
+  }
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (error) {
+    console.error("Invalid token:", error);
+    res.status(400).json({ error: "Invalid token" });
+  }
+};
+
 // ✅ Register a New User
 router.post("/register", async (req, res) => {
   try {
@@ -57,6 +74,20 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     console.error("Error in user login:", error);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// ✅ Get User Details
+router.get("/user", verifyToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select("name email");
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error fetching user details:", error);
+    res.status(500).json({ error: "Failed to fetch user details" });
   }
 });
 

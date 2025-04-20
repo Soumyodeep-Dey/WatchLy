@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
+import { FaHeart, FaShoppingCart, FaSearch, FaUser } from "react-icons/fa"; // Import FaUser for the user icon
 import { fetchSearchSuggestions } from "../functions/SearchFunction"; // Import the search function
 import LoginLogoutButton from "../buttons/LoginLogoutButton"; // Import the LoginLogoutButton
 
@@ -99,56 +99,21 @@ const Header = () => {
           )}
         </div>
 
-        <div className="hidden md:flex items-center space-x-8">
-          <ul className="flex space-x-6">
-            {["Products", "About", "Contact"].map((page) => (
-              <li key={page}>
-                <Link
-                  to={`/${page.toLowerCase()}`}
-                  className={`transition duration-200 ${location.pathname === `/${page.toLowerCase()}`
-                      ? "text-gold"
-                      : "text-white hover:text-gold"
-                    }`}
-                >
-                  {page}
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          <div className="flex space-x-6">
-            <Link
-              to="/wishlist"
-              className={`flex items-center transition duration-200 ${location.pathname === "/wishlist"
-                  ? "text-gold"
-                  : "text-white hover:text-gold"
-                } space-x-2`}
-            >
-              <FaHeart className="text-gold" />
-              <span>Wishlist</span>
-            </Link>
-            <Link
-              to="/cart"
-              className={`flex items-center transition duration-200 ${location.pathname === "/cart"
-                  ? "text-gold"
-                  : "text-white hover:text-gold"
-                } space-x-2`}
-            >
-              <FaShoppingCart className="text-gold" />
-              <span>Cart</span>
-            </Link>
-
-            {/* Use the LoginLogoutButton */}
-            <LoginLogoutButton />
-          </div>
+        <div className="flex items-center space-x-6">
+          <Link to="/wishlist" className="text-white hover:text-gold">
+            <FaHeart />
+          </Link>
+          <Link to="/cart" className="text-white hover:text-gold">
+            <FaShoppingCart />
+          </Link>
+          {/* User Icon */}
+          <button
+            onClick={() => navigate("/user")}
+            className="text-white hover:text-gold"
+          >
+            <FaUser />
+          </button>
         </div>
-
-        <button
-          className="md:hidden text-white focus:outline-none"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          <span className="material-icons">{isMenuOpen ? "close" : "menu"}</span>
-        </button>
       </nav>
 
       {isMenuOpen && (
