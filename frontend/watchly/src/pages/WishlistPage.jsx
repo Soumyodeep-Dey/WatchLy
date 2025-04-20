@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import RemoveFromWIshListButton from "../buttons/RemoveFromWIshListButton";
+import MoveToCartButton from "../watches/MoveToCartButton";
 
 function WishlistPage() {
   const [wishlistItems, setWishlistItems] = useState([]);
@@ -61,7 +62,12 @@ function WishlistPage() {
                   Price: {item.productId.price}
                 </p>
               </div>
-              <div>
+              <div className="flex flex-col gap-2">
+                <MoveToCartButton
+                  productId={item.productId._id}
+                  onCartUpdate={() => console.log("Cart updated")}
+                  onWishlistUpdate={fetchWishlistItems} // Refresh the wishlist after moving
+                />
                 <RemoveFromWIshListButton
                   productId={item.productId._id}
                   onWishlistUpdate={fetchWishlistItems} // Refresh the wishlist after removal
