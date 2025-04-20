@@ -1,27 +1,33 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SortingButton from "../buttons/SortingButton";
+import SortFunction from "../functions/SortFunction";
 
 function AllClassicPage() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]); // State for storing watches
+  const [sortedProducts, setSortedProducts] = useState([]); // State for sorted watches
 
   useEffect(() => {
     // Fetch watches from backend
     fetch("http://localhost:8000/api/watches")
-      .then((response) => {
-        console.log("Response:", response); // Log the raw response
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
-        console.log("Data:", data); // Log the parsed data
         // Filter products with prices between $299.99 and $9,999.99
         const filteredProducts = data.filter(
-          (product) => product.price >= "$299.99" && product.price <= "$9999.99"
+          (product) => parseFloat(product.price.replace(/[^0-9.-]+/g, "")) >= 299.99 &&
+                       parseFloat(product.price.replace(/[^0-9.-]+/g, "")) <= 9999.99
         );
         setProducts(filteredProducts);
+        setSortedProducts(filteredProducts); // Initialize sorted products
       })
       .catch((error) => console.error("Error fetching watches:", error));
   }, []);
+
+  const handleSort = (sortOrder) => {
+    const sorted = SortFunction({ watches: products, sortOrder });
+    setSortedProducts(sorted);
+  };
 
   const handleViewDetails = (path) => {
     navigate(`/${path}`);
@@ -31,8 +37,12 @@ function AllClassicPage() {
     <div className="bg-black-rich text-white py-16 px-6">
       <h1 className="text-5xl font-bold text-center mb-12 text-gold">All Classic Watches</h1>
 
+      <div className="text-center mb-6">
+        <SortingButton onSort={handleSort} />
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
-        {products.map((product) => (
+        {sortedProducts.map((product) => (
           <div
             key={product._id}
             className="bg-white border-4 border-gold-dark shadow-lg rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-2xl transition-all"
