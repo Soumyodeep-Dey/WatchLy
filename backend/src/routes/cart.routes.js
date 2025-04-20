@@ -43,7 +43,7 @@ router.get("/", verifyToken, async (req, res) => {
 
     const cartItems = await Cart.find({ userId }).populate({
       path: "productId",
-      select: "name price imageUrl", // Select only the required fields
+      select: "name price imageUrl path", // Include the 'path' field
     });
     res.status(200).json({ cartItems });
   } catch (error) {

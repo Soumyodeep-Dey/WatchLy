@@ -94,7 +94,8 @@ function CartPage() {
               <img
                 src={item.productId.imageUrl}
                 alt={item.productId.name}
-                className="w-32 h-32 object-cover rounded-md"
+                className="w-32 h-32 object-cover rounded-md cursor-pointer"
+                onClick={() => navigate(`/${item.productId.path}`)} // Navigate to product page
               />
               <div className="flex-grow">
                 <h2 className="text-xl font-semibold text-gold mb-2">
