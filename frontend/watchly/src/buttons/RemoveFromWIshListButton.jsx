@@ -9,6 +9,8 @@ const RemoveFromWIshListButton = ({ productId, onWishlistUpdate }) => {
       return;
     }
 
+    console.log("Removing product from wishlist with productId:", productId); // Debugging log
+
     try {
       const res = await fetch(`http://localhost:8000/api/wishlist/${productId}`, {
         method: "DELETE",
@@ -17,13 +19,15 @@ const RemoveFromWIshListButton = ({ productId, onWishlistUpdate }) => {
         },
       });
 
+      const data = await res.json();
+
       if (res.ok) {
+        console.log("Wishlist response:", data); // Debugging log
         alert("✅ Item removed from wishlist");
         if (onWishlistUpdate) {
           onWishlistUpdate(); // Callback to refresh the wishlist
         }
       } else {
-        const data = await res.json();
         console.error("Failed to remove item:", data.error);
         alert("❌ Failed to remove item");
       }

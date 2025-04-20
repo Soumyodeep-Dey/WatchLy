@@ -1,6 +1,7 @@
 import { Router } from "express";
 import Wishlist from "../models/wishlist.model.js"; // Import Wishlist model
 import { verifyToken } from "../middlewares/authMiddleware.js";
+import { Types } from "mongoose"; // Import Types from mongoose
 
 const router = Router();
 
@@ -48,6 +49,35 @@ router.get("/", verifyToken, async (req, res) => {
   } catch (error) {
     console.error("Error fetching wishlist items:", error);
     res.status(500).json({ error: "Failed to fetch wishlist items" });
+  }
+});
+
+// ✅ Remove item from wishlist (Protected Route)
+router.delete("/:productId", verifyToken, async (req, res) => {
+  try {
+    const userId = req.user.userId; // Extract user ID from token
+    const { productId } = req.params;
+
+    console.log("DELETE request received for productId:", productId);
+    console.log("User ID from token:", userId);
+
+    if (!Types.ObjectId.isValid(productId)) {
+      console.error("Invalid product ID:", productId);
+      return res.status(400).json({ error: "Invalid product ID" });
+    }
+
+    const result = await Wishlist.findOneAndDelete({ userId, productId });
+
+    if (!result) {
+      console.error("Item not found in wishlist for productId:", productId);
+      return res.status(404).json({ error: "Item not found in wishlist" });
+    }
+
+    console.log("Item removed from wishlist:", result);
+    res.status(200).json({ message: "Item removed from wishlist" });
+  } catch (error) {
+    console.error("Error removing item from wishlist:", error);
+    res.status(500).json({ error: "Failed to remove item from wishlist" });
   }
 });
 
