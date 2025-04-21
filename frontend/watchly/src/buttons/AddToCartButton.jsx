@@ -12,7 +12,7 @@ const AddToCartButton = ({ productId, onCartUpdate }) => {
     console.log("Adding product to cart:", productId); // Debugging log
 
     try {
-      const res = await fetch("http://localhost:8000/api/cart", {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/cart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

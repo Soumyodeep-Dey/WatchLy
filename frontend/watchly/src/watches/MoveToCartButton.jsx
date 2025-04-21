@@ -16,7 +16,7 @@ const MoveToCartButton = ({ productId, quantity, onCartUpdate, onWishlistUpdate 
 
     try {
       // Add the item to the cart with its quantity
-      const addToCartRes = await fetch("http://localhost:8000/api/cart", {
+      const addToCartRes = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/cart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,7 +34,7 @@ const MoveToCartButton = ({ productId, quantity, onCartUpdate, onWishlistUpdate 
 
       // Remove the item from the wishlist
       const removeFromWishlistRes = await fetch(
-        `http://localhost:8000/api/wishlist/${productId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/wishlist/${productId}`,
         {
           method: "DELETE",
           headers: {

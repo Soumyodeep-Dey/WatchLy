@@ -16,7 +16,7 @@ const UserPage = () => {
     }
 
     // Fetch user details from the backend
-    fetch("http://localhost:8000/api/auth/user", {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/user`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
