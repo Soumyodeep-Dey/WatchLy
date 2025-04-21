@@ -12,7 +12,7 @@ const RemoveFromWIshListButton = ({ productId, onWishlistUpdate }) => {
     console.log("Removing product from wishlist with productId:", productId); // Debugging log
 
     try {
-      const res = await fetch(`http://localhost:8000/api/wishlist/${productId}`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/wishlist/${productId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

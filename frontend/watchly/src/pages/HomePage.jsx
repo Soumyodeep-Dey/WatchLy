@@ -7,19 +7,9 @@ const HomePage = () => {
 
   useEffect(() => {
     // Fetch featured products from the backend
-    fetch("http://localhost:8000/api/watches")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch featured products");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // Filter the featured products (e.g., first 3 items or based on specific criteria)
-        const filteredProducts = data.slice(0, 3); // Example: Take the first 3 products
-        setFeaturedProducts(filteredProducts);
-      })
-      .catch((error) => console.error("Error fetching featured products:", error));
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/watches`)
+      .then((response) => response.json())
+      .then((data) => setFeaturedProducts(data.slice(0, 3)));
   }, []);
 
   const handleViewDetails = (path) => {

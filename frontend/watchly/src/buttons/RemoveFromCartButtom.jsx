@@ -10,7 +10,7 @@ const RemoveFromCartButton = ({ productId, onCartUpdate }) => {
     }
 
     try {
-      const res = await fetch(`http://localhost:8000/api/cart/${productId}`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/cart/${productId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
