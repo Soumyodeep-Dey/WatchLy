@@ -1,13 +1,39 @@
-# Node.js dependencies
-node_modules/
-
-# Environment variables
-*.env
+# Node modules and build
+**/node_modules/
+**/dist/
+**/build/
 
 # Logs
-logs/
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
-# Other files
+# Environment
+**/.env
+**/.env.local
+**/.env.development
+**/.env.production
+
+# OS junk
 .DS_Store
+Thumbs.db
+
+# Editor junk
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Python/AI related
+**/__pycache__/
+**/*.py[cod]
+**/.ipynb_checkpoints/
+**/*.checkpoint
+
+# Package-lock files if you're not using them
+# (Optional, only if you want consistency through yarn or pnpm)
+# **/package-lock.json
