@@ -6,6 +6,8 @@ import authRoutes from "./routes/auth.routes.js"; // Import authentication route
 import wishlistRoutes from "./routes/wishlist.routes.js"; // Import wishlist routes
 
 const app = express();
+const path = require("path");
+// Middleware to serve static files from the "public" directory
 
 app.use(
   cors({
@@ -13,7 +15,11 @@ app.use(
     credentials: true,
   })
 );
+app.use((express.static(path.join(__dirname, "/frontend/watchly/dist")))); // Serve static files from the "public" directory
 
+app.get("/*" , (req,res) => {
+  res.sendFile(path.join(__dirname,"/frontend/watchly/dist/index.html"))
+})
 // Common middlewares
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
