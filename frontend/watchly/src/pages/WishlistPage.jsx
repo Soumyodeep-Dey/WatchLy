@@ -16,7 +16,7 @@ function WishlistPage() {
     }
 
     try {
-      const res = await fetch("http://localhost:8000/api/wishlist", {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/wishlist`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
