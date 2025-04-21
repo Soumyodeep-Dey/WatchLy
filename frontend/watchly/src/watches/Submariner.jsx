@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import AddToCartButton from "../buttons/AddToCartButton"; // ✅ Make sure it's default export
-
+import AddToCartButton from "../buttons/AddToCartButton";
 
 function Submariner() {
   const [product, setProduct] = useState(null);
@@ -8,7 +7,7 @@ function Submariner() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/watches/67d097edbcc7677ff2fa4219")
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/watches/67d097edbcc7677ff2fa4219`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch product data");
@@ -48,10 +47,13 @@ function Submariner() {
         <div className="p-8 md:w-1/2">
           <p className="text-lg text-gray-700 mb-4">{product.description}</p>
           <p className="text-4xl font-bold text-gold mb-6">{product.price}</p>
-          <button className="w-full px-10 py-4 bg-gold text-black font-semibold text-lg rounded-lg shadow-md hover:bg-black hover:text-white transition-colors duration-300 transform hover:scale-105 mb-8 border-2 border-transparent hover:border-gold focus:outline-none focus:ring-2 focus:ring-gold">
+
+          <button
+            className="w-full px-10 py-4 bg-gold text-black font-semibold text-lg rounded-lg shadow-md hover:bg-black hover:text-white transition-colors duration-300 transform hover:scale-105 mb-8 border-2 border-transparent hover:border-gold focus:outline-none focus:ring-2 focus:ring-gold"
+          >
             Buy Now
           </button>
-          {/* ✅ Properly Rendered Add to Cart Button */}
+
           <AddToCartButton productId={product._id} />
         </div>
       </div>

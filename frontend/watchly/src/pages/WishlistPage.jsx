@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import RemoveFromWIshListButton from "../buttons/RemoveFromWIshListButton";
-import MoveToCartButton from "../watches/MoveToCartButton";
+import MoveToCartButton from "../buttons/MoveToCartButton";
 
 function WishlistPage() {
   const [wishlistItems, setWishlistItems] = useState([]);

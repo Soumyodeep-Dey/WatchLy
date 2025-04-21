@@ -7,7 +7,7 @@ function DayDateBlue() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/watches/67d097edbcc7677ff2fa4216")
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/watches/67d097edbcc7677ff2fa4216`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch product data");
