@@ -9,7 +9,7 @@ function DayDateGreen() {
 
   useEffect(() => {
     // Fetch product data from the backend
-    fetch("http://localhost:8000/api/watches/67d097edbcc7677ff2fa4214") // Use the actual product ID
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/watches/67d097edbcc7677ff2fa4214`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch product data");

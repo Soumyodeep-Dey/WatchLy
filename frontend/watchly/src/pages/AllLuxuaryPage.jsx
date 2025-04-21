@@ -9,7 +9,7 @@ function AllLuxuryPage() {
 
   useEffect(() => {
     // Fetch watches from backend
-    fetch("http://localhost:8000/api/watches")
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/watches`)
       .then((response) => response.json())
       .then((data) => {
         // Filter products with prices between $9,999.99 and $199,999.99
