@@ -1,18 +1,21 @@
 import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";
 import path from "path";
 import watchRoutes from "./routes/watches.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
 import authRoutes from "./routes/auth.routes.js"; // Import authentication routes
 import wishlistRoutes from "./routes/wishlist.routes.js"; // Import wishlist routes
 
+dotenv.config(); // Load environment variables
+
 const app = express();
 
 // Middleware for CORS
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:8000"], // Allowed origins
-    credentials: true,
+    origin: [process.env.FRONTEND_URL, "http://localhost:5173"], // Allow live and local frontend
+    credentials: true, // Allow cookies and credentials
   })
 );
 
