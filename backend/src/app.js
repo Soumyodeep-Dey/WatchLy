@@ -25,15 +25,6 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 
 
 
-// const __dirname = path.resolve();
-// app.use(express.static(path.join(__dirname, "../frontend/watchly/dist")));
-
-// app.get("/*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "../frontend/watchly/dist/index.html"));
-// });
-
-
-
 // ✅ API Routes
 app.use("/api/watches", watchRoutes);
 app.use("/api/cart", cartRoutes);
