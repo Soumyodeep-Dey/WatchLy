@@ -20,7 +20,7 @@ const Signup = () => {
     setError("");
     setSuccess("");
 
-    const apiUrl = "http://localhost:8000/api/auth/register"; // API endpoint for registration
+    const apiUrl = `${import.meta.env.VITE_BACKEND_URL}/api/auth/register`; // API endpoint for registration
 
     fetch(apiUrl, {
       method: "POST",
