@@ -12,7 +12,7 @@ const AddtoWishListButton = ({ productId, onWishlistUpdate }) => {
     console.log("Adding product to wishlist:", productId); // Debugging log
 
     try {
-      const res = await fetch("http://localhost:8000/api/wishlist", {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/wishlist`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
