@@ -75,6 +75,12 @@ function CartPage() {
     fetchCartItems();
   }, []);
 
+  // Calculate the total price
+  const totalPrice = cartItems.reduce((total, item) => {
+    const itemPrice = parseFloat(item.productId.price.replace(/[^0-9.-]+/g, "")); // Remove currency symbols
+    return total + itemPrice * item.quantity;
+  }, 0);
+
   if (loading) {
     return <div className="text-center text-lg text-gray-700">Loading...</div>;
   }
@@ -138,6 +144,11 @@ function CartPage() {
               </div>
             </div>
           ))}
+
+          {/* Display Total Price */}
+          <div className="text-right text-2xl font-bold text-gold mt-8">
+            Total: ${totalPrice.toFixed(2)}
+          </div>
         </div>
       ) : (
         <div className="text-center">
