@@ -7,6 +7,7 @@ function CartPage() {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const fetchCartItems = async () => {
     const token = sessionStorage.getItem("jwt");
@@ -28,8 +29,8 @@ function CartPage() {
       if (res.ok) {
         setCartItems(data.cartItems);
       } else {
-        console.error("Failed to fetch cart items:", data.error);
-        setCartItems([]);
+        setError("Failed to fetch cart items. Please try again.");
+        return;
       }
     } catch (error) {
       console.error("Error fetching cart items:", error);
@@ -83,6 +84,12 @@ function CartPage() {
       <h1 className="text-4xl font-bold text-center text-gold mb-12">
         Your Cart
       </h1>
+
+      {error && (
+        <div className="text-center text-red-500 text-lg mb-4">
+          {error}
+        </div>
+      )}
 
       {cartItems.length > 0 ? (
         <div className="max-w-6xl mx-auto space-y-8">
