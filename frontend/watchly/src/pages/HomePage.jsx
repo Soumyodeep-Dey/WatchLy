@@ -8,7 +8,11 @@ const HomePage = () => {
   useEffect(() => {
     fetch(`${import.meta.env.VITE_BACKEND_URL}/api/watches`)
       .then((response) => response.json())
-      .then((data) => setFeaturedProducts(data.slice(0, 3)));
+      .then((data) => {
+        // Show 4 products on mobile, 3 on desktop
+        const products = data.slice(0, 4);
+        setFeaturedProducts(products);
+      });
   }, []);
 
   const handleViewDetails = (path) => {
@@ -27,14 +31,18 @@ const HomePage = () => {
         <div className="bg-black bg-opacity-70 absolute inset-0"></div>
         <div className="relative z-10 px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">Welcome to Watchly</h1>
-          <p className="text-base md:text-lg mb-6 text-gray-300">
+          <p className="text-base md:text-lg mb-8 text-gray-300">
             Explore our premium collection of luxury and smartwatches.
           </p>
           <button
-            className="bg-gradient-to-r from-gold-light to-gold-dark px-6 py-2 rounded-md hover:opacity-90 transition text-black font-semibold"
+            className="group relative bg-gradient-to-r from-gold-light to-gold-dark px-8 py-3 rounded-full 
+              text-black font-semibold text-lg overflow-hidden transition-all duration-300
+              hover:shadow-[0_0_20px_rgba(212,175,55,0.5)] hover:scale-105
+              before:absolute before:inset-0 before:bg-white before:opacity-0 
+              before:transition-opacity before:duration-300 hover:before:opacity-20"
             onClick={() => navigate("/products")}
           >
-            Shop Now
+            <span className="relative z-10">Shop Now</span>
           </button>
         </div>
       </section>
@@ -44,23 +52,24 @@ const HomePage = () => {
         <h2 className="text-3xl md:text-4xl font-semibold text-center mb-12 text-white">
           Featured Watches
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featuredProducts.map((product) => (
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+          {featuredProducts.map((product, index) => (
             <div
               key={product._id}
-              className="product bg-black border-4 border-gold-dark shadow-lg p-4 rounded-md transition-transform hover:scale-105"
+              className={`product bg-black border-4 border-gold-dark shadow-lg p-4 rounded-md transition-transform hover:scale-105
+                ${index === 3 ? 'lg:hidden' : ''}`}
             >
               <div className="overflow-hidden rounded-md">
                 <img
                   src={product.imageUrl}
                   alt={product.name}
-                  className="mb-4 mx-auto object-cover h-64 md:h-96 w-full"
+                  className="mb-4 mx-auto object-cover h-48 sm:h-64 md:h-96 w-full"
                 />
               </div>
-              <h3 className="text-xl font-medium text-gold">{product.name}</h3>
-              <p className="text-lg mt-2 text-gray-300">{product.price}</p>
+              <h3 className="text-lg md:text-xl font-medium text-gold">{product.name}</h3>
+              <p className="text-base md:text-lg mt-2 text-gray-300">{product.price}</p>
               <button
-                className="mt-4 bg-gradient-to-r from-gold-light to-gold-dark text-black px-4 py-2 rounded-md hover:bg-black hover:text-gold transition-all w-full sm:w-auto"
+                className="mt-4 bg-gradient-to-r from-gold-light to-gold-dark text-black px-4 py-2 rounded-md hover:bg-black hover:text-gold-dark transition-all w-full"
                 onClick={() => handleViewDetails(product.path)}
               >
                 View Details
