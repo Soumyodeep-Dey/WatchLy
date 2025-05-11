@@ -31,35 +31,60 @@ function ProductsPage() {
   };
 
   return (
-    <div className="py-16 px-6 bg-black">
-      <h1 className="text-4xl font-bold text-center mb-12 text-gold">Our Exclusive Collections</h1>
+    <div className="min-h-screen w-full bg-black-rich text-white relative overflow-hidden">
+      {/* Enhanced background gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black opacity-95"></div>
+      
+      {/* Premium animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gold opacity-5 animate-spin-slow"></div>
+        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gold opacity-5 animate-spin-slow-reverse"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gold/5 via-transparent to-transparent"></div>
+      </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-12">
-        {products.map((product) => (
-          <div
-            key={product.id}
-            className="bg-black shadow-lg rounded-xl overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl border border-gold"
-          >
-            <div className="p-4"> {/* Added padding here */}
-              <img
-                src={product.imageUrl}
-                alt={`Image of ${product.name}`}
-                className="w-full h-72 object-cover rounded-t-xl transition-opacity hover:opacity-90" // Adjusted height to 72
-              />
-            </div>
-            <div className="p-6">
-              <h2 className="text-2xl font-bold text-gold">{product.name}</h2>
-              <p className="text-sm text-gray-400 mt-2">{product.description}</p>
-              <p className="text-lg font-semibold text-gold mt-4">{product.price}</p>
-              <button
-                onClick={() => handleRedirect(product.category)}
-                className="mt-6 px-6 py-3 bg-gold text-black font-semibold rounded-lg hover:bg-black hover:text-gold transition-colors duration-300"
+      <div className="relative z-10 w-full h-screen">
+        <div className="h-full flex flex-col">
+          <h1 className="text-6xl font-bold text-center py-12 text-gold relative">
+            Our Exclusive Collections
+            <span className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-64 h-1 bg-gradient-to-r from-transparent via-gold to-transparent"></span>
+          </h1>
+
+          <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-8 px-8 pb-8">
+            {products.map((product) => (
+              <div
+                key={product.id}
+                className="group bg-gray-800/40 backdrop-blur-md border border-gold/20 rounded-3xl overflow-hidden 
+                  transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-gold/20 transition-all duration-500
+                  hover:border-gold/40 h-full flex flex-col"
               >
-                View All {product.name.split(" ")[0]} Products
-              </button>
-            </div>
+                <div className="relative flex-1 overflow-hidden">
+                  <img
+                    src={product.imageUrl}
+                    alt={`Image of ${product.name}`}
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gold/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+                
+                <div className="p-8 bg-gray-900/50 backdrop-blur-sm">
+                  <h2 className="text-3xl font-bold text-gold mb-4 group-hover:text-gold-light transition-colors duration-300">{product.name}</h2>
+                  <p className="text-gray-300 text-lg mb-6 group-hover:text-gray-200 transition-colors duration-300">{product.description}</p>
+                  <p className="text-2xl font-semibold text-gold mb-8 group-hover:text-gold-light transition-colors duration-300">{product.price}</p>
+                  <button
+                    onClick={() => handleRedirect(product.category)}
+                    className="w-full py-4 bg-gradient-to-r from-gold-light to-gold-dark text-black font-semibold text-lg 
+                      rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-gold/30
+                      focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-gray-800
+                      hover:from-gold hover:to-gold-dark"
+                  >
+                    View All {product.name.split(" ")[0]} Products
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );
