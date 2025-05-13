@@ -8,12 +8,62 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const [cartCount, setCartCount] = useState(0);
+  const [wishlistCount, setWishlistCount] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
   const searchContainerRef = useRef(null);
 
   // Use global auth context
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+
+  const fetchCartCount = async () => {
+    const token = sessionStorage.getItem("jwt");
+    if (!token) return;
+
+    try {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/cart`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setCartCount(data.cartItems.length);
+      }
+    } catch (error) {
+      console.error("Error fetching cart count:", error);
+    }
+  };
+
+  const fetchWishlistCount = async () => {
+    const token = sessionStorage.getItem("jwt");
+    if (!token) return;
+
+    try {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/wishlist`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setWishlistCount(data.wishlistItems.length);
+      }
+    } catch (error) {
+      console.error("Error fetching wishlist count:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetchCartCount();
+      fetchWishlistCount();
+    } else {
+      setCartCount(0);
+      setWishlistCount(0);
+    }
+  }, [isLoggedIn]);
 
   const handleLogout = () => {
     sessionStorage.removeItem("jwt");
@@ -152,14 +202,22 @@ const Header = () => {
               className="text-white hover:text-gold transition-all duration-300 transform hover:scale-110 relative group"
             >
               <FaHeart />
-              <span className="absolute -top-2 -right-2 w-4 h-4 bg-gold rounded-full text-black text-xs flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300">0</span>
+              {wishlistCount > 0 && (
+                <span className="absolute -top-2 -right-2 w-4 h-4 bg-gold rounded-full text-black text-xs flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300">
+                  {wishlistCount}
+                </span>
+              )}
             </Link>
             <Link 
               to="/cart" 
               className="text-white hover:text-gold transition-all duration-300 transform hover:scale-110 relative group"
             >
               <FaShoppingCart />
-              <span className="absolute -top-2 -right-2 w-4 h-4 bg-gold rounded-full text-black text-xs flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300">0</span>
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 w-4 h-4 bg-gold rounded-full text-black text-xs flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300">
+                  {cartCount}
+                </span>
+              )}
             </Link>
             <button
               onClick={() => navigate("/user")}
