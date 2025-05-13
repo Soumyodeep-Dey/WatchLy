@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RemoveFromWIshListButton from "../buttons/RemoveFromWIshListButton";
 import MoveToCartButton from "../buttons/MoveToCartButton";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function WishlistPage() {
   const [wishlistItems, setWishlistItems] = useState([]);
@@ -12,7 +14,22 @@ function WishlistPage() {
     const token = sessionStorage.getItem("jwt");
 
     if (!token) {
-      alert("Please log in to view your wishlist.");
+      toast.error('Please log in to view your wishlist', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        style: {
+          background: 'rgba(17, 24, 39, 0.95)',
+          border: '1px solid rgba(212, 175, 55, 0.2)',
+          color: '#fff',
+        },
+        icon: '⌚',
+      });
       return;
     }
 
@@ -28,10 +45,41 @@ function WishlistPage() {
       if (res.ok) {
         setWishlistItems(data.wishlistItems);
       } else {
-        console.error("Failed to fetch wishlist items:", data.error);
+        toast.error('Failed to fetch wishlist items', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          style: {
+            background: 'rgba(17, 24, 39, 0.95)',
+            border: '1px solid rgba(212, 175, 55, 0.2)',
+            color: '#fff',
+          },
+          icon: '⌚',
+        });
       }
     } catch (error) {
       console.error("Error fetching wishlist items:", error);
+      toast.error('Error loading wishlist', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        style: {
+          background: 'rgba(17, 24, 39, 0.95)',
+          border: '1px solid rgba(212, 175, 55, 0.2)',
+          color: '#fff',
+        },
+        icon: '⌚',
+      });
     } finally {
       setLoading(false);
     }
@@ -43,6 +91,23 @@ function WishlistPage() {
 
   return (
     <div className="min-h-screen py-16 px-6 bg-black-rich text-white-off relative overflow-hidden">
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        toastStyle={{
+          background: 'rgba(17, 24, 39, 0.95)',
+          border: '1px solid rgba(212, 175, 55, 0.2)',
+          color: '#fff',
+        }}
+      />
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black opacity-95"></div>
       <div className="absolute inset-0 overflow-hidden">

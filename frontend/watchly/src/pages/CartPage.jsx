@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AddtoWishListButton from "../buttons/AddtoWishListButtom";
 import RemoveFromCartButton from "../buttons/RemoveFromCartButtom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function CartPage() {
   const navigate = useNavigate();
@@ -44,7 +46,22 @@ function CartPage() {
     const token = sessionStorage.getItem("jwt");
 
     if (!token) {
-      alert("Please log in to update cart items.");
+      toast.error('Please log in to update cart items', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        style: {
+          background: 'rgba(17, 24, 39, 0.95)',
+          border: '1px solid rgba(212, 175, 55, 0.2)',
+          color: '#fff',
+        },
+        icon: '⌚',
+      });
       return;
     }
 
@@ -61,13 +78,59 @@ function CartPage() {
       const data = await res.json();
 
       if (res.ok) {
-        alert("✅ Cart updated");
+        toast.success('Cart updated successfully', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          style: {
+            background: 'rgba(17, 24, 39, 0.95)',
+            border: '1px solid rgba(212, 175, 55, 0.2)',
+            color: '#fff',
+          },
+          icon: '⌚',
+        });
         fetchCartItems();
       } else {
-        console.error("Failed to update cart item:", data.error);
+        toast.error('Failed to update cart', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          style: {
+            background: 'rgba(17, 24, 39, 0.95)',
+            border: '1px solid rgba(212, 175, 55, 0.2)',
+            color: '#fff',
+          },
+          icon: '⌚',
+        });
       }
     } catch (error) {
       console.error("Error updating cart item:", error);
+      toast.error('Error updating cart', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        style: {
+          background: 'rgba(17, 24, 39, 0.95)',
+          border: '1px solid rgba(212, 175, 55, 0.2)',
+          color: '#fff',
+        },
+        icon: '⌚',
+      });
     }
   };
 
@@ -83,6 +146,23 @@ function CartPage() {
 
   return (
     <div className="min-h-screen py-16 px-6 bg-black-rich text-white-off relative overflow-hidden">
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        toastStyle={{
+          background: 'rgba(17, 24, 39, 0.95)',
+          border: '1px solid rgba(212, 175, 55, 0.2)',
+          color: '#fff',
+        }}
+      />
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black opacity-95"></div>
       <div className="absolute inset-0 overflow-hidden">
