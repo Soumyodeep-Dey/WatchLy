@@ -2,7 +2,7 @@ import { useState } from "react";
 import { toast } from 'react-toastify';
 import PropTypes from "prop-types";
 
-const AddToCartButton = ({ productId, quantity = 1 }) => {
+const AddToCartButton = ({ productId, onCartUpdate }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleAddToCart = async () => {
@@ -37,7 +37,7 @@ const AddToCartButton = ({ productId, quantity = 1 }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ productId, quantity }),
+        body: JSON.stringify({ productId }),
       });
 
       const data = await res.json();
@@ -59,6 +59,9 @@ const AddToCartButton = ({ productId, quantity = 1 }) => {
           },
           icon: '⌚',
         });
+        if (onCartUpdate) {
+          onCartUpdate();
+        }
       } else {
         toast.error(data.error || 'Failed to add to cart', {
           position: "top-right",
@@ -104,9 +107,7 @@ const AddToCartButton = ({ productId, quantity = 1 }) => {
     <button
       onClick={handleAddToCart}
       disabled={isLoading}
-      className="w-full py-2 px-4 bg-gradient-to-r from-gold to-gold-dark text-black font-semibold rounded-lg 
-        hover:opacity-90 transition-opacity duration-300 disabled:opacity-50 disabled:cursor-not-allowed
-        transform hover:scale-105 active:scale-95"
+      className="w-full px-10 py-4 bg-black text-white font-semibold text-lg rounded-lg shadow-md hover:bg-gold hover:text-black transition-colors duration-300 transform hover:scale-105 border-2 border-transparent hover:border-gold focus:outline-none focus:ring-2 focus:ring-gold"
     >
       {isLoading ? "Adding..." : "Add to Cart"}
     </button>
@@ -115,7 +116,7 @@ const AddToCartButton = ({ productId, quantity = 1 }) => {
 
 AddToCartButton.propTypes = {
   productId: PropTypes.string.isRequired,
-  quantity: PropTypes.number,
+  onCartUpdate: PropTypes.func,
 };
 
 export default AddToCartButton;

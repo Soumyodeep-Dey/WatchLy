@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './auth/AuthContext'; // Import AuthProvider
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductsPage'; // Import additional pages
@@ -24,6 +26,23 @@ const App = () => {
     return (
         <AuthProvider>
             <Router>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={3000}
+                    hideProgressBar={false}
+                    newestOnTop
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="dark"
+                    toastStyle={{
+                        background: 'rgba(17, 24, 39, 0.95)',
+                        border: '1px solid rgba(212, 175, 55, 0.2)',
+                        color: '#fff',
+                    }}
+                />
                 {/* Layout provides consistent Header and Footer */}
                 <Layout>
                     <Routes>
