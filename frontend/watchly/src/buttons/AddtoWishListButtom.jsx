@@ -1,15 +1,34 @@
+import { useState } from "react";
+import { toast } from 'react-toastify';
 import PropTypes from "prop-types";
 
 const AddtoWishListButton = ({ productId, onWishlistUpdate }) => {
-  const handleAddToWishlist = async (productId) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleAddToWishlist = async () => {
     const token = sessionStorage.getItem("jwt");
 
     if (!token) {
-      alert("Please log in to add items to your wishlist.");
+      toast.error('Please log in to add items to wishlist', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        style: {
+          background: 'rgba(17, 24, 39, 0.95)',
+          border: '1px solid rgba(212, 175, 55, 0.2)',
+          color: '#fff',
+        },
+        icon: '⌚',
+      });
       return;
     }
 
-    console.log("Adding product to wishlist:", productId); // Debugging log
+    setIsLoading(true);
 
     try {
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/wishlist`, {
@@ -24,27 +43,75 @@ const AddtoWishListButton = ({ productId, onWishlistUpdate }) => {
       const data = await res.json();
 
       if (res.ok) {
-        console.log("Wishlist response:", data); // Debugging log
-        alert("✅ Item added to wishlist");
+        toast.success('Added to wishlist successfully', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          style: {
+            background: 'rgba(17, 24, 39, 0.95)',
+            border: '1px solid rgba(212, 175, 55, 0.2)',
+            color: '#fff',
+          },
+          icon: '⌚',
+        });
         if (onWishlistUpdate) {
           onWishlistUpdate(); // Optional callback to refresh the wishlist
         }
       } else {
-        console.error("Failed to add item to wishlist:", data.error);
-        alert("❌ " + data.error);
+        toast.error(data.error || 'Failed to add to wishlist', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          style: {
+            background: 'rgba(17, 24, 39, 0.95)',
+            border: '1px solid rgba(212, 175, 55, 0.2)',
+            color: '#fff',
+          },
+          icon: '⌚',
+        });
       }
     } catch (error) {
       console.error("Error adding to wishlist:", error);
-      alert("❌ Something went wrong");
+      toast.error('Error adding to wishlist', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        style: {
+          background: 'rgba(17, 24, 39, 0.95)',
+          border: '1px solid rgba(212, 175, 55, 0.2)',
+          color: '#fff',
+        },
+        icon: '⌚',
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <button
-      onClick={() => handleAddToWishlist(productId)}
-      className="bg-blue-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-600 transition"
+      onClick={handleAddToWishlist}
+      disabled={isLoading}
+      className="w-full py-2 px-4 bg-gradient-to-r from-gold to-gold-dark text-black font-semibold rounded-lg 
+        hover:opacity-90 transition-opacity duration-300 disabled:opacity-50 disabled:cursor-not-allowed
+        transform hover:scale-105 active:scale-95"
     >
-      Add to Wishlist
+      {isLoading ? "Adding..." : "Add to Wishlist"}
     </button>
   );
 };

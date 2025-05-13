@@ -1,15 +1,34 @@
+import { useState } from "react";
+import { toast } from 'react-toastify';
 import PropTypes from "prop-types";
 
-const AddToCartButton = ({ productId, onCartUpdate }) => {
-  const handleAddToCart = async (productId) => {
+const AddToCartButton = ({ productId, quantity = 1 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleAddToCart = async () => {
     const token = sessionStorage.getItem("jwt");
 
     if (!token) {
-      alert("Please log in to add items to your cart.");
+      toast.error('Please log in to add items to cart', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        style: {
+          background: 'rgba(17, 24, 39, 0.95)',
+          border: '1px solid rgba(212, 175, 55, 0.2)',
+          color: '#fff',
+        },
+        icon: '⌚',
+      });
       return;
     }
 
-    console.log("Adding product to cart:", productId); // Debugging log
+    setIsLoading(true);
 
     try {
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/cart`, {
@@ -18,40 +37,85 @@ const AddToCartButton = ({ productId, onCartUpdate }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ productId }),
+        body: JSON.stringify({ productId, quantity }),
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        console.log("Cart response:", data); // Debugging log
-        alert("✅ Item added to cart");
-        if (onCartUpdate) {
-          onCartUpdate(); // Optional callback to refresh the cart
-        }
+        toast.success('Added to cart successfully', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          style: {
+            background: 'rgba(17, 24, 39, 0.95)',
+            border: '1px solid rgba(212, 175, 55, 0.2)',
+            color: '#fff',
+          },
+          icon: '⌚',
+        });
       } else {
-        console.error("Failed to add item to cart:", data.error);
-        alert("❌ " + data.error);
+        toast.error(data.error || 'Failed to add to cart', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          style: {
+            background: 'rgba(17, 24, 39, 0.95)',
+            border: '1px solid rgba(212, 175, 55, 0.2)',
+            color: '#fff',
+          },
+          icon: '⌚',
+        });
       }
     } catch (error) {
       console.error("Error adding to cart:", error);
-      alert("❌ Something went wrong");
+      toast.error('Error adding to cart', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        style: {
+          background: 'rgba(17, 24, 39, 0.95)',
+          border: '1px solid rgba(212, 175, 55, 0.2)',
+          color: '#fff',
+        },
+        icon: '⌚',
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <button
-      onClick={() => handleAddToCart(productId)}
-      className="w-full px-10 py-4 bg-black text-white font-semibold text-lg rounded-lg shadow-md hover:bg-gold hover:text-black transition-colors duration-300 transform hover:scale-105 border-2 border-transparent hover:border-gold focus:outline-none focus:ring-2 focus:ring-gold"
+      onClick={handleAddToCart}
+      disabled={isLoading}
+      className="w-full py-2 px-4 bg-gradient-to-r from-gold to-gold-dark text-black font-semibold rounded-lg 
+        hover:opacity-90 transition-opacity duration-300 disabled:opacity-50 disabled:cursor-not-allowed
+        transform hover:scale-105 active:scale-95"
     >
-      Add to Cart
+      {isLoading ? "Adding..." : "Add to Cart"}
     </button>
   );
 };
 
 AddToCartButton.propTypes = {
   productId: PropTypes.string.isRequired,
-  onCartUpdate: PropTypes.func, // Optional callback to refresh the cart
+  quantity: PropTypes.number,
 };
 
 export default AddToCartButton;

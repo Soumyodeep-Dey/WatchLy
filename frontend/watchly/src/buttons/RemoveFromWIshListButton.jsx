@@ -1,15 +1,34 @@
+import { useState } from "react";
+import { toast } from 'react-toastify';
 import PropTypes from "prop-types";
 
 const RemoveFromWIshListButton = ({ productId, onWishlistUpdate }) => {
-  const handleRemove = async () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleRemoveFromWishlist = async () => {
     const token = sessionStorage.getItem("jwt");
 
     if (!token) {
-      alert("Please log in to remove items from your wishlist.");
+      toast.error('Please log in to remove items from wishlist', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        style: {
+          background: 'rgba(17, 24, 39, 0.95)',
+          border: '1px solid rgba(212, 175, 55, 0.2)',
+          color: '#fff',
+        },
+        icon: '⌚',
+      });
       return;
     }
 
-    console.log("Removing product from wishlist with productId:", productId); // Debugging log
+    setIsLoading(true);
 
     try {
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/wishlist/${productId}`, {
@@ -22,27 +41,75 @@ const RemoveFromWIshListButton = ({ productId, onWishlistUpdate }) => {
       const data = await res.json();
 
       if (res.ok) {
-        console.log("Wishlist response:", data); // Debugging log
-        alert("✅ Item removed from wishlist");
+        toast.success('Removed from wishlist successfully', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          style: {
+            background: 'rgba(17, 24, 39, 0.95)',
+            border: '1px solid rgba(212, 175, 55, 0.2)',
+            color: '#fff',
+          },
+          icon: '⌚',
+        });
         if (onWishlistUpdate) {
-          onWishlistUpdate(); // Callback to refresh the wishlist
+          onWishlistUpdate();
         }
       } else {
-        console.error("Failed to remove item:", data.error);
-        alert("❌ Failed to remove item");
+        toast.error(data.error || 'Failed to remove from wishlist', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          style: {
+            background: 'rgba(17, 24, 39, 0.95)',
+            border: '1px solid rgba(212, 175, 55, 0.2)',
+            color: '#fff',
+          },
+          icon: '⌚',
+        });
       }
     } catch (error) {
-      console.error("Error removing item from wishlist:", error);
-      alert("❌ Something went wrong");
+      console.error("Error removing from wishlist:", error);
+      toast.error('Error removing from wishlist', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        style: {
+          background: 'rgba(17, 24, 39, 0.95)',
+          border: '1px solid rgba(212, 175, 55, 0.2)',
+          color: '#fff',
+        },
+        icon: '⌚',
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <button
-      onClick={handleRemove}
-      className="bg-red-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-600 transition"
+      onClick={handleRemoveFromWishlist}
+      disabled={isLoading}
+      className="w-full py-2 px-4 bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold rounded-lg 
+        hover:opacity-90 transition-opacity duration-300 disabled:opacity-50 disabled:cursor-not-allowed
+        transform hover:scale-105 active:scale-95"
     >
-      Remove
+      {isLoading ? "Removing..." : "Remove from Wishlist"}
     </button>
   );
 };
