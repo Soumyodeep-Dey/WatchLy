@@ -81,88 +81,120 @@ function CartPage() {
     return total + itemPrice * item.quantity;
   }, 0);
 
-  if (loading) {
-    return <div className="text-center text-lg text-gray-700">Loading...</div>;
-  }
-
   return (
-    <div className="bg-black-rich min-h-screen py-12 px-6 text-white-off">
-      <h1 className="text-4xl font-bold text-center text-gold mb-12">
-        Your Cart
-      </h1>
+    <div className="min-h-screen py-16 px-6 bg-black-rich text-white-off relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black opacity-95"></div>
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gold opacity-5 animate-spin-slow"></div>
+        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gold opacity-5 animate-spin-slow-reverse"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gold/5 via-transparent to-transparent"></div>
+      </div>
 
-      {error && (
-        <div className="text-center text-red-500 text-lg mb-4">
-          {error}
-        </div>
-      )}
+      <div className="relative z-10">
+        <h1 className="text-4xl md:text-5xl font-bold text-center mb-16 text-gold relative">
+          Your Cart
+          <span className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-48 h-1 bg-gradient-to-r from-transparent via-gold to-transparent"></span>
+        </h1>
 
-      {cartItems.length > 0 ? (
-        <div className="max-w-6xl mx-auto space-y-8">
-          {cartItems.map((item) => (
-            <div
-              key={item._id}
-              className="bg-black border border-gold-dark rounded-xl p-6 shadow-lg flex items-center gap-6"
-            >
-              <img
-                src={item.productId.imageUrl}
-                alt={item.productId.name}
-                className="w-32 h-32 object-cover rounded-md cursor-pointer"
-                onClick={() => navigate(`/${item.productId.path}`)} // Navigate to product page
-              />
-              <div className="flex-grow">
-                <h2 className="text-xl font-semibold text-gold mb-2">
-                  {item.productId.name}
-                </h2>
-                <p className="text-gray-400 text-lg mb-4">
-                  Price: {item.productId.price}
-                </p>
-                <p className="text-gray-400 text-lg mb-4">
-                  Quantity: {item.quantity}
-                </p>
-                <div className="flex items-center gap-4">
-                  <button
-                    onClick={() => handleQuantityChange(item.productId._id, -1)}
-                    className="bg-red-500 text-white font-semibold py-1 px-3 rounded-lg hover:bg-red-600 transition"
-                  >
-                    -
-                  </button>
-                  <button
-                    onClick={() => handleQuantityChange(item.productId._id, 1)}
-                    className="bg-green-500 text-white font-semibold py-1 px-3 rounded-lg hover:bg-green-600 transition"
-                  >
-                    +
-                  </button>
+        {error && (
+          <div className="max-w-2xl mx-auto mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-center">
+            {error}
+          </div>
+        )}
+
+        {loading ? (
+          <div className="flex justify-center items-center min-h-[400px]">
+            <div className="w-16 h-16 border-4 border-gold border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        ) : cartItems.length > 0 ? (
+          <div className="max-w-6xl mx-auto space-y-8">
+            {cartItems.map((item) => (
+              <div
+                key={item._id}
+                className="group bg-gray-900/40 backdrop-blur-md border border-gold/20 rounded-2xl p-6 shadow-lg transform hover:scale-[1.02] transition-all duration-300"
+              >
+                <div className="flex flex-col md:flex-row items-center gap-6">
+                  <div className="relative w-48 h-48 overflow-hidden rounded-xl group-hover:shadow-2xl transition-all duration-300">
+                    <div className="absolute inset-0 bg-gradient-to-br from-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <img
+                      src={item.productId.imageUrl}
+                      alt={item.productId.name}
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300 cursor-pointer"
+                      onClick={() => navigate(`/${item.productId.path}`)}
+                    />
+                  </div>
+                  
+                  <div className="flex-grow text-center md:text-left">
+                    <h2 className="text-2xl font-semibold text-gold mb-3 group-hover:text-gold-light transition-colors duration-300">
+                      {item.productId.name}
+                    </h2>
+                    <p className="text-xl text-gray-300 mb-4">
+                      Price: <span className="text-gold">{item.productId.price}</span>
+                    </p>
+                    <div className="flex flex-col md:flex-row items-center gap-4">
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={() => handleQuantityChange(item.productId._id, -1)}
+                          className="w-10 h-10 flex items-center justify-center bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/30 transition-colors duration-300"
+                        >
+                          -
+                        </button>
+                        <span className="text-xl font-semibold text-gold">{item.quantity}</span>
+                        <button
+                          onClick={() => handleQuantityChange(item.productId._id, 1)}
+                          className="w-10 h-10 flex items-center justify-center bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 transition-colors duration-300"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-3">
+                    <RemoveFromCartButton
+                      productId={item.productId._id}
+                      onCartUpdate={fetchCartItems}
+                    />
+                    <AddtoWishListButton productId={item.productId._id} />
+                  </div>
                 </div>
               </div>
-              <div className="flex flex-col gap-2">
-                <RemoveFromCartButton
-                  productId={item.productId._id}
-                  onCartUpdate={fetchCartItems} // Refresh the cart after removal
-                />
-                <AddtoWishListButton productId={item.productId._id} />
-              </div>
-            </div>
-          ))}
+            ))}
 
-          {/* Display Total Price */}
-          <div className="text-right text-2xl font-bold text-gold mt-8">
-            Total: ${totalPrice.toFixed(2)}
+            {/* Total Price Section */}
+            <div className="mt-12 p-6 bg-gray-900/40 backdrop-blur-md border border-gold/20 rounded-2xl">
+              <div className="flex justify-between items-center">
+                <span className="text-2xl text-gray-300">Total Amount:</span>
+                <span className="text-3xl font-bold text-gold">${totalPrice.toFixed(2)}</span>
+              </div>
+              <button
+                className="w-full mt-6 py-3 bg-gradient-to-r from-gold to-gold-dark text-black font-semibold rounded-lg hover:opacity-90 transition-opacity duration-300"
+                onClick={() => navigate("/checkout")}
+              >
+                Proceed to Checkout
+              </button>
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="text-center">
-          <p className="text-lg text-gray-500">
-            Your cart is empty. Add items to your cart to see them here!
-          </p>
-          <button
-            className="mt-4 bg-gradient-gold px-6 py-2 rounded-md text-black font-semibold hover:opacity-90 transition"
-            onClick={() => navigate("/products")}
-          >
-            Shop Now
-          </button>
-        </div>
-      )}
+        ) : (
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="mb-8">
+              <svg className="w-24 h-24 mx-auto text-gold/20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+            </div>
+            <p className="text-xl text-gray-400 mb-8">
+              Your cart is empty. Discover our collection of premium timepieces!
+            </p>
+            <button
+              className="px-8 py-3 bg-gradient-to-r from-gold to-gold-dark text-black font-semibold rounded-lg hover:opacity-90 transition-opacity duration-300"
+              onClick={() => navigate("/products")}
+            >
+              Explore Watches
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
