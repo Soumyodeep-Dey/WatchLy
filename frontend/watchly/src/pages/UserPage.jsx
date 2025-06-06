@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 const UserPage = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [formData, setFormData] = useState({ name: "", email: "", address: "", phone: "" });
   const [passwordData, setPasswordData] = useState({ currentPassword: "", newPassword: "" });
@@ -12,7 +15,25 @@ const UserPage = () => {
     const token = sessionStorage.getItem("jwt");
 
     if (!token) {
-      alert("Please log in to view your profile.");
+      toast.error('Please log in to view your profile', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        style: {
+          background: 'rgba(17, 24, 39, 0.95)',
+          border: '1px solid rgba(212, 175, 55, 0.2)',
+          color: '#fff',
+        },
+        icon: '⌚',
+      });
+      setTimeout(() => {
+        navigate("/login");
+      }, 1000);
       return;
     }
 
@@ -39,7 +60,7 @@ const UserPage = () => {
       })
       .catch((error) => console.error("Error fetching user details:", error))
       .finally(() => setLoading(false));
-  }, []);
+  }, [navigate]);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

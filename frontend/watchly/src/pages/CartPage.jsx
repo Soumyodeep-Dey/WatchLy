@@ -15,7 +15,25 @@ function CartPage() {
     const token = sessionStorage.getItem("jwt");
 
     if (!token) {
-      alert("Please log in to view your cart.");
+      toast.error('Please log in to view your cart', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        style: {
+          background: 'rgba(17, 24, 39, 0.95)',
+          border: '1px solid rgba(212, 175, 55, 0.2)',
+          color: '#fff',
+        },
+        icon: '⌚',
+      });
+      setTimeout(() => {
+        navigate("/login");
+      }, 1000);
       return;
     }
 
