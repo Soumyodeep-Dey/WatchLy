@@ -344,8 +344,8 @@ const HomePage = () => {
           key="cta-bg"
           initial={{ opacity: 0 }}
           animate={{ 
-            opacity: [0.2, 0.3, 0.2],
-            scale: [1, 1.02, 1]
+            opacity: [0.1, 0.2, 0.1],
+            backgroundPosition: ['0% 0%', '100% 100%', '0% 0%']
           }}
           transition={{ 
             opacity: { 
@@ -353,34 +353,67 @@ const HomePage = () => {
               repeat: Infinity,
               ease: "easeInOut"
             },
+            backgroundPosition: {
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear"
+            }
+          }}
+          className="absolute inset-0 bg-gradient-to-r from-gold-dark/20 via-gold-light/20 to-gold-dark/20 backdrop-blur-sm"
+          style={{
+            backgroundSize: '200% 200%'
+          }}
+        />
+        <motion.div 
+          key="cta-container"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ 
+            opacity: 1, 
+            y: 0,
+            scale: [1, 1.01, 1]
+          }}
+          transition={{ 
+            y: { duration: 0.8 },
             scale: { 
               duration: 4,
               repeat: Infinity,
               ease: "easeInOut"
             }
           }}
-          className="absolute inset-0 bg-gradient-to-r from-gold-dark/20 to-gold-light/20 backdrop-blur-sm"
-        />
-        <motion.div 
-          key="cta-container"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ 
-            duration: 0.8,
-            type: "spring",
-            stiffness: 100
-          }}
           className="relative z-10 max-w-4xl mx-auto text-center"
         >
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ 
+              opacity: 1,
+              y: [0, -5, 0]
+            }}
+            transition={{ 
+              opacity: { duration: 0.6 },
+              y: { 
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }
+            }}
+            className="mb-8"
+          >
+            <span className="text-6xl">⌚</span>
+          </motion.div>
           <motion.h2 
             key="cta-heading"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0 }}
+            animate={{ 
+              opacity: 1,
+              y: [0, -5, 0]
+            }}
             transition={{ 
-              duration: 0.6,
-              delay: 0.2,
-              type: "spring",
-              stiffness: 150
+              opacity: { duration: 0.6 },
+              y: { 
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }
             }}
             className="text-4xl md:text-5xl font-bold mb-6 text-white"
           >
@@ -388,13 +421,22 @@ const HomePage = () => {
             <motion.span 
               key="cta-watch"
               className="text-gold inline-block"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ 
+                opacity: 1,
+                textShadow: [
+                  '0 0 5px rgba(212,175,55,0.5)',
+                  '0 0 20px rgba(212,175,55,0.8)',
+                  '0 0 5px rgba(212,175,55,0.5)'
+                ]
+              }}
               transition={{ 
-                duration: 0.5,
-                delay: 0.5,
-                type: "spring",
-                stiffness: 200
+                opacity: { duration: 0.5 },
+                textShadow: {
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }
               }}
             >
               Watch
@@ -402,35 +444,58 @@ const HomePage = () => {
           </motion.h2>
           <motion.p 
             key="cta-description"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ 
+              opacity: 1,
+              y: [0, -3, 0]
+            }}
             transition={{ 
-              duration: 0.6,
-              delay: 0.4
+              opacity: { duration: 0.6 },
+              y: {
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }
             }}
             className="text-lg md:text-xl mb-10 text-gray-300 leading-relaxed"
           >
             Find a watch that perfectly matches your style and needs. 
             Explore our exclusive collection today and make a statement that lasts.
           </motion.p>
-          <motion.button
-            key="cta-button"
-            whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(212,175,55,0.3)" }}
-            whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ 
-              duration: 0.6,
-              delay: 0.6,
-              type: "spring",
-              stiffness: 150
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ 
+              opacity: 1,
+              y: [0, -3, 0]
             }}
-            className="bg-black text-gold px-8 py-4 rounded-full font-semibold text-lg
-              border-2 border-gold hover:bg-gold hover:text-black transition-all duration-300"
-            onClick={() => navigate("/contact")}
+            transition={{ 
+              opacity: { duration: 0.6 },
+              y: {
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }
+            }}
           >
-            Get Your Custom Watch
-          </motion.button>
+            <motion.button
+              key="cta-button"
+              whileHover={{ 
+                scale: 1.05, 
+                boxShadow: "0 0 30px rgba(212,175,55,0.3)",
+                backgroundColor: "#D4AF37",
+                color: "#000"
+              }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6 }}
+              className="bg-black text-gold px-8 py-4 rounded-full font-semibold text-lg
+                border-2 border-gold transition-all duration-300"
+              onClick={() => navigate("/contact")}
+            >
+              Get Your Custom Watch
+            </motion.button>
+          </motion.div>
         </motion.div>
       </section>
     </div>
