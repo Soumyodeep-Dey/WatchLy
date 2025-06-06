@@ -159,26 +159,79 @@ const HomePage = () => {
 
       {/* Call to Action Section */}
       <section className="cta relative py-24 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-gold-dark/20 to-gold-light/20 backdrop-blur-sm"></div>
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          key="cta-bg"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="absolute inset-0 bg-gradient-to-r from-gold-dark/20 to-gold-light/20 backdrop-blur-sm"
+        />
+        <motion.div 
+          key="cta-container"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ 
+            duration: 0.8,
+            type: "spring",
+            stiffness: 100
+          }}
           className="relative z-10 max-w-4xl mx-auto text-center"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-            Discover Your Perfect <span className="text-gold">Watch</span>
-          </h2>
-          <p className="text-lg md:text-xl mb-10 text-gray-300 leading-relaxed">
+          <motion.h2 
+            key="cta-heading"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ 
+              duration: 0.6,
+              delay: 0.2,
+              type: "spring",
+              stiffness: 150
+            }}
+            className="text-4xl md:text-5xl font-bold mb-6 text-white"
+          >
+            Discover Your Perfect{" "}
+            <motion.span 
+              key="cta-watch"
+              className="text-gold inline-block"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ 
+                duration: 0.5,
+                delay: 0.5,
+                type: "spring",
+                stiffness: 200
+              }}
+            >
+              Watch
+            </motion.span>
+          </motion.h2>
+          <motion.p 
+            key="cta-description"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 0.6,
+              delay: 0.4
+            }}
+            className="text-lg md:text-xl mb-10 text-gray-300 leading-relaxed"
+          >
             Find a watch that perfectly matches your style and needs. 
             Explore our exclusive collection today and make a statement that lasts.
-          </p>
+          </motion.p>
           <motion.button
-            whileHover={{ scale: 1.05 }}
+            key="cta-button"
+            whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(212,175,55,0.3)" }}
             whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 0.6,
+              delay: 0.6,
+              type: "spring",
+              stiffness: 150
+            }}
             className="bg-black text-gold px-8 py-4 rounded-full font-semibold text-lg
-              border-2 border-gold hover:bg-gold hover:text-black transition-all duration-300
-              hover:shadow-[0_0_30px_rgba(212,175,55,0.3)]"
+              border-2 border-gold hover:bg-gold hover:text-black transition-all duration-300"
             onClick={() => navigate("/contact")}
           >
             Get Your Custom Watch
