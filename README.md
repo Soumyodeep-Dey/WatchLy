@@ -52,6 +52,13 @@
 - MongoDB
 - Git
 
+### Getting Started
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/soumyodeep-dey/Watchly.git
+   cd Watchly
+   ```
+
 ### Frontend Setup
 1. Navigate to the frontend directory:
    ```bash
