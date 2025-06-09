@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import AddToCartButton from "../buttons/AddToCartButton";
 import AddtoWishListButtom from "../buttons/AddtoWishListButtom";
 
@@ -60,6 +61,23 @@ const WatchDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-black text-white py-16 px-4 md:px-8">
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        toastStyle={{
+          background: 'rgba(17, 24, 39, 0.95)',
+          border: '1px solid rgba(212, 175, 55, 0.2)',
+          color: '#fff',
+        }}
+      />
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
