@@ -33,8 +33,8 @@ function AllClassicPage() {
     setSortedProducts(sorted);
   };
 
-  const handleViewDetails = (path) => {
-    navigate(`/${path}`);
+  const handleViewDetails = (watchId) => {
+    navigate(`/watch/${watchId}`);
   };
 
   return (
@@ -88,7 +88,7 @@ function AllClassicPage() {
                       className="w-full py-3 bg-gradient-to-r from-gold-light to-gold-dark text-black font-semibold text-lg 
                         rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-gold/20
                         focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-gray-800"
-                      onClick={() => handleViewDetails(product.path)}
+                      onClick={() => handleViewDetails(product._id)}
                     >
                       View Details
                     </button>

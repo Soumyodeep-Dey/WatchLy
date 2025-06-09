@@ -107,7 +107,10 @@ const AddToCartButton = ({ productId, onCartUpdate }) => {
     <button
       onClick={handleAddToCart}
       disabled={isLoading}
-      className="w-full px-10 py-4 bg-black text-white font-semibold text-lg rounded-lg shadow-md hover:bg-gold hover:text-black transition-colors duration-300 transform hover:scale-105 border-2 border-transparent hover:border-gold focus:outline-none focus:ring-2 focus:ring-gold"
+      className="w-full bg-gradient-to-r from-gold-light to-gold-dark text-black px-8 py-4 
+        rounded-full font-semibold text-lg hover:shadow-[0_0_30px_rgba(212,175,55,0.3)] 
+        transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed
+        transform hover:scale-105 active:scale-95"
     >
       {isLoading ? "Adding..." : "Add to Cart"}
     </button>

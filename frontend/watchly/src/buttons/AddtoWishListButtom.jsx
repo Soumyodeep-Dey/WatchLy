@@ -107,8 +107,9 @@ const AddtoWishListButton = ({ productId, onWishlistUpdate }) => {
     <button
       onClick={handleAddToWishlist}
       disabled={isLoading}
-      className="w-full py-2 px-4 bg-gradient-to-r from-gold to-gold-dark text-black font-semibold rounded-lg 
-        hover:opacity-90 transition-opacity duration-300 disabled:opacity-50 disabled:cursor-not-allowed
+      className="w-full border-2 border-gold text-gold px-8 py-4 rounded-full 
+        font-semibold text-lg hover:bg-gold hover:text-black 
+        transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed
         transform hover:scale-105 active:scale-95"
     >
       {isLoading ? "Adding..." : "Add to Wishlist"}

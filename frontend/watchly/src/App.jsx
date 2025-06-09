@@ -12,12 +12,7 @@ import AllClassicPage from './pages/AllClassicPage';
 import AllLuxuaryPage from './pages/AllLuxuaryPage';
 import WishlistPage from './pages/WishlistPage';
 import CartPage from './pages/CartPage';
-import DayDateGreen from './watches/DayDateGreen';
-import DayDateBlue from './watches/DayDateBlue';
-import LadyDateJust from './watches/LadyDateJust';
-import Submariner from './watches/Submariner';
-import YachtMaster from './watches/YachtMaster';
-import GMTmaster from './watches/GMTmaster';
+import WatchDetailPage from './pages/WatchDetailPage';
 import Login from './pages/LoginPage'; // Import Login page
 import Signup from './pages/SignUpPage'; // Import Sign-up page
 import UserPage from './pages/UserPage';
@@ -62,16 +57,9 @@ const App = () => {
 
                         <Route path="/all-classic-products" element={<AllClassicPage />} />
                         {/* all classic watches */}
-                        <Route path="/Rolex+Oyster+Perpetual+Day-Date+36+Green" element={<DayDateGreen />} />
-                        <Route path="/Rolex+Lady-Datejust+watch" element={<LadyDateJust />} />
-                        <Route path="/Rolex+Oyster+Perpetual+Day-Date+36+Blue" element={<DayDateBlue />} />
-
-
                         <Route path="/all-luxury-products" element={<AllLuxuaryPage />} />
                         {/* all luxury watches */}
-                        <Route path="/Rolex+Yacht+Master+II" element={<YachtMaster />} />
-                        <Route path="/Rolex+GMT+Master+II" element={<GMTmaster />} />
-                        <Route path="/Rolex+Submariner" element={<Submariner />} />
+                        <Route path="/watch/:id" element={<WatchDetailPage />} />
 
                         {/* Other routes */}
                         <Route path="/user" element={<UserPage />} />

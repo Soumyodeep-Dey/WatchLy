@@ -25,8 +25,8 @@ const HomePage = () => {
     return () => clearInterval(interval);
   }, [featuredProducts.length]);
 
-  const handleViewDetails = (path) => {
-    navigate(`/${path}`);
+  const handleViewDetails = (watchId) => {
+    navigate(`/watch/${watchId}`);
   };
 
   const visibleProducts = featuredProducts.slice(currentIndex, currentIndex + 3);
@@ -252,7 +252,7 @@ const HomePage = () => {
                   className="w-full bg-gradient-to-r from-gold-light to-gold-dark text-black px-6 py-3 
                     rounded-lg font-medium text-lg hover:shadow-[0_0_20px_rgba(212,175,55,0.3)] 
                     transition-all duration-300"
-                  onClick={() => handleViewDetails(product.path)}
+                  onClick={() => handleViewDetails(product._id)}
                 >
                   View Details
                 </motion.button>
