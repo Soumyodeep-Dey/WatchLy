@@ -2,14 +2,29 @@
 
 **Watchly** is a large-scale e-commerce platform focused on selling wristwatches, designed to provide users with an enhanced shopping experience through advanced features. The platform is built using a scalable **MERN stack** architecture, aiming to handle high traffic and offer real-time analytics.
 
-## Features (In Progress)
+## Features
 
-- **Search, Sorting, and Filtering:** Users can efficiently find products using advanced search, sorting, and filtering options.
-- **Infinite Scroll:** The product listings are designed to load seamlessly as users scroll down the page.
-- **Personalized Recommendation System:** An AI-powered recommendation engine to suggest products based on user preferences.
-- **Virtual Try-On Feature:** Users can virtually try on watches using AR technology (planned for future development).
-- **AI-Powered Style Advisor:** Offers style suggestions to users based on current trends and personal tastes (planned for future development).
-- **Real-Time Analytics:** Tracks user behavior and provides real-time insights (planned for future development).
+### V1 (Current Release)
+- **User Authentication:** Secure login and signup functionality
+- **Product Browsing:** Browse watches by categories (Classic, Luxury)
+- **Product Details:** Detailed view of each watch with specifications
+- **Shopping Cart:** Add, remove, and manage items in cart
+- **Wishlist:** Save favorite watches for later
+- **User Profile:** Manage personal information and orders
+- **Responsive Design:** Mobile-friendly interface
+- **Contact & About:** Information about the platform and contact details
+
+### V2 (Planned Features)
+- **Advanced Search & Filtering:** Enhanced product search with multiple filters
+- **Infinite Scroll:** Seamless product loading as users scroll
+- **Personalized Recommendations:** AI-powered product suggestions
+- **Virtual Try-On:** AR technology for virtual watch try-on
+- **AI Style Advisor:** Smart style suggestions based on trends
+- **Real-Time Analytics:** User behavior tracking and insights
+- **Order Tracking:** Real-time order status updates
+- **Payment Integration:** Multiple payment gateway support
+- **Reviews & Ratings:** User reviews and rating system
+- **Social Sharing:** Share products on social media
 
 ## Technologies Used
 
