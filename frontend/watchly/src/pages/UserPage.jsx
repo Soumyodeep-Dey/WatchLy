@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UserPage = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const UserPage = () => {
     const token = sessionStorage.getItem("jwt");
 
     if (!token) {
-      toast.error('Please log in to view your profile', {
+      toast.error('Please log in to view this', {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -144,6 +145,23 @@ const UserPage = () => {
 
   return (
     <div className="min-h-screen py-16 px-6 bg-black-rich text-white-off relative overflow-hidden">
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        toastStyle={{
+          background: 'rgba(17, 24, 39, 0.95)',
+          border: '1px solid rgba(212, 175, 55, 0.2)',
+          color: '#fff',
+        }}
+      />
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black opacity-95"></div>
       <div className="absolute inset-0 overflow-hidden">

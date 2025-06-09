@@ -32,6 +32,9 @@ function WishlistPage() {
         },
         icon: '⌚',
       });
+      setTimeout(() => {
+        navigate("/login");
+      }, 1000);
       return;
     }
 
