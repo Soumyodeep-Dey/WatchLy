@@ -31,33 +31,10 @@ const Header = () => {
       });
       if (res.ok) {
         const data = await res.json();
-        const newCount = data.cartItems.length;
-        if (newCount > cartCount) {
-          toast.success('Item added to cart! 🛍️', {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
-        }
-        setCartCount(newCount);
+        setCartCount(data.cartItems.length);
       }
     } catch (error) {
       console.error("Error fetching cart count:", error);
-      toast.error('Failed to update cart! 😔', {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
     }
   };
 
@@ -73,33 +50,10 @@ const Header = () => {
       });
       if (res.ok) {
         const data = await res.json();
-        const newCount = data.wishlistItems.length;
-        if (newCount > wishlistCount) {
-          toast.success('Added to wishlist! ❤️', {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
-        }
-        setWishlistCount(newCount);
+        setWishlistCount(data.wishlistItems.length);
       }
     } catch (error) {
       console.error("Error fetching wishlist count:", error);
-      toast.error('Failed to update wishlist! 😔', {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
     }
   };
 
@@ -210,115 +164,119 @@ const Header = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {/* Search Bar */}
-            <div className="relative w-[500px]" ref={searchContainerRef}>
-              <form onSubmit={handleSearchSubmit} className="relative group">
+            <div className="flex-1 max-w-2xl mx-8" ref={searchContainerRef}>
+              <form onSubmit={handleSearchSubmit} className="relative">
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={handleSearchChange}
-                  placeholder="Search for watches..."
-                  className="w-full bg-black/80 text-white border-2 border-gold/30 rounded-full pl-5 pr-12 py-3 
-                    placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold
-                    transition-all duration-300 hover:border-gold/50 group-hover:border-gold/50
-                    shadow-lg shadow-gold/5"
+                  placeholder="Search watches..."
+                  className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg 
+                    focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent
+                    placeholder-gray-400 text-white"
                 />
-                <FaSearch className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gold/80 
-                  group-hover:text-gold transition-all duration-300 text-lg" />
+                <button
+                  type="submit"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gold"
+                >
+                  <FaSearch />
+                </button>
+
+                {/* Search Suggestions */}
+                {suggestions.length > 0 && (
+                  <div className="absolute z-50 w-full mt-2 bg-gray-800/95 border border-gray-700 rounded-lg shadow-lg">
+                    {suggestions.map((suggestion, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleSearchSelect(suggestion.path)}
+                        className="w-full px-4 py-2 text-left text-white hover:bg-gray-700/50 
+                          transition-colors duration-200 first:rounded-t-lg last:rounded-b-lg"
+                      >
+                        {suggestion.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </form>
-              {/* Search Suggestions */}
-              {suggestions.length > 0 && (
-                <ul className="absolute left-0 right-0 bg-black/95 backdrop-blur-md text-white rounded-lg shadow-xl mt-2 z-10 
-                  border-2 border-gold/20 overflow-hidden transform origin-top transition-all duration-300">
-                  {suggestions.map((suggestion) => (
-                    <li
-                      key={suggestion._id}
-                      className="px-5 py-3.5 hover:bg-gold/10 hover:text-gold cursor-pointer transition-all duration-300
-                        border-b border-gold/10 last:border-b-0 flex items-center space-x-3"
-                      onClick={() => handleSearchSelect(suggestion.path)}
-                    >
-                      <FaSearch className="text-gold/60 w-4 h-4" />
-                      <span className="text-base">{suggestion.name}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
             </div>
 
             {/* Navigation Links */}
             <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-6">
-                <Link 
-                  to="/products" 
-                  className="hover:text-gold transition-all duration-300 relative group whitespace-nowrap"
-                >
-                  Products
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-gold to-gold-dark group-hover:w-full transition-all duration-300"></span>
-                </Link>
-                <Link 
-                  to="/about" 
-                  className="hover:text-gold transition-all duration-300 relative group whitespace-nowrap"
-                >
-                  About
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-gold to-gold-dark group-hover:w-full transition-all duration-300"></span>
-                </Link>
-                <Link 
-                  to="/contact" 
-                  className="hover:text-gold transition-all duration-300 relative group whitespace-nowrap"
-                >
-                  Contact Us
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-gold to-gold-dark group-hover:w-full transition-all duration-300"></span>
-                </Link>
-              </div>
+              <Link
+                to="/products"
+                className={`text-lg font-medium hover:text-gold transition-colors duration-300 ${
+                  location.pathname === "/products" ? "text-gold" : "text-white"
+                }`}
+              >
+                Products
+              </Link>
+              <Link
+                to="/about"
+                className={`text-lg font-medium hover:text-gold transition-colors duration-300 ${
+                  location.pathname === "/about" ? "text-gold" : "text-white"
+                }`}
+              >
+                About
+              </Link>
+              <Link
+                to="/contact"
+                className={`text-lg font-medium hover:text-gold transition-colors duration-300 ${
+                  location.pathname === "/contact" ? "text-gold" : "text-white"
+                }`}
+              >
+                Contact
+              </Link>
+            </div>
 
-              <div className="flex items-center space-x-6">
-                {!isLoggedIn && (
-                  <Link 
-                    to="/login" 
-                    className="hover:text-gold transition-all duration-300 relative group whitespace-nowrap"
+            {/* User Actions */}
+            <div className="flex items-center space-x-4">
+              {isLoggedIn ? (
+                <>
+                  <Link
+                    to="/wishlist"
+                    className="relative text-white hover:text-gold transition-colors duration-300"
                   >
-                    Login
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-gold to-gold-dark group-hover:w-full transition-all duration-300"></span>
+                    <FaHeart className="text-xl" />
+                    {wishlistCount > 0 && (
+                      <span className="absolute -top-2 -right-2 bg-gold text-black text-xs font-bold 
+                        rounded-full w-5 h-5 flex items-center justify-center">
+                        {wishlistCount}
+                      </span>
+                    )}
                   </Link>
-                )}
-                <Link 
-                  to="/wishlist" 
-                  className="text-white hover:text-gold transition-all duration-300 transform hover:scale-110 relative group"
-                >
-                  <FaHeart />
-                  {wishlistCount > 0 && (
-                    <span className="absolute -top-2 -right-2 w-4 h-4 bg-gold rounded-full text-black text-xs flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300">
-                      {wishlistCount}
-                    </span>
-                  )}
-                </Link>
-                <Link 
-                  to="/cart" 
-                  className="text-white hover:text-gold transition-all duration-300 transform hover:scale-110 relative group"
-                >
-                  <FaShoppingCart />
-                  {cartCount > 0 && (
-                    <span className="absolute -top-2 -right-2 w-4 h-4 bg-gold rounded-full text-black text-xs flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300">
-                      {cartCount}
-                    </span>
-                  )}
-                </Link>
-                <button
-                  onClick={() => navigate("/user")}
-                  className="text-white hover:text-gold transition-all duration-300 transform hover:scale-110"
-                >
-                  <FaUser />
-                </button>
-                {isLoggedIn && (
+                  <Link
+                    to="/cart"
+                    className="relative text-white hover:text-gold transition-colors duration-300"
+                  >
+                    <FaShoppingCart className="text-xl" />
+                    {cartCount > 0 && (
+                      <span className="absolute -top-2 -right-2 bg-gold text-black text-xs font-bold 
+                        rounded-full w-5 h-5 flex items-center justify-center">
+                        {cartCount}
+                      </span>
+                    )}
+                  </Link>
+                  <Link
+                    to="/user"
+                    className="text-white hover:text-gold transition-colors duration-300"
+                  >
+                    <FaUser className="text-xl" />
+                  </Link>
                   <button
                     onClick={handleLogout}
-                    className="bg-gradient-to-r from-gold to-gold-dark text-black px-4 py-1.5 rounded-lg font-medium 
-                      hover:opacity-90 transition-all duration-300 transform hover:scale-105
-                      shadow-lg hover:shadow-xl whitespace-nowrap"
+                    className="bg-gold text-black px-4 py-2 rounded-lg font-medium hover:bg-gold-light transition"
                   >
                     Logout
                   </button>
-                )}
-              </div>
+                </>
+              ) : (
+                <Link
+                  to="/login"
+                  className="bg-gold text-black px-4 py-2 rounded-lg font-medium hover:bg-gold-light transition"
+                >
+                  Login
+                </Link>
+              )}
             </div>
           </div>
         </nav>
