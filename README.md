@@ -1,6 +1,6 @@
 # Watchly
 
-**Watchly** is a large-scale e-commerce platform focused on selling wristwatches, designed to provide users with an enhanced shopping experience through advanced features. The platform is built using a scalable **MERN stack** architecture, aiming to handle high traffic and offer real-time analytics. Currently, only the frontend part of the project is available on GitHub, and the development is ongoing.
+**Watchly** is a large-scale e-commerce platform focused on selling wristwatches, designed to provide users with an enhanced shopping experience through advanced features. The platform is built using a scalable **MERN stack** architecture, aiming to handle high traffic and offer real-time analytics.
 
 ## Features (In Progress)
 
@@ -13,14 +13,63 @@
 
 ## Technologies Used
 
-- **React:** For building the user interface.
-- **Tailwind CSS:** For rapid and responsive UI development with utility-first styling.
-- **JavaScript:** For implementing interactive features on the frontend.
+### Frontend
+- **React 18:** For building the user interface
+- **Vite:** For fast development and optimized builds
+- **Tailwind CSS:** For rapid and responsive UI development
+- **Framer Motion:** For smooth animations and transitions
+- **React Router DOM:** For client-side routing
+- **React Toastify:** For toast notifications
+- **Font Awesome & React Icons:** For iconography
+
+### Backend
+- **Node.js & Express:** For the server and API
+- **MongoDB & Mongoose:** For database and ODM
+- **JWT:** For authentication
+- **Bcrypt:** For password hashing
+- **CORS:** For cross-origin resource sharing
+- **Dotenv:** For environment variable management
 
 ## Project Setup
 
-To run the frontend part of this project locally:
+### Prerequisites
+- Node.js (v18 or higher)
+- MongoDB
+- Git
 
-1. Clone the repository:
+### Frontend Setup
+1. Navigate to the frontend directory:
    ```bash
-   git clone https://github.com/soumyodeep-dey/Watchly.git
+   cd frontend/watchly
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+### Backend Setup
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create a `.env` file with necessary environment variables
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the ISC License.
