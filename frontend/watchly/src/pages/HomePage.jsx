@@ -329,7 +329,20 @@ const HomePage = () => {
                   border border-gold-dark/30 hover:border-gold-dark hover:shadow-[0_0_30px_rgba(212,175,55,0.2)]
                   transition-all duration-300"
               >
-                <div className="text-4xl mb-4">{feature.icon}</div>
+                <motion.div 
+                  className="text-4xl mb-4"
+                  animate={{ 
+                    scale: [1, 1.1, 1],
+                    rotate: [0, 5, 0]
+                  }}
+                  transition={{ 
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  {feature.icon}
+                </motion.div>
                 <h3 className="text-xl font-semibold text-gold mb-3">{feature.title}</h3>
                 <p className="text-gray-400">{feature.description}</p>
               </motion.div>
