@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaHeart, FaShoppingCart, FaSearch, FaUser, FaBars } from "react-icons/fa";
 import { fetchSearchSuggestions } from "../functions/SearchFunction";
 import { AuthContext } from "../auth/AuthContext";
+import { useCartWishlist } from "../context/CartWishlistContext";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -10,62 +11,13 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const [cartCount, setCartCount] = useState(0);
-  const [wishlistCount, setWishlistCount] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
   const searchContainerRef = useRef(null);
 
   // Use global auth context
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
-
-  const fetchCartCount = async () => {
-    const token = sessionStorage.getItem("jwt");
-    if (!token) return;
-
-    try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/cart`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setCartCount(data.cartItems.length);
-      }
-    } catch (error) {
-      console.error("Error fetching cart count:", error);
-    }
-  };
-
-  const fetchWishlistCount = async () => {
-    const token = sessionStorage.getItem("jwt");
-    if (!token) return;
-
-    try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/wishlist`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setWishlistCount(data.wishlistItems.length);
-      }
-    } catch (error) {
-      console.error("Error fetching wishlist count:", error);
-    }
-  };
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      fetchCartCount();
-      fetchWishlistCount();
-    } else {
-      setCartCount(0);
-      setWishlistCount(0);
-    }
-  }, [isLoggedIn]);
+  const { cartCount, wishlistCount } = useCartWishlist();
 
   const handleLogout = () => {
     sessionStorage.removeItem("jwt");

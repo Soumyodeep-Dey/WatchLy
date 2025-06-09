@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { toast } from 'react-toastify';
 import PropTypes from "prop-types";
+import { useCartWishlist } from "../context/CartWishlistContext";
 
 const AddToCartButton = ({ productId, onCartUpdate }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const { updateCartCount } = useCartWishlist();
 
   const handleAddToCart = async () => {
     const token = sessionStorage.getItem("jwt");
@@ -59,6 +61,16 @@ const AddToCartButton = ({ productId, onCartUpdate }) => {
           },
           icon: '⌚',
         });
+        // Update the cart count in the context
+        const cartRes = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/cart`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (cartRes.ok) {
+          const cartData = await cartRes.json();
+          updateCartCount(cartData.cartItems.length);
+        }
         if (onCartUpdate) {
           onCartUpdate();
         }

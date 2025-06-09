@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { toast } from 'react-toastify';
 import PropTypes from "prop-types";
+import { useCartWishlist } from "../context/CartWishlistContext";
 
 const RemoveFromWIshListButton = ({ productId, onWishlistUpdate }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const { updateWishlistCount } = useCartWishlist();
 
   const handleRemoveFromWishlist = async () => {
     const token = sessionStorage.getItem("jwt");
@@ -57,6 +59,16 @@ const RemoveFromWIshListButton = ({ productId, onWishlistUpdate }) => {
           },
           icon: '⌚',
         });
+        // Update the wishlist count in the context
+        const wishlistRes = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/wishlist`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (wishlistRes.ok) {
+          const wishlistData = await wishlistRes.json();
+          updateWishlistCount(wishlistData.wishlistItems.length);
+        }
         if (onWishlistUpdate) {
           onWishlistUpdate();
         }

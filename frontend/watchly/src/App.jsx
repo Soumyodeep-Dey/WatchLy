@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './auth/AuthContext'; // Import AuthProvider
+import { CartWishlistProvider } from './context/CartWishlistContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Layout from './components/Layout';
@@ -20,55 +21,57 @@ import UserPage from './pages/UserPage';
 const App = () => {
     return (
         <AuthProvider>
-            <Router>
-                <ToastContainer
-                    position="top-right"
-                    autoClose={3000}
-                    hideProgressBar={false}
-                    newestOnTop
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="dark"
-                    toastStyle={{
-                        background: 'rgba(17, 24, 39, 0.95)',
-                        border: '1px solid rgba(212, 175, 55, 0.2)',
-                        color: '#fff',
-                    }}
-                />
-                {/* Layout provides consistent Header and Footer */}
-                <Layout>
-                    <Routes>
-                        {/* Define routes for each page */}
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/products" element={<ProductsPage />} />
-                        <Route path="/about" element={<AboutPage />} />
-                        <Route path="/contact" element={<ContactPage />} />
-                        <Route path="/wishlist" element={<WishlistPage />} />
-                        <Route path="/cart" element={<CartPage />} />
+            <CartWishlistProvider>
+                <Router>
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={3000}
+                        hideProgressBar={false}
+                        newestOnTop
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="dark"
+                        toastStyle={{
+                            background: 'rgba(17, 24, 39, 0.95)',
+                            border: '1px solid rgba(212, 175, 55, 0.2)',
+                            color: '#fff',
+                        }}
+                    />
+                    {/* Layout provides consistent Header and Footer */}
+                    <Layout>
+                        <Routes>
+                            {/* Define routes for each page */}
+                            <Route path="/" element={<HomePage />} />
+                            <Route path="/products" element={<ProductsPage />} />
+                            <Route path="/about" element={<AboutPage />} />
+                            <Route path="/contact" element={<ContactPage />} />
+                            <Route path="/wishlist" element={<WishlistPage />} />
+                            <Route path="/cart" element={<CartPage />} />
 
 
-                        {/* Login and Sign-up */}
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/signup" element={<Signup />} />
+                            {/* Login and Sign-up */}
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/signup" element={<Signup />} />
 
 
-                        <Route path="/all-classic-products" element={<AllClassicPage />} />
-                        {/* all classic watches */}
-                        <Route path="/all-luxury-products" element={<AllLuxuaryPage />} />
-                        {/* all luxury watches */}
-                        <Route path="/watch/:id" element={<WatchDetailPage />} />
+                            <Route path="/all-classic-products" element={<AllClassicPage />} />
+                            {/* all classic watches */}
+                            <Route path="/all-luxury-products" element={<AllLuxuaryPage />} />
+                            {/* all luxury watches */}
+                            <Route path="/watch/:id" element={<WatchDetailPage />} />
 
-                        {/* Other routes */}
-                        <Route path="/user" element={<UserPage />} />
+                            {/* Other routes */}
+                            <Route path="/user" element={<UserPage />} />
 
-                        {/* Fallback route for undefined paths */}
-                        <Route path="*" element={<NotFoundPage />} />
-                    </Routes>
-                </Layout>
-            </Router>
+                            {/* Fallback route for undefined paths */}
+                            <Route path="*" element={<NotFoundPage />} />
+                        </Routes>
+                    </Layout>
+                </Router>
+            </CartWishlistProvider>
         </AuthProvider>
     );
 };

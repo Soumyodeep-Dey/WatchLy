@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AddtoWishListButton from "../buttons/AddtoWishListButtom";
 import RemoveFromCartButton from "../buttons/RemoveFromCartButtom";
+import { useCartWishlist } from "../context/CartWishlistContext";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -10,6 +11,7 @@ function CartPage() {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { updateCartCount } = useCartWishlist();
 
   const fetchCartItems = async () => {
     const token = sessionStorage.getItem("jwt");
@@ -48,6 +50,7 @@ function CartPage() {
 
       if (res.ok) {
         setCartItems(data.cartItems);
+        updateCartCount(data.cartItems.length);
       } else {
         setError("Failed to fetch cart items. Please try again.");
         return;
@@ -55,6 +58,7 @@ function CartPage() {
     } catch (error) {
       console.error("Error fetching cart items:", error);
       setCartItems([]);
+      updateCartCount(0);
     } finally {
       setLoading(false);
     }

@@ -1,9 +1,11 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { toast } from 'react-toastify';
+import { useCartWishlist } from "../context/CartWishlistContext";
 
 const MoveToCartButton = ({ productId, quantity, onCartUpdate, onWishlistUpdate }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const { updateCartCount, updateWishlistCount } = useCartWishlist();
 
   const handleMoveToCart = async () => {
     const token = sessionStorage.getItem("jwt");
@@ -69,6 +71,26 @@ const MoveToCartButton = ({ productId, quantity, onCartUpdate, onWishlistUpdate 
             },
             icon: '⌚',
           });
+          // Update both cart and wishlist counts
+          const [cartCountRes, wishlistCountRes] = await Promise.all([
+            fetch(`${import.meta.env.VITE_BACKEND_URL}/api/cart`, {
+              headers: { Authorization: `Bearer ${token}` },
+            }),
+            fetch(`${import.meta.env.VITE_BACKEND_URL}/api/wishlist`, {
+              headers: { Authorization: `Bearer ${token}` },
+            })
+          ]);
+          
+          if (cartCountRes.ok) {
+            const cartCountData = await cartCountRes.json();
+            updateCartCount(cartCountData.cartItems.length);
+          }
+          
+          if (wishlistCountRes.ok) {
+            const wishlistCountData = await wishlistCountRes.json();
+            updateWishlistCount(wishlistCountData.wishlistItems.length);
+          }
+
           if (onCartUpdate) onCartUpdate();
           if (onWishlistUpdate) onWishlistUpdate();
         } else {
