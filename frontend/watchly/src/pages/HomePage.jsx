@@ -11,7 +11,9 @@ const HomePage = () => {
     fetch(`${import.meta.env.VITE_BACKEND_URL}/api/watches`)
       .then((response) => response.json())
       .then((data) => {
-        setFeaturedProducts(data);
+        // Filter only featured products
+        const featuredOnly = data.filter(product => product.featured === true);
+        setFeaturedProducts(featuredOnly);
       });
   }, []);
 
@@ -20,7 +22,7 @@ const HomePage = () => {
       setCurrentIndex((prevIndex) => 
         prevIndex + 3 >= featuredProducts.length ? 0 : prevIndex + 3
       );
-    }, 5000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [featuredProducts.length]);
