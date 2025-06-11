@@ -275,7 +275,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Why Choose Watchly Section */}
       <section className="features py-20 px-4 bg-gradient-to-b from-gray-900 to-black">
         <motion.div
           initial={{ opacity: 0 }}

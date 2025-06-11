@@ -99,7 +99,7 @@ const Header = () => {
               className="hover:text-white transition-all duration-300 flex items-center"
             >
               <span className="relative">
-                Watchly
+                Watchly V1.0
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-gold to-gold-dark group-hover:w-full transition-all duration-300"></span>
               </span>
             </Link>
