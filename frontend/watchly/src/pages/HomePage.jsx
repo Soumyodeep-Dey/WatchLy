@@ -22,7 +22,7 @@ const HomePage = () => {
       setCurrentIndex((prevIndex) => 
         prevIndex + 3 >= featuredProducts.length ? 0 : prevIndex + 3
       );
-    }, 3000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [featuredProducts.length]);
@@ -226,13 +226,15 @@ const HomePage = () => {
           <AnimatePresence mode="wait">
             {visibleProducts.map((product, index) => (
               <motion.div
-                key={product._id}
+                key={`${product._id}-${currentIndex}`}
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -50 }}
                 transition={{ 
                   duration: 0.5,
-                  delay: index * 0.1
+                  delay: index * 0.1,
+                  type: "spring",
+                  stiffness: 100
                 }}
                 whileHover={{ y: -10 }}
                 className="product bg-gradient-to-b from-gray-900 to-black border border-gold-dark/30 
